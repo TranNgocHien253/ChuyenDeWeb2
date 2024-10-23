@@ -1,0 +1,196 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 10px; /* Giảm khoảng cách lề của body */
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px; /* Giảm khoảng cách dưới bảng */
+}
+table, th, td {
+    border: 1px solid #0b08ab;
+}
+th, td {
+    padding: 8px; /* Giảm padding cho th và td */
+    text-align: center;
+    font-size: 14px; /* Giảm kích thước font */
+}
+th {
+    background-color: #0b08ab;
+    color: white;
+}
+/* Thêm cột trắng nhỏ giữa các th */
+th:not(:last-child) {
+    border-right: 1px solid white; /* Cột trắng nhỏ */
+}
+.status {
+    padding: 4px 8px; /* Giảm padding cho status */
+    border-radius: 5px;
+    font-size: 12px; /* Giảm kích thước font cho status */
+    color: white;
+}
+.pending {
+    background-color: orange;
+}
+.approved {
+    background-color: green;
+}
+.rejected {
+    background-color: red;
+}
+.actions i {
+    cursor: pointer;
+    font-size: 16px; /* Kích thước biểu tượng hành động */
+}
+.edit {
+    color: blue;
+    margin-right: 8px; /* Giảm khoảng cách bên phải */
+}
+.delete {
+    color: red;
+}
+.add-order-btn {
+    background-color: #0b08ab;
+    color: white;
+    border: none;
+    padding: 8px 16px; /* Giảm padding cho nút */
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px; /* Giảm kích thước font cho nút */
+}
+.top-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.sort-controls {
+    display: flex;
+    align-items: center; /* Căn giữa dọc */
+}
+.sort-button {
+    background-color: white; /* Màu nền cho nút */
+    color: black; /* Màu chữ cho nút */
+    padding: 8px 16px; /* Padding cho nút */
+    border-radius: 5px; /* Bo góc cho nút */
+    font-size: 14px; /* Kích thước font cho nút */
+    margin-left: 10px; /* Khoảng cách bên trái giữa nút và label */
+    border: 2px solid #0f0f0f;
+}
+.sort-controls select {
+    padding: 4px; /* Giảm padding cho select */
+    font-size: 14px; /* Giảm kích thước font cho select */
+    margin-left: 10px; /* Khoảng cách giữa select và label */
+}
+#perPage{
+    background-color: white; /* Màu nền cho nút */
+    color: black; /* Màu chữ cho nút */
+    padding: 8px; /* Padding cho nút 
+    border-radius: 5px; /* Bo góc cho nút */
+    font-size: 14px; /* Kích thước font cho nút */
+    margin-left: 10px; /* Khoảng cách bên trái giữa nút và label */
+    border: 2px solid #0f0f0f;
+}
+h3 {
+    text-align: center; /* Căn giữa tiêu đề */
+}
+a{
+    text-decoration: none;
+}
+/* Popup styles */
+.popup {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.popup-header {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.popup-message {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.popup-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.popup-actions button {
+    padding: 8px 16px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.popup-actions .confirm {
+    background-color: #0b08ab;
+    color: white;
+}
+
+.popup-actions .cancel {
+    background-color: #e74c3c;
+    color: white;
+}
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+.status.approved {
+    background-color: #28a745; /* Xanh nước */
+}
+
+.status.rejected {
+    background-color: #dc3545; /* Đỏ */
+}
+
+.pagination {
+    display: flex;
+    justify-content: right;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination a, .pagination span {
+    padding: 8px 12px;
+    border: 1px solid #007bff;
+    color: #007bff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .active span {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .disabled span {
+    color: #ccc;
+    pointer-events: none;
+}
