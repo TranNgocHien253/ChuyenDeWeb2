@@ -19,9 +19,11 @@ use App\Http\Controllers\HomeController;
 */
 //này của home
 Route::get('/', function () {
-    return view('user.home_list.home');
+    return view('app');
 });
-
+// Route::get('/', function () {
+//     return view('user.home_list.home');
+// });
 
 
 // Route cho sản phẩm

@@ -1,4 +1,4 @@
-@extends('app')
+<!-- @extends('app')
 
 @section('title', 'Danh sách Slides')
 
@@ -20,7 +20,7 @@
 
         <ul id="dots" class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
             @foreach ($slides as $index => $slide)
-            <li class="dot w-3 h-3 rounded-full bg-gray-700 cursor-pointer" data-index="{{ $index }}" style="opacity: {{ $index === 0 ? '1' : '0.2' }};"></li>
+            <li class="dot w-3 h-3 rounded-full bg-gray-700 cursor-pointer" data-index="{{ $index }}"></li>
             @endforeach
         </ul>
 
@@ -35,7 +35,6 @@
 
 <script>
     const slides = @json($slides);
-    console.log(slides);
     let currentSlideIndex = 0;
 
     const slideImage = document.getElementById('slideImage');
@@ -81,4 +80,4 @@
     }
 </script>
 
-@endsection
+@endsection -->
