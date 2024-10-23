@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\HomeController;
 
 
 
@@ -16,25 +17,29 @@ use App\Http\Controllers\OrderController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+//này của home
 Route::get('/', function () {
-    return view('app');
+    return view('user.home_list.home');
 });
 
 
 
+// Route cho sản phẩm
+Route::get('/', [HomeController::class, 'index'])->name('user.home');
 
 // Routes for slides
-Route::get('/slides/create', [SlideController::class, 'create'])->name('admin.slides.create');
 Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
-
 Route::get('/slides', [SlideController::class, 'index'])->name('admin.slides.index');
+
+Route::get('/slides/create', [SlideController::class, 'create'])->name('admin.slides.create');
 
 Route::get('/slides/{id}/edit', [SlideController::class, 'edit'])->name('admin.slides.edit');
 Route::put('/slides/{id}', [SlideController::class, 'update'])->name('admin.slides.update');
 
 Route::delete('/slides/{id}', [SlideController::class, 'destroy'])->name('admin.slides.destroy');
 
+
+// Routes for order
 Route::get('/order', [OrderController::class, 'index'])->name('admin.order.index');
 Route::get('/order/add', [OrderController::class, 'create'])->name('admin.order.create');
 Route::post('/order/add', [OrderController::class, 'store'])->name('admin.order.store');
