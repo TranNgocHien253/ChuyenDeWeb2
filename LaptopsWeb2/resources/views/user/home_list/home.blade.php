@@ -32,9 +32,10 @@
     @endif
 
 </div>
+
 <script>
     const slides = @json($slides);
-    console.log(slides); // Kiểm tra dữ liệu slides
+    console.log(slides);
     let currentSlideIndex = 0;
 
     const slideImage = document.getElementById('slideImage');
@@ -42,38 +43,42 @@
     const dots = document.querySelectorAll('.dot');
 
     function updateSlide() {
-        slideImage.src = slides[currentSlideIndex].image;
-        slideLink.href = slides[currentSlideIndex].link;
+        if (slides.length > 0) {
+            slideImage.src = slides[currentSlideIndex].image;
+            slideLink.href = slides[currentSlideIndex].link;
 
-        // Cập nhật chấm hiện tại
-        dots.forEach((dot, index) => {
-            dot.style.opacity = index === currentSlideIndex ? '1' : '0.5';
-        });
+
+            dots.forEach((dot, index) => {
+                dot.style.opacity = index === currentSlideIndex ? '1' : '0.5';
+            });
+        }
     }
 
-    document.getElementById('prevButton').addEventListener('click', () => {
-        currentSlideIndex = (currentSlideIndex > 0) ? currentSlideIndex - 1 : slides.length - 1;
-        updateSlide();
-    });
-
-    document.getElementById('nextButton').addEventListener('click', () => {
-        currentSlideIndex = (currentSlideIndex < slides.length - 1) ? currentSlideIndex + 1 : 0;
-        updateSlide();
-    });
-
-    // Chấm điều hướng
-    dots.forEach(dot => {
-        dot.addEventListener('click', () => {
-            currentSlideIndex = parseInt(dot.getAttribute('data-index'));
+    if (slides.length > 0) {
+        document.getElementById('prevButton').addEventListener('click', () => {
+            currentSlideIndex = (currentSlideIndex > 0) ? currentSlideIndex - 1 : slides.length - 1;
             updateSlide();
         });
-    });
 
-    // Tự động chuyển đổi slide mỗi 2 giây
-    setInterval(() => {
-        currentSlideIndex = (currentSlideIndex < slides.length - 1) ? currentSlideIndex + 1 : 0;
-        updateSlide();
-    }, 2000); // 2000ms = 2s
+        document.getElementById('nextButton').addEventListener('click', () => {
+            currentSlideIndex = (currentSlideIndex < slides.length - 1) ? currentSlideIndex + 1 : 0;
+            updateSlide();
+        });
+
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                currentSlideIndex = parseInt(dot.getAttribute('data-index'));
+                updateSlide();
+            });
+        });
+
+
+        setInterval(() => {
+            currentSlideIndex = (currentSlideIndex < slides.length - 1) ? currentSlideIndex + 1 : 0;
+            updateSlide();
+        }, 2000);
+    }
 </script>
 
 @endsection
