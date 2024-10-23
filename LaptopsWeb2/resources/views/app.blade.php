@@ -8,6 +8,7 @@
 </head>
 
 <body>
+  @include('Header.header')
   <div class="container mx-auto px-4 mt-5">
     @yield('content')
   </div>
