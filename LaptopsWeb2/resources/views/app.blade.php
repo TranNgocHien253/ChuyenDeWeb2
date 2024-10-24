@@ -9,6 +9,10 @@
 
 <body>
   @include('Header.header')
+  <div class="container mx-auto px-4 mt-5">
+    @yield('content')
+  </div>
+  <!-- @include('Header.header')
   <div class="container">
     <div class="flex">
       <div class="w-1/4">
@@ -18,7 +22,7 @@
         @yield('content')
       </div>
     </div>
-  </div>
+  </div> -->
 </body>
 
 </html>
