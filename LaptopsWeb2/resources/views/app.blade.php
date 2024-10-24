@@ -9,20 +9,16 @@
 
 <body>
   @include('Header.header')
-  <div class="container mx-auto px-4 mt-5">
-    @yield('content')
-  </div>
-  <!-- @include('Header.header')
-  <div class="container">
-    <div class="flex">
-      <div class="w-1/4">
+  <div class="w-full px-4">
+    <div class="flex gap-4">
+      <div class="container shadow h-screen rounded-lg mr-5 ml-5 w-1/4 border-r-2">
         @include('Header.dashbroad')
       </div>
       <div class="w-3/4 mt-3  ">
         @yield('content')
       </div>
     </div>
-  </div> -->
+  </div>
 </body>
 
 </html>

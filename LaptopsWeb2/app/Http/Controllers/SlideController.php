@@ -14,7 +14,7 @@ class SlideController extends Controller
 
         $order = request('order', 'desc'); //Mặc định Là 'desc'
 
-        $slides = Slide::orderBy('updated_at', $order)->paginate(5)->appends(['order' => $order]);
+        $slides = Slide::orderBy('updated_at', $order)->paginate(3)->appends(['order' => $order]);
 
         return view('admin.slides.index', compact('slides'));
     }
