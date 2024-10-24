@@ -15,7 +15,7 @@
             </select>
         </form>
         <form action="{{ route('admin.slides.create')}}" class="">
-            <button class="bg-purple-600 text-white py-2 px-4 rounded hover:bg-blue-600">+ Thêm User</button>
+            <button class="bg-purple-600 text-white py-2 px-4 rounded hover:bg-blue-600">+ Thêm Slide</button>
         </form>
     </div>
     @if(session('success'))
