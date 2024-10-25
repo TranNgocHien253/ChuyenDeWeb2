@@ -8,16 +8,29 @@
 </head>
 
 <body>
-  @include('Header.header')
-  <div class="w-full px-4">
+  <div>
+    @if (auth()->check())
+    @if (auth()->user()->role === 'admin')
+    @include('Header.header')
     <div class="flex gap-4">
       <div class="container shadow h-screen rounded-lg mr-5 ml-5 w-1/4 border-r-2">
         @include('Header.dashbroad')
       </div>
-      <div class="w-3/4 mt-3  ">
+      <div class="w-3/4 m-3">
         @yield('content')
       </div>
     </div>
+    @else
+    @include('Header.header')
+    <div class="mt-3">
+      @yield('content')
+    </div>
+    @endif
+    @else
+    <div class="mt-0 h-screen">
+      @yield('content')
+    </div>
+    @endif
   </div>
 </body>
 

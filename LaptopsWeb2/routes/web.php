@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 
 
 
@@ -29,6 +30,8 @@ Route::get('/', function () {
 // Route cho sản phẩm
 Route::get('/', [HomeController::class, 'index'])->name('user.home');
 
+
+
 // Routes for slides
 Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
 Route::get('/slides', [SlideController::class, 'index'])->name('admin.slides.index');
@@ -48,3 +51,15 @@ Route::post('/order/add', [OrderController::class, 'store'])->name('admin.order.
 Route::get('/order/{id}/edit', [OrderController::class, 'edit'])->name('admin.order.edit');
 Route::put('/order/{id}', [OrderController::class, 'update'])->name('admin.order.update');
 Route::delete('/order/delete/{id}', [OrderController::class, 'destroy'])->name('admin.order.destroy');
+
+
+// Trang đăng nhập
+Route::get('/login', function () {
+    return view('user.login');
+})->name('login');
+
+// Xử lý đăng nhập
+Route::post('/login', [UserController::class, 'login']);
+
+// Xử lý đăng xuất
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');

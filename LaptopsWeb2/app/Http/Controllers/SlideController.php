@@ -87,6 +87,6 @@ class SlideController extends Controller
         }
         $slide->delete();
 
-        return redirect()->route('admin.slides.index')->with('success', "Slide {$slide->id} deleted successfully!");
+        return redirect()->route('admin.slides.index')->with('success', "Slide {$slide->id} đã xáo thành công!");
     }
 }
