@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TypeProductController;
+
 
 
 
@@ -48,3 +50,11 @@ Route::post('/order/add', [OrderController::class, 'store'])->name('admin.order.
 Route::get('/order/{id}/edit', [OrderController::class, 'edit'])->name('admin.order.edit');
 Route::put('/order/{id}', [OrderController::class, 'update'])->name('admin.order.update');
 Route::delete('/order/delete/{id}', [OrderController::class, 'destroy'])->name('admin.order.destroy');
+
+
+Route::get('/typeproduct', [TypeProductController::class, 'index'])->name('admin.typeproduct.index');
+Route::get('/typeproduct/add', [TypeProductController::class, 'create'])->name('admin.typeproduct.create');
+Route::post('/typeproduct/add', [TypeProductController::class, 'store'])->name('admin.typeproduct.store');
+Route::get('/typeproduct/{id}/edit', [TypeProductController::class, 'edit'])->name('admin.typeproduct.edit');
+Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name('admin.typeproduct.update');
+Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');

@@ -66,11 +66,7 @@
             @endforeach
         </tbody>
     </table>
-    @if ($orders->hasPages())
-    <div class="pagination">
-        {{ $orders->links() }}
-    </div>
-@endif
+    {{ $orders->links('vendor.pagination.bootstrap-4') }}
 
 
     <!-- Confirmation Popup -->

@@ -13,12 +13,12 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         // Get the number of items per page from the request or set a default
-    $perPage = $request->input('perPage', 10);
+        $perPage = $request->input('perPage', 10);
 
-    // Retrieve the orders with pagination
-    $orders = Order::paginate($perPage);
+        // Retrieve the orders with pagination
+        $orders = Order::paginate($perPage);
 
-    return view('admin.order.index', compact('orders'));
+        return view('admin.order.index', compact('orders'));
     }
 
     // Hiển thị form thêm đơn hàng
@@ -36,7 +36,7 @@ class OrderController extends Controller
         $data = $request->all();
         $data['status'] = 'Approved';
         $order = Order::create($request->all());
-        return redirect()->route('admin.order.index')->with('success', 'Đơn hàng đã được thêm thành công.');
+        return redirect()->route('admin.order.index')->with('success', 'Đơn hàng đã được thêm thành công!');
     }
 
     // Hiển thị form chỉnh sửa đơn hàng
