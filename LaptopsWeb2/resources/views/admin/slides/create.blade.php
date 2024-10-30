@@ -44,7 +44,7 @@
         <div class="flex h-11 gap-5 justify-around">
             <button type="submit" class="bg-green-200 text-black border border-black py-2 px-4 w-1/2 rounded hover:bg-green-600 transition">ADD</button>
             <a href="{{ route('admin.slides.index') }}" class="flex justify-center items-center bg-red-200 text-black border border-black py-2 px-4 rounded h-full w-1/2 hover:bg-red-600 transition">Cancel</a>
-            </ class="flex ">
+        </div>
     </form>
 </div>
 @endsection

@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomeController;
-
-
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +47,13 @@ Route::post('/order/add', [OrderController::class, 'store'])->name('admin.order.
 Route::get('/order/{id}/edit', [OrderController::class, 'edit'])->name('admin.order.edit');
 Route::put('/order/{id}', [OrderController::class, 'update'])->name('admin.order.update');
 Route::delete('/order/delete/{id}', [OrderController::class, 'destroy'])->name('admin.order.destroy');
+
+
+//user
+
+Route::get('/user', [UserController::class, 'index'])->name('admin.user.index'); // Hiển thị danh sách người dùng
+Route::get('/user/create', [UserController::class, 'create'])->name('admin.user.create'); // Form tạo người dùng
+Route::post('/user', [UserController::class, 'store'])->name('admin.user.store'); // Xử lý tạo người dùng
+Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit'); // Form sửa người dùng
+Route::put('/user/{id}', [UserController::class, 'update'])->name('admin.user.update'); // Xử lý sửa người dùng
+Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
