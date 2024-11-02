@@ -38,7 +38,7 @@
         </div>
 
         @foreach($profiles as $user)
-        <div class="flex items-center border-b py-2 rounded-md bg-white hover:bg-slate-100 transition duration-200 ease-in-out">
+        <div class="flex items-center border-b py-2 my-3 rounded-lg bg-white hover:bg-slate-100 transition duration-200 ease-in-out">
             <div class="w-1/12 text-center">{{ $profiles->currentPage() * $profiles->perPage() - $profiles->perPage() + $loop->iteration }}</div>
             <div class="w-3/12 text-left px-2">{{ $user->full_name }}</div>
             <div class="w-3/12 text-left px-2">{{ $user->email }}</div>

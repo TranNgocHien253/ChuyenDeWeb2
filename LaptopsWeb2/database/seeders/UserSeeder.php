@@ -27,7 +27,34 @@ class UserSeeder extends Seeder
 
         User::create([
             'full_name' => 'Tran Thi B',
-            'email' => 'tranthib@example.com',
+            'email' => 'tranthic@example.com',
+            'password' => Hash::make('password123'),
+            'imageAvatar' => 'avatar2.jpg',
+            'gender' => 'Female',
+            'address' => '456 Le Loi, Ho Chi Minh City',
+            'phone' => '0987654321',
+        ]);
+        User::create([
+            'full_name' => 'Tran Thi B',
+            'email' => 'tranthid@example.com',
+            'password' => Hash::make('password123'),
+            'imageAvatar' => 'avatar2.jpg',
+            'gender' => 'Female',
+            'address' => '456 Le Loi, Ho Chi Minh City',
+            'phone' => '0987654321',
+        ]);
+        User::create([
+            'full_name' => 'Tran Thi B',
+            'email' => 'tranthie@example.com',
+            'password' => Hash::make('password123'),
+            'imageAvatar' => 'avatar2.jpg',
+            'gender' => 'Female',
+            'address' => '456 Le Loi, Ho Chi Minh City',
+            'phone' => '0987654321',
+        ]);
+        User::create([
+            'full_name' => 'Tran Thi B',
+            'email' => 'tranthif@example.com',
             'password' => Hash::make('password123'),
             'imageAvatar' => 'avatar2.jpg',
             'gender' => 'Female',
