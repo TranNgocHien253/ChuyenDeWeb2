@@ -27,7 +27,7 @@
 
     <!-- Table Section -->
     <div class="overflow-hidden">
-        <div class="flex gap-3 items-center font-bold py-4 bg-blue-200 text-white rounded-md">
+        <div class="flex gap-3 items-center font-bold py-4 bg-blue-200 text-gray-700 rounded-md">
             <div class="w-1/12 text-center">STT</div>
             <div class="w-3/12 text-left px-2">Họ tên</div>
             <div class="w-3/12 text-left px-2">Email</div>
