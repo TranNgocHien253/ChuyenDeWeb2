@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             TypeProductsTableSeeder::class,
             ProductsTableSeeder::class,
-            OrdersTableSeeder::class, // OrderSeeder must run last
+            OrdersTableSeeder::class,
+            SlideSeeder::class,
+
         ]);
     }
 }
