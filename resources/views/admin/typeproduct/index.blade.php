@@ -68,7 +68,6 @@
     </div>
 </div>
 
-
     {{ $types->links('vendor.pagination.bootstrap-4') }}
 
     @endsection
