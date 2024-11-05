@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\OrderController;
@@ -28,18 +29,32 @@ Route::get('/', function () {
 // Route cho sản phẩm
 Route::get('/', [HomeController::class, 'index'])->name('user.home');
 
-// Routes for slides
-Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
-Route::get('/slides', [SlideController::class, 'index'])->name('admin.slides.index');
+// Route::middleware(['auth', 'role:user'])->group(function () {});
 
-Route::get('/slides/create', [SlideController::class, 'create'])->name('admin.slides.create');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
-Route::get('/slides/{id}/edit', [SlideController::class, 'edit'])->name('admin.slides.edit');
-Route::put('/slides/{id}', [SlideController::class, 'update'])->name('admin.slides.update');
+// Route xử lý quá trình đăng nhập
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::delete('/slides/{id}', [SlideController::class, 'destroy'])->name('admin.slides.destroy');
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
+    // Routes for slides
+    Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
+    Route::get('/slides', [SlideController::class, 'index'])->name('admin.slides.index');
 
+    Route::get('/slides/create', [SlideController::class, 'create'])->name('admin.slides.create');
+
+    Route::get('/slides/{id}/edit', [SlideController::class, 'edit'])->name('admin.slides.edit');
+    Route::put('/slides/{id}', [SlideController::class, 'update'])->name('admin.slides.update');
+
+    Route::delete('/slides/{id}', [SlideController::class, 'destroy'])->name('admin.slides.destroy');
+});
+
+// Public route example
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth');
 // Routes for order
 Route::get('/order', [OrderController::class, 'index'])->name('admin.order.index');
 Route::get('/order/add', [OrderController::class, 'create'])->name('admin.order.create');
