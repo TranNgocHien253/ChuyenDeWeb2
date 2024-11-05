@@ -82,6 +82,12 @@
             <button class="cancel" id="cancelDelete">Cancel</button>
         </div>
     </div>
+<<<<<<< HEAD
+=======
+</div>
+
+    {{ $types->links('vendor.pagination.bootstrap-4') }}
+>>>>>>> 7915b9161c2ef8dbb797f8be558fb059d7550af0
 
     @endsection
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
