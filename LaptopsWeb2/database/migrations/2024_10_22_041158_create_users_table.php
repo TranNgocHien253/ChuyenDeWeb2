@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('gender', 50)->nullable();
             $table->string('address')->nullable();
             $table->string('phone', 15)->nullable();
+            $table->tinyInteger('role')->default(0);
             $table->timestamps();
         });
     }

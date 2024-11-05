@@ -18,18 +18,30 @@
                     </button>
                 </div>
             </form>
+            <!-- User Actions -->
             <div class="flex items-center space-x-6 rtl:space-x-reverse">
-                <button class="text-sm text-white bg-purple-600 hover:bg-purple-400 rounded-md px-4 py-2 transition duration-200">
+                @guest
+                <!-- Buttons for Guests -->
+                <a href="{{ route('login') }}" class="text-sm text-white bg-purple-600 hover:bg-purple-400 rounded-md px-4 py-2 transition duration-200">
                     Login
-                </button>
-                <button class="text-sm text-purple-700 border border-purple-600 bg-white hover:bg-purple-100 rounded-md px-4 py-2 transition duration-200">
+                </a>
+                <a href="#" class="text-sm text-purple-700 border border-purple-600 bg-white hover:bg-purple-100 rounded-md px-4 py-2 transition duration-200">
                     Register
-                </button>
+                </a>
+                @else
+                <!-- User Profile and Logout for Logged-in Users -->
                 <button class="flex items-center justify-center rounded-full bg-transparent cursor-pointer">
                     <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" class="rounded-full w-9 h-9 fill-black animation-fadeout">
                         <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM128,72a12,12,0,1,0-12-12A12,12,0,0,0,128,72Zm0,112a12,12,0,1,0,12,12A12,12,0,0,0,128,184Z"></path>
                     </svg>
                 </button>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="text-sm text-purple-700 border border-purple-600 bg-white hover:bg-purple-100 rounded-md px-4 py-2 transition duration-200">
+                        Logout
+                    </button>
+                </form>
+                @endguest
             </div>
 
         </div>

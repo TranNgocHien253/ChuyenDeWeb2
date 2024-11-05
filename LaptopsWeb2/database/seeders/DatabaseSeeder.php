@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
             TypeProductsTableSeeder::class,
             ProductsTableSeeder::class,
             OrdersTableSeeder::class,
+            UserSeeder::class,
             SlideSeeder::class,
-
         ]);
     }
 }

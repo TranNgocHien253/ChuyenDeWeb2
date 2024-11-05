@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SlideController;
 use App\Http\Controllers\OrderController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\TypeProductController;
 
 
 
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,18 +33,32 @@ Route::get('/', function () {
 // Route cho sản phẩm
 Route::get('/', [HomeController::class, 'index'])->name('user.home');
 
-// Routes for slides
-Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
-Route::get('/slides', [SlideController::class, 'index'])->name('admin.slides.index');
+// Route::middleware(['auth', 'role:user'])->group(function () {});
 
-Route::get('/slides/create', [SlideController::class, 'create'])->name('admin.slides.create');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
-Route::get('/slides/{id}/edit', [SlideController::class, 'edit'])->name('admin.slides.edit');
-Route::put('/slides/{id}', [SlideController::class, 'update'])->name('admin.slides.update');
+// Route xử lý quá trình đăng nhập
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::delete('/slides/{id}', [SlideController::class, 'destroy'])->name('admin.slides.destroy');
+Route::middleware(['auth', 'role:admin'])->group(function () {
 
+    // Routes for slides
+    Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
+    Route::get('/slides', [SlideController::class, 'index'])->name('admin.slides.index');
 
+    Route::get('/slides/create', [SlideController::class, 'create'])->name('admin.slides.create');
+
+    Route::get('/slides/{id}/edit', [SlideController::class, 'edit'])->name('admin.slides.edit');
+    Route::put('/slides/{id}', [SlideController::class, 'update'])->name('admin.slides.update');
+
+    Route::delete('/slides/{id}', [SlideController::class, 'destroy'])->name('admin.slides.destroy');
+});
+
+// Public route example
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth');
 // Routes for order
 Route::get('/order', [OrderController::class, 'index'])->name('admin.order.index');
 Route::get('/order/add', [OrderController::class, 'create'])->name('admin.order.create');
@@ -58,3 +74,11 @@ Route::post('/typeproduct/add', [TypeProductController::class, 'store'])->name('
 Route::get('/typeproduct/{id}/edit', [TypeProductController::class, 'edit'])->name('admin.typeproduct.edit');
 Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name('admin.typeproduct.update');
 Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
+
+
+Route::get('/user', [UserController::class, 'index'])->name('admin.user.index'); // Hiển thị danh sách người dùng
+Route::get('/user/create', [UserController::class, 'create'])->name('admin.user.create'); // Form tạo người dùng
+Route::post('/user', [UserController::class, 'store'])->name('admin.user.store'); // Xử lý tạo người dùng
+Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit'); // Form sửa người dùng
+Route::put('/user/{id}', [UserController::class, 'update'])->name('admin.user.update'); // Xử lý sửa người dùng
+Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
