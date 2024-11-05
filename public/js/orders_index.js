@@ -26,8 +26,3 @@ document.addEventListener('DOMContentLoaded', function () {
         window.location.href = `?perPage=${selectedValue}`;
     });
 });
-function applyPerPage() {
-    const perPage = document.getElementById('perPage').value;
-    const url = `?perPage=${perPage}`;
-    window.location.href = url;
-}

@@ -12,13 +12,13 @@ class OrderController extends Controller
     // Hiển thị danh sách đơn hàng
     public function index(Request $request)
     {
+        // Get the number of items per page from the request or set a default
         $perPage = $request->input('perPage', 10);
 
-    // Retrieve the orders with pagination
-    $orders = Order::paginate($perPage);
+        // Retrieve the orders with pagination
+        $orders = Order::paginate($perPage);
 
-    // Pass the current `perPage` setting to the view
-    return view('admin.order.index', compact('orders', 'perPage'));
+        return view('admin.order.index', compact('orders'));
     }
 
     // Hiển thị form thêm đơn hàng

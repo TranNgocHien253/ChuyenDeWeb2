@@ -19,11 +19,11 @@
     <div class="top-controls">
         <div class="sort-controls">
             <button class="sort-button">Sắp xếp</button>
-            <select id="perPage" name="perPage" onchange="applyPerPage()">
-            <option value="10" {{ request('perPage') == 10 ? 'selected' : '' }}>10</option>
-            <option value="20" {{ request('perPage') == 20 ? 'selected' : '' }}>20</option>
-            <option value="50" {{ request('perPage') == 50 ? 'selected' : '' }}>50</option>
-        </select>
+            <select id="perPage">
+                <option value="10" {{ request('perPage') == 10 ? 'selected' : '' }}>10</option>
+                <option value="20" {{ request('perPage') == 20 ? 'selected' : '' }}>20</option>
+                <option value="50" {{ request('perPage') == 50 ? 'selected' : '' }}>50</option>
+            </select>
         </div>
         <a href="{{ route('admin.order.create') }}" class="add-order-btn">Thêm Đơn Hàng</a>
     </div>
@@ -66,9 +66,9 @@
             @endforeach
         </tbody>
     </table>
-    {{ $orders->appends(['perPage' => $perPage])->links('vendor.pagination.bootstrap-4') }}
+    {{ $orders->links('vendor.pagination.bootstrap-4') }}
 
-    
+
     <!-- Confirmation Popup -->
     <div id="deletePopup" class="popup">
         <div class="popup-header">Thông báo</div>

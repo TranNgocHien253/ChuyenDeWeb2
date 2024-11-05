@@ -124,13 +124,13 @@ a{
 }
 
 .popup-actions {
-    text-align: center; /* Căn giữa các nút */
+    text-align: center;
     margin-top: 20px;
 }
 
 .popup-actions button {
     padding: 8px 16px;
-    margin: 0 5px; /* Giữ khoảng cách giữa các nút */
+    margin: 0 5px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -138,21 +138,14 @@ a{
 }
 
 .popup-actions .confirm {
-    background-color: #0b08ab; /* Màu nền cho nút Xóa */
+    background-color: #0b08ab;
     color: white;
 }
 
 .popup-actions .cancel {
-    background-color: #e74c3c; /* Màu nền cho nút Hủy */
+    background-color: #e74c3c;
     color: white;
 }
-
-/* Đảm bảo nút hiển thị cùng chiều cao */
-.popup-actions button {
-    height: 40px; /* Đặt chiều cao cho nút */
-}
-
-
 .status {
     padding: 5px 10px;
     border-radius: 5px;
