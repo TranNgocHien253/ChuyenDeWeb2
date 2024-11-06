@@ -6,24 +6,29 @@
 
 <div class="container mx-auto">
     <!-- Header Section -->
-    <div class="flex justify-between items-center mb-6 bg-blue-50 p-4 rounded-md shadow">
-        <form action="{{ route('admin.user.index') }}" method="GET" class="flex items-center">
-            <input type="hidden" name="page" value="{{ request('page', 1) }}">
-            <select name="order" class="p-2 border rounded-lg shadow-sm" onchange="this.form.submit()">
-                <option value="desc" {{ request('order') === 'desc' ? 'selected' : '' }}>Giảm dần</option>
-                <option value="asc" {{ request('order') === 'asc' ? 'selected' : '' }}>Tăng dần</option>
-            </select>
-        </form>
-        <form action="{{ route('admin.user.create') }}">
-            <button class="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition duration-150 ease-in-out">+ Thêm User</button>
-        </form>
+    <div class="relative mb-6 bg-blue-50  rounded-md shadow">
+        <div class="flex justify-center">
+            @if(session('success'))
+            <div class="absolute w-2/3 bg-green-100 text-green-700 p-4 rounded my-2 fade-in ">
+                {{ session('success') }}
+            </div>
+            @endif
+        </div>
+        <div class="p-4  flex justify-between items-center">
+            <form action="{{ route('admin.user.index') }}" method="GET" class="flex items-center">
+                <input type="hidden" name="page" value="{{ request('page', 1) }}">
+                <select name="order" class="p-2 border rounded-lg shadow-sm" onchange="this.form.submit()">
+                    <option value="desc" {{ request('order') === 'desc' ? 'selected' : '' }}>Giảm dần</option>
+                    <option value="asc" {{ request('order') === 'asc' ? 'selected' : '' }}>Tăng dần</option>
+                </select>
+            </form>
+            <form action="{{ route('admin.user.create') }}">
+                <button class="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition duration-150 ease-in-out">+ Thêm User</button>
+            </form>
+        </div>
+
     </div>
 
-    @if(session('success'))
-    <div class="bg-green-100 text-green-700 p-4 rounded mb-4">
-        {{ session('success') }}
-    </div>
-    @endif
 
     <!-- Table Section -->
     <div class="overflow-hidden">
@@ -38,7 +43,7 @@
         </div>
 
         @foreach($profiles as $user)
-        <div class="flex items-center border-b py-2 my-3 rounded-lg bg-white hover:bg-slate-100 transition duration-200 ease-in-out">
+        <div class="flex items-center border-b py-2 my-3 rounded-lg bg-white hover:bg-slate-100 transition duration-200 ease-in-out relative group fade-hide">
             <div class="w-1/12 text-center">{{ $profiles->currentPage() * $profiles->perPage() - $profiles->perPage() + $loop->iteration }}</div>
             <div class="w-3/12 text-left px-2">{{ $user->full_name }}</div>
             <div class="w-3/12 text-left px-2">{{ $user->email }}</div>
@@ -64,7 +69,7 @@
                     </button>
                 </form>
             </div>
-            <p class="absolute bottom-full left-0 bg-purple-500 text-white text-xs p-2 rounded opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="transform: translateY(-0.5rem);">
+            <p class="absolute bottom-full left-0 bg-purple-500 text-white text-xs p-1 rounded opacity-0 transition-opacity duration-300 group-hover:opacity-100" style="transform: translateY(-0.5rem);">
                 Ngày chỉnh sửa: {{ $user->updated_at->format('d/m/Y H:i') }}
             </p>
         </div>
@@ -76,7 +81,11 @@
                 @if ($profiles->onFirstPage())
                 <li><span class="flex gap-1 items-center justify-center px-3 h-8 leading-tight text-gray-500"></span></li>
                 @else
-                <li><a href="{{ $profiles->previousPageUrl() }}" class="flex gap-1 items-center justify-center px-3 h-8 leading-tight text-gray-500 hover:text-gray-700">Pre</a></li>
+                <li><a href="{{ $profiles->previousPageUrl() }}" class="flex gap-1 items-center justify-center px-3 h-8 leading-tight text-gray-500 hover:text-gray-700">
+                        <svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+                        </svg>Pre< /a>
+                </li>
                 @endif
 
                 @for ($i = 1; $i <= $profiles->lastPage(); $i++)
@@ -90,7 +99,9 @@
                     @endfor
 
                     @if ($profiles->hasMorePages())
-                    <li><a href="{{ $profiles->nextPageUrl() }}" class="flex gap-1 items-center justify-center px-3 h-8 leading-tight text-gray-500 hover:text-gray-700">Next</a></li>
+                    <li><a href="{{ $profiles->nextPageUrl() }}" class="flex gap-1 items-center justify-center px-3 h-8 leading-tight text-gray-500 hover:text-gray-700">Next<svg class="w-2.5 h-2.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+                            </svg></a></li>
                     @else
                     <li><span class="flex gap-1 items-center justify-center px-3 h-8 leading-tight text-gray-500"></span></li>
                     @endif
@@ -106,5 +117,28 @@
         }
     }
 </script>
+<style>
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
 
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .fade-in {
+        opacity: 0;
+        animation: fadeIn 0.5s ease-out;
+        animation-delay: .5s;
+        animation-fill-mode: forwards;
+    }
+
+    .fade-hide {
+        animation: fadeIn 0.5s ease-out;
+    }
+</style>
 @endsection

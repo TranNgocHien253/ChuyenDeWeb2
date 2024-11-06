@@ -31,7 +31,10 @@ class AuthController extends Controller
     // Phương thức đăng xuất
     public function logout()
     {
+        // Đảm bảo rằng chúng ta xóa sạch session khi logout
         Auth::logout();
-        return redirect('/login');
+        session()->flush();
+
+        return redirect('/');
     }
 }
