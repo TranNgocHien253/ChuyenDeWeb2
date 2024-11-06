@@ -6,7 +6,7 @@ use App\Http\Controllers\SlideController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TypeProductController;
-
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 
 /*
