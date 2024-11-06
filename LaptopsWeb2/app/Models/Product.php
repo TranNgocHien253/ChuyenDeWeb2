@@ -14,4 +14,8 @@ class Product extends Model
     {
         return $this->belongsTo(TypeProduct::class, 'id_type'); // Use id_type as the foreign key
     }
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'product_id'); // Khóa ngoại phải là 'product_id'
+    }
 }

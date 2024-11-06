@@ -15,4 +15,8 @@ class TypeProduct extends Model
     {
         return $this->hasMany(Product::class, 'id_type'); // Make sure to reference id_type here
     }
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'id_type'); // Adjust foreign key if necessary
+    }
 }

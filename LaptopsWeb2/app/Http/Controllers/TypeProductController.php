@@ -12,10 +12,10 @@ class TypeProductController extends Controller
     {
         // Lấy số lượng mục mỗi trang từ yêu cầu hoặc thiết lập mặc định
         $perPage = $request->input('perPage', 10);
-
+    
         // Lấy danh sách loại sản phẩm với phân trang
         $types = TypeProduct::paginate($perPage);
-
+    
         return view('admin.typeproduct.index', compact('types'));
     }
 
@@ -94,39 +94,51 @@ class TypeProductController extends Controller
     }
 
     public function destroy($id)
-    {
-        $type = TypeProduct::findOrFail($id); // Tìm loại sản phẩm theo ID
+{
+    // Tìm loại sản phẩm
+    $typeProduct = TypeProduct::findOrFail($id);
 
-        // Kiểm tra xem có sản phẩm liên quan không
-        if ($type->products()->count() > 0) {
-            // Nếu có sản phẩm liên quan, trả về thông báo xác nhận
-            return response()->json([
-                'message' => 'Loại sản phẩm này có sản phẩm liên quan. Vui lòng xóa sản phẩm trước.',
-                'confirm' => true
-            ]);
+    // Lấy tất cả sản phẩm thuộc loại sản phẩm
+    $products = $typeProduct->products; // Lấy các sản phẩm liên quan
+
+    // Kiểm tra xem có sản phẩm không
+    if ($products->isNotEmpty()) {
+        foreach ($products as $product) {
+            // Tìm tất cả đơn hàng liên quan đến sản phẩm
+            $orders = $product->orders; // Tìm các đơn hàng liên quan đến sản phẩm
+
+            // Kiểm tra xem $orders có phải là một collection không
+            if ($orders && $orders->isNotEmpty()) {
+                foreach ($orders as $order) {
+                    $order->delete(); // Xóa đơn hàng
+                }
+            }
+
+            // Xóa hình ảnh của sản phẩm nếu có
+            if ($product->image) {
+                $oldProductImagePath = public_path($product->image);
+                if (file_exists($oldProductImagePath)) {
+                    unlink($oldProductImagePath); // Xóa tệp hình ảnh
+                }
+            }
+
+            // Xóa sản phẩm
+            $product->delete();
         }
-
-        // Kiểm tra xem có đơn hàng liên quan không
-        if ($type->orders()->count() > 0) {
-            // Nếu có đơn hàng liên quan, trả về thông báo xác nhận
-            return response()->json([
-                'message' => 'Loại sản phẩm này có đơn hàng liên quan. Vui lòng xóa đơn hàng trước.',
-                'confirm' => true
-            ]);
-        }
-
-        // Xóa hình ảnh nếu có
-        if ($type->image) {
-            \Storage::disk('public')->delete($type->image);
-        }
-
-        // Xóa loại sản phẩm
-        $type->delete();
-
-        return response()->json([
-            'message' => 'Loại sản phẩm đã được xóa thành công!',
-            'confirm' => false
-        ]);
     }
+
+    // Xóa hình ảnh của loại sản phẩm nếu có
+    if ($typeProduct->image) {
+        $oldImagePath = public_path($typeProduct->image);
+        if (file_exists($oldImagePath)) {
+            unlink($oldImagePath); // Xóa tệp hình ảnh
+        }
+    }
+
+    // Cuối cùng, xóa loại sản phẩm
+    $typeProduct->delete();
+
+    return redirect()->route('admin.typeproduct.index')->with('success', 'Loại sản phẩm và các sản phẩm liên quan đã được xóa thành công.');
+}
 
 }
