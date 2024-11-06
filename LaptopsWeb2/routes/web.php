@@ -66,6 +66,28 @@ Route::get('/order/{id}/edit', [OrderController::class, 'edit'])->name('admin.or
 Route::put('/order/{id}', [OrderController::class, 'update'])->name('admin.order.update');
 Route::delete('/order/delete/{id}', [OrderController::class, 'destroy'])->name('admin.order.destroy');
 
+// product
+// Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('admin.product.edit');
+// Route::get('/product/delete/{id}', [ProductController::class, 'delete'])->name('admin.product.delete');
+
+
+// Route::put('/product/{id}', [ProductController::class, 'update'])->name('admin.product.update');
+
+// Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
+// //them san pham
+// Route::get('/product/create', [ProductController::class, 'create'])->name('admin.product.create');
+// Route::post('/product', [ProductController::class, 'store'])->name('admin.product.store');
+
+// Route::get('/product', [ProductController::class, 'index'])->name('admin.product.manageProduct');
+
+
+Route::get('/product', [ProductController::class, 'index'])->name('admin.product.index'); // Thay 'manageProduct' bằng 'index'
+Route::get('/product/create', [ProductController::class, 'create'])->name('admin.product.create');
+Route::post('/product', [ProductController::class, 'store'])->name('admin.product.store');
+Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
+Route::put('/product/{id}', [ProductController::class, 'update'])->name('admin.product.update');
+Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
+
 
 Route::get('/typeproduct', [TypeProductController::class, 'index'])->name('admin.typeproduct.index');
 Route::get('/typeproduct/add', [TypeProductController::class, 'create'])->name('admin.typeproduct.create');
