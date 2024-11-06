@@ -6,23 +6,28 @@
 
 <div class="container mx-auto">
     <!-- Header Section -->
-    <div class="flex justify-between items-center mb-6">
-        <form action="{{ route('admin.slides.index') }}" method="GET" class="flex items-center ">
-            <input type="hidden" name="page" value="{{ request('page', 1) }}">
-            <select name="order" class="p-2 border rounded-lg" onchange="this.form.submit()">
-                <option value="desc" {{ request('order') === 'desc' ? 'selected' : '' }}>Giảm dần</option>
-                <option value="asc" {{ request('order') === 'asc' ? 'selected' : '' }}>Tăng dần</option>
-            </select>
-        </form>
-        <form action="{{ route('admin.slides.create')}}" class="">
-            <button class="bg-purple-600 text-white py-2 px-4 rounded hover:bg-blue-600">+ Thêm Slide</button>
-        </form>
+    <div class="relative bg-blue-50  rounded-md shadow">
+        <div class="flex justify-center">
+            @if(session('success'))
+            <div class="absolute w-2/3 bg-green-100 text-green-700 p-4 rounded my-2 fade-in ">
+                {{ session('success') }}
+            </div>
+            @endif
+        </div>
+        <div class="p-4  flex justify-between items-center">
+            <form action="{{ route('admin.slides.index') }}" method="GET" class="flex items-center">
+                <input type="hidden" name="page" value="{{ request('page', 1) }}">
+                <select name="order" class="p-2 border rounded-lg shadow-sm" onchange="this.form.submit()">
+                    <option value="desc" {{ request('order') === 'desc' ? 'selected' : '' }}>Giảm dần</option>
+                    <option value="asc" {{ request('order') === 'asc' ? 'selected' : '' }}>Tăng dần</option>
+                </select>
+            </form>
+            <form action="{{ route('admin.slides.create') }}">
+                <button class="bg-purple-600 text-white py-2 px-4 rounded hover:bg-purple-700 transition duration-150 ease-in-out">+ Thêm Slide</button>
+            </form>
+        </div>
     </div>
-    @if(session('success'))
-    <div class="bg-green-100 text-green-700 p-4 rounded mb-4">
-        {{ session('success') }}
-    </div>
-    @endif
+
     <!-- Table Section -->
     <div class="bg-white  overflow-hidden">
         <!-- First Row -->
@@ -39,7 +44,7 @@
             </div>
         </div>
         @foreach($slides as $slide)
-        <div class="flex gap-4 items-center justify-between border rounded-2xl p-4 mt-4 hover:bg-slate-100 relative group">
+        <div class="flex gap-4 items-center justify-between border rounded-2xl p-4 hover:bg-slate-100 relative group fade-hide">
             <div class="w-1/12 text-center">{{ $slides->currentPage() * $slides->perPage() - $slides->perPage() + $loop->iteration }}</div>
             <div class="w-3/12">
                 <img src="{{ asset($slide->image) }}" alt="image" class="rounded-md h-24 w-auto">
@@ -129,3 +134,27 @@
         }
     }
 </script>
+<style>
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .fade-in {
+        opacity: 0;
+        animation: fadeIn 0.5s ease-out;
+        animation-delay: .5s;
+        animation-fill-mode: forwards;
+    }
+
+    .fade-hide {
+        animation: fadeIn 0.5s ease-out;
+    }
+</style>
