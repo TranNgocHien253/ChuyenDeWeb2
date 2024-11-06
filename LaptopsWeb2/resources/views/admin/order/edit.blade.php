@@ -41,7 +41,7 @@
                     <select id="product" name="product_id">
                         <option value="">Chọn sản phẩm</option>
                         @foreach($order->category->products as $product)
-                            <option value="{{ $product->id }}" data-price="{{ $product->price }}" {{ $order->product_id == $product->id ? 'selected' : '' }}>
+                            <option value="{{ $product->id }}" data-price="{{ $product->unit_price }}" {{ $order->product_id == $product->id ? 'selected' : '' }}>
                                 {{ $product->name }}
                             </option>
                         @endforeach
@@ -58,7 +58,7 @@
                 </div>
                 <div class="form-group">
                     <label for="price">Giá Tiền:</label>
-                    <input type="number" id="price" name="price" value="{{ $order->product->price }}" readonly>
+                    <input type="number" id="price" name="price" value="{{ $order->product->unit_price }}" readonly>
                 </div>
             </div>
 
@@ -100,7 +100,7 @@
             </div>
         </div>
     </form>
-    <script src="{{asset('js/orders_edit.js')}}"></script>
+    <script src="{{ asset('js/orders_edit.js') }}"></script>
 </body>
 
 </html>
