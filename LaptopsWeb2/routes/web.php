@@ -87,3 +87,5 @@ Route::post('/typeproduct/add', [TypeProductController::class, 'store'])->name('
 Route::get('/typeproduct/{id}/edit', [TypeProductController::class, 'edit'])->name('admin.typeproduct.edit');
 Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name('admin.typeproduct.update');
 Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
+
+Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
