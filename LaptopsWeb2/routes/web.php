@@ -50,7 +50,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/slides/{id}', [SlideController::class, 'update'])->name('admin.slides.update');
 
     Route::delete('/slides/{id}', [SlideController::class, 'destroy'])->name('admin.slides.destroy');
-
 });
 Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
 
@@ -88,4 +87,3 @@ Route::post('/typeproduct/add', [TypeProductController::class, 'store'])->name('
 Route::get('/typeproduct/{id}/edit', [TypeProductController::class, 'edit'])->name('admin.typeproduct.edit');
 Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name('admin.typeproduct.update');
 Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
-
