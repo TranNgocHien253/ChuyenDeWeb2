@@ -7,8 +7,6 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TypeProductController;
 
-
-
 use App\Http\Controllers\UserController;
 
 /*
@@ -44,7 +42,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Routes for slides
-    Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
     Route::get('/slides', [SlideController::class, 'index'])->name('admin.slides.index');
 
     Route::get('/slides/create', [SlideController::class, 'create'])->name('admin.slides.create');
@@ -53,7 +50,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/slides/{id}', [SlideController::class, 'update'])->name('admin.slides.update');
 
     Route::delete('/slides/{id}', [SlideController::class, 'destroy'])->name('admin.slides.destroy');
+
 });
+Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
 
 // Public route example
 Route::get('/dashboard', function () {
@@ -82,3 +81,11 @@ Route::post('/user', [UserController::class, 'store'])->name('admin.user.store')
 Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit'); // Form sửa người dùng
 Route::put('/user/{id}', [UserController::class, 'update'])->name('admin.user.update'); // Xử lý sửa người dùng
 Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
+
+Route::get('/typeproduct', [TypeProductController::class, 'index'])->name('admin.typeproduct.index');
+Route::get('/typeproduct/add', [TypeProductController::class, 'create'])->name('admin.typeproduct.create');
+Route::post('/typeproduct/add', [TypeProductController::class, 'store'])->name('admin.typeproduct.store');
+Route::get('/typeproduct/{id}/edit', [TypeProductController::class, 'edit'])->name('admin.typeproduct.edit');
+Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name('admin.typeproduct.update');
+Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
+
