@@ -50,13 +50,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/slides/{id}', [SlideController::class, 'update'])->name('admin.slides.update');
 
     Route::delete('/slides/{id}', [SlideController::class, 'destroy'])->name('admin.slides.destroy');
-});
-Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
 
-// Public route example
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth');
+//user
+Route::get('/user', [UserController::class, 'index'])->name('admin.user.index');
+Route::get('/user/create', [UserController::class, 'create'])->name('admin.user.create');
+Route::post('/user', [UserController::class, 'store'])->name('admin.user.store');
+Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit');
+Route::put('/user/{id}', [UserController::class, 'update'])->name('admin.user.update');
+Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
+
 // Routes for order
 Route::get('/order', [OrderController::class, 'index'])->name('admin.order.index');
 Route::get('/order/add', [OrderController::class, 'create'])->name('admin.order.create');
@@ -64,6 +66,25 @@ Route::post('/order/add', [OrderController::class, 'store'])->name('admin.order.
 Route::get('/order/{id}/edit', [OrderController::class, 'edit'])->name('admin.order.edit');
 Route::put('/order/{id}', [OrderController::class, 'update'])->name('admin.order.update');
 Route::delete('/order/delete/{id}', [OrderController::class, 'destroy'])->name('admin.order.destroy');
+
+
+Route::get('/typeproduct', [TypeProductController::class, 'index'])->name('admin.typeproduct.index');
+Route::get('/typeproduct/add', [TypeProductController::class, 'create'])->name('admin.typeproduct.create');
+Route::post('/typeproduct/add', [TypeProductController::class, 'store'])->name('admin.typeproduct.store');
+Route::get('/typeproduct/{id}/edit', [TypeProductController::class, 'edit'])->name('admin.typeproduct.edit');
+Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name('admin.typeproduct.update');
+Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
+});
+Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
+
+
+
+
+// Public route example
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth');
+
 
 // product
 // Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('admin.product.edit');
@@ -88,19 +109,9 @@ Route::put('/product/{id}', [ProductController::class, 'update'])->name('admin.p
 Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
 
 
-Route::get('/typeproduct', [TypeProductController::class, 'index'])->name('admin.typeproduct.index');
-Route::get('/typeproduct/add', [TypeProductController::class, 'create'])->name('admin.typeproduct.create');
-Route::post('/typeproduct/add', [TypeProductController::class, 'store'])->name('admin.typeproduct.store');
-Route::get('/typeproduct/{id}/edit', [TypeProductController::class, 'edit'])->name('admin.typeproduct.edit');
-Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name('admin.typeproduct.update');
-Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
 
 
-Route::get('/user', [UserController::class, 'index'])->name('admin.user.index');
-Route::get('/user/create', [UserController::class, 'create'])->name('admin.user.create');
-Route::post('/user', [UserController::class, 'store'])->name('admin.user.store');
-Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit');
-Route::put('/user/{id}', [UserController::class, 'update'])->name('admin.user.update');
-Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
+
+
 
 Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
