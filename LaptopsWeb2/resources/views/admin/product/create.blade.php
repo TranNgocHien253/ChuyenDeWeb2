@@ -76,7 +76,10 @@
             <label for="unit_price">Giá Tiền:</label>
             <input type="number" id="unit_price" name="unit_price" required>
         </div>
-    
+        <div class="form-group">
+            <label for="promotion_price">Tiền:</label>
+            <input type="number" id="promotion_price" name="promotion_price" required>
+        </div>
         <div class="form-group">
             <label for="new">Hàng Mới:</label>
             <input type="number" id="new" name="new" required>

@@ -26,6 +26,7 @@ public function store(Request $request)
     $product->name = $request->input('name');
     $product->description = $request->input('description');
     $product->unit_price = $request->input('unit_price');
+    $product->promotion_price = $request->input('promotion_price');
     $product->new = $request->input('new');
     $product->id_type = $request->input('id_type'); // Gán giá trị id_type từ request
     $product->save();
