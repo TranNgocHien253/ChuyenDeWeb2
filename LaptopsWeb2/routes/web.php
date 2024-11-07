@@ -97,17 +97,10 @@ Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name(
 Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
 
 
-Route::get('/user', [UserController::class, 'index'])->name('admin.user.index'); // Hiển thị danh sách người dùng
-Route::get('/user/create', [UserController::class, 'create'])->name('admin.user.create'); // Form tạo người dùng
-Route::post('/user', [UserController::class, 'store'])->name('admin.user.store'); // Xử lý tạo người dùng
-Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit'); // Form sửa người dùng
-Route::put('/user/{id}', [UserController::class, 'update'])->name('admin.user.update'); // Xử lý sửa người dùng
+Route::get('/user', [UserController::class, 'index'])->name('admin.user.index'); 
+Route::get('/user/create', [UserController::class, 'create'])->name('admin.user.create'); 
+Route::post('/user', [UserController::class, 'store'])->name('admin.user.store');
+Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit'); 
+Route::put('/user/{id}', [UserController::class, 'update'])->name('admin.user.update');
 Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
-
-Route::get('/typeproduct', [TypeProductController::class, 'index'])->name('admin.typeproduct.index');
-Route::get('/typeproduct/add', [TypeProductController::class, 'create'])->name('admin.typeproduct.create');
-Route::post('/typeproduct/add', [TypeProductController::class, 'store'])->name('admin.typeproduct.store');
-Route::get('/typeproduct/{id}/edit', [TypeProductController::class, 'edit'])->name('admin.typeproduct.edit');
-Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name('admin.typeproduct.update');
-Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
 
