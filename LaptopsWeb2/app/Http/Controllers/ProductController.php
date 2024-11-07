@@ -80,7 +80,7 @@ public function store(Request $request)
 public function destroy($id)
 {
     // Tìm và xóa sản phẩm theo ID
-    $product = Product::findOrFail($id);
+    $product = Product::where('id', $id)->firstOrFail();
     $product->delete();
 
     // Chuyển hướng về trang quản lý sản phẩm với thông báo thành công
