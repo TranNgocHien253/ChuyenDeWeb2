@@ -50,7 +50,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/slides/{id}', [SlideController::class, 'update'])->name('admin.slides.update');
 
     Route::delete('/slides/{id}', [SlideController::class, 'destroy'])->name('admin.slides.destroy');
-
 });
 Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
 
@@ -103,4 +102,3 @@ Route::post('/user', [UserController::class, 'store'])->name('admin.user.store')
 Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit'); 
 Route::put('/user/{id}', [UserController::class, 'update'])->name('admin.user.update');
 Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
-

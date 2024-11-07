@@ -18,7 +18,15 @@ class UserController extends Controller
 
         return view('admin.user.index', compact('profiles'));
     }
-    
+
+    public function showProfile()
+    {
+        $user = auth()->user();
+        return view('user.profile.index', compact('user'));
+    }
+
+
+
     // Hiển thị form tạo người dùng
     public function create()
     {
@@ -45,7 +53,7 @@ class UserController extends Controller
 
         $imagePath = null;
         if ($request->hasFile('imageAvatar')) {
-            $imagePath = $request->file('imageAvatar')->store('avatars', 'public'); // Store in 'public/avatars'
+            $imagePath = $request->file('imageAvatar')->store('avatars', 'public');
         }
 
         User::create([
