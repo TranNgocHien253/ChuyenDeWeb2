@@ -96,9 +96,11 @@ Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name(
 Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
 
 
-Route::get('/user', [UserController::class, 'index'])->name('admin.user.index'); 
-Route::get('/user/create', [UserController::class, 'create'])->name('admin.user.create'); 
+Route::get('/user', [UserController::class, 'index'])->name('admin.user.index');
+Route::get('/user/create', [UserController::class, 'create'])->name('admin.user.create');
 Route::post('/user', [UserController::class, 'store'])->name('admin.user.store');
-Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit'); 
+Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit');
 Route::put('/user/{id}', [UserController::class, 'update'])->name('admin.user.update');
 Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
+
+Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
