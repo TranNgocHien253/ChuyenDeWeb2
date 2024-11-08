@@ -17,8 +17,8 @@ class UserSeeder extends Seeder
         // Tạo người dùng thường
         User::create([
             'full_name' => 'Nguyen Van A',
-            'email' => 'nguyenvana@example.com',
-            'password' => Hash::make('password123'),
+            'email' => 'user@example.com',
+            'password' => Hash::make('123'),
             'imageAvatar' => 'avatar1.jpg',
             'gender' => 'Male',
             'address' => '123 Pham Van Dong, Hanoi',
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
         User::create([
             'full_name' => 'Admin User',
             'email' => 'admin@example.com',
-            'password' => Hash::make('adminpassword'),
+            'password' => Hash::make('123'),
             'imageAvatar' => 'admin_avatar.jpg',
             'gender' => 'Male',
             'address' => '456 Admin Street, Hanoi',
