@@ -32,7 +32,9 @@
                 @if (session('error'))
                 <p style="color: red;">{{ session('error') }}</p>
                 @endif
-                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+                <div class="flex justify-center">
+                    <button type="submit" class="group group-hover:before:duration-500 group-hover:after:duration-500 after:duration-500 hover:border-gray-400 hover:before:[box-shadow:_20px_20px_20px_30px_#a21caf] duration-500 before:duration-500 hover:duration-500 underline underline-offset-2 hover:after:-right-8 hover:before:right-12 hover:before:-bottom-8 hover:before:blur hover:underline hover:underline-offset-4  origin-left hover:decoration-2 hover:text-white relative bg-neutral-800 h-16 w-64 border text-left p-3 text-gray-50 text-base font-bold rounded-lg  overflow-hidden  before:absolute before:w-12 before:h-12 before:content[''] before:right-1 before:top-1 before:z-10 before:bg-white before:rounded-full before:blur-lg  after:absolute after:z-10 after:w-20 after:h-20 after:content['']  after:bg-gray-400 after:right-8 after:top-3 after:rounded-full after:blur-lg">Login</button>
+                </div>
             </form>
         </div>
     </div>
