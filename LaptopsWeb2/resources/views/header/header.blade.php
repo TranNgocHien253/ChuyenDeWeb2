@@ -46,7 +46,7 @@
 
         </div>
     </nav>
-    <div id="slideDiv" class="fixed right-[-100px] top-px top-20 z-50 transition-all duration-500 ease-in-out transform">
+    <div id="slideDiv" class="fixed right-[-100px] top-px z-50 transition-all duration-500 ease-in-out transform">
         <div class="flex flex-col justify-center items-center relative transition-all duration-[450ms] ease-in-out w-16">
             <article
                 class="border border-solid border-gray-700 w-full ease-in-out duration-500 left-0 rounded-2xl inline-block shadow-lg shadow-black/15 bg-white">
