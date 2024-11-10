@@ -74,7 +74,6 @@
             <p class="text-gray-600">Đã có tài khoản? <a href="{{ route('login') }}" class="text-blue-500 hover:text-blue-700">Đăng nhập ngay</a></p>
         </div>
     </div>
-    </div>
 
 </body>
 </html>
