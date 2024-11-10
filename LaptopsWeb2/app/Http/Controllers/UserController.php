@@ -38,12 +38,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => [
-                'required',
-                'string',
-                'min:3',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/'
-            ],
+            'password' => 'required|string|min:3',
             'imageAvatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow image files
             'gender' => 'nullable|string|max:50',
             'address' => 'nullable|string',
