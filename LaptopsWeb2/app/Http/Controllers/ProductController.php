@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index(){
-        $products = Product::all();
-        return view("admin.product.manageProduct", compact('products'));
+    public function index(Request $request) {
+        $order = $request->input('order', 'desc');
+        $products = Product::orderBy('unit_price', $order)->get(); 
+        return view("admin.product.manageProduct", compact('products', 'order'));
     }
+    
     
     // public function create() {
     //     return view('admin.product.create');

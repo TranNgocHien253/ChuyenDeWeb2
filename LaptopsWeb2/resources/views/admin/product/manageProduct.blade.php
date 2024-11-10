@@ -54,8 +54,16 @@
 
 <div class="product-management-container">
     <h1>Quản Lý Sản Phẩm</h1>
-    <a href="{{ route('admin.product.create') }}" class="add-btn">Thêm Sản Phẩm</a>
-    
+    <div class="flex justify-start">
+        <a href="{{ route('admin.product.create') }}" class="add-btn ml-6">Thêm Sản Phẩm</a>
+        <form class="ml-6" method="GET" action="{{ route('admin.product.index') }}">
+            <select name="order" class="p-2 border rounded-lg shadow-sm" onchange="this.form.submit()">
+                <option value="desc" {{ request('order') === 'desc' ? 'selected' : '' }}>Giảm dần</option>
+                <option value="asc" {{ request('order') === 'asc' ? 'selected' : '' }}>Tăng dần</option>
+            </select>
+        </form>
+    </div>
+  
     <table class="product-table">
         <thead>
             <tr>
