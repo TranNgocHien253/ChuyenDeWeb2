@@ -6,7 +6,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SlideController;
-use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TypeProductController;
@@ -120,6 +119,3 @@ Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('adm
 
 
 Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
-
-
-Route::get('/search', [SearchController::class, 'search'])->name('search');
