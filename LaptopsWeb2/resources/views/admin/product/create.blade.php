@@ -5,49 +5,50 @@
 @section('content')
 <style>
     .product-create-container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-}
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
 
-.product-create-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-}
+    .product-create-container h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 
-.form-group {
-    margin-bottom: 15px;
-}
+    .form-group {
+        margin-bottom: 15px;
+    }
 
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-}
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+    }
 
-.form-group input, .form-group textarea, .form-group select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
 
-.submit-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
+    .submit-btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+    }
 </style>
 <div class="product-create-container">
     <h1>Thêm Sản Phẩm Mới</h1>
-    
+
     <form action="{{ route('admin.product.store') }}" method="POST">
         @csrf
 
@@ -59,31 +60,31 @@
                 <!-- Các lựa chọn khác -->
             </select>
         </div>
-        
+
 
 
         <div class="form-group">
             <label for="name">Tên sản phẩm:</label>
             <input type="text" id="name" name="name" required>
         </div>
-        
+
         <div class="form-group">
             <label for="description">Mô tả:</label>
             <textarea id="description" name="description"></textarea>
         </div>
-        
+
         <div class="form-group">
             <label for="unit_price">Giá Tiền:</label>
             <input type="number" id="unit_price" name="unit_price" required>
         </div>
-    
+
         <div class="form-group">
             <label for="new">Hàng Mới:</label>
             <input type="number" id="new" name="new" required>
         </div>
-    
+
         <button type="submit" class="submit-btn">Lưu Sản Phẩm</button>
     </form>
-    
+
 </div>
 @endsection

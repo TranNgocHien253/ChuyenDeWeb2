@@ -8,8 +8,8 @@
                 <label for="simple-search" class="sr-only">Search</label>
                 <div class="relative w-full">
                     <input type="text" name="search" id="simple-search"
-                           class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg shadow-md focus:ring-2 focus:ring-purple-600 focus:border-transparent block w-full pl-3 p-2.5"
-                           placeholder="Search..." required />
+                        class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg shadow-md focus:ring-2 focus:ring-purple-600 focus:border-transparent block w-full pl-3 p-2.5"
+                        placeholder="Search..." required />
                     <button type="submit" class="absolute inset-y-0 right-0 flex items-center px-3">
                         <svg class="w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
@@ -46,7 +46,7 @@
 
         </div>
     </nav>
-    <div id="slideDiv" class="fixed right-[-100px] top-px z-50 transition-all duration-500 ease-in-out transform">
+    <div id="slideDiv" class="fixed right-[-100px] top-px top-20 z-50 transition-all duration-500 ease-in-out transform">
         <div class="flex flex-col justify-center items-center relative transition-all duration-[450ms] ease-in-out w-16">
             <article
                 class="border border-solid border-gray-700 w-full ease-in-out duration-500 left-0 rounded-2xl inline-block shadow-lg shadow-black/15 bg-white">

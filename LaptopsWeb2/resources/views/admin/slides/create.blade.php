@@ -28,7 +28,7 @@
     @endif
 
     <!-- Form tạo slide -->
-    <form class="flex flex-col gap-5" action="{{ route('admin.slides.store') }}" method="POST" enctype="multipart/form-data">
+    <form class="flex flex-col gap-5" action="{{ route('admin.slides.store') }}" method="POST" enctype="multipart/form-data" require>
         @csrf
         <div class="mb-4">
             <label for="image" class="block text-gray-700 font-semibold mb-2">Image</label>

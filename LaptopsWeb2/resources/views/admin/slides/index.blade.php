@@ -4,9 +4,9 @@
 
 @section('content')
 
-<div class="container mx-auto">
+<div class="container mx-auto h-auto">
     <!-- Header Section -->
-    <div class="relative bg-blue-50  rounded-md shadow">
+    <div class="relative mb-6 bg-blue-50  rounded-md shadow">
         <div class="flex justify-center">
             @if(session('success'))
             <div class="absolute w-2/3 bg-green-100 text-green-700 p-4 rounded my-2 fade-in ">
