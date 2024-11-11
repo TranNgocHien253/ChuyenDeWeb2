@@ -25,10 +25,6 @@ use App\Http\Controllers\TypeProductController;
 Route::get('/', function () {
     return view('app');
 });
-// Route::get('/', function () {
-//     return view('user.home_list.home');
-// });
-
 
 // Route cho sản phẩm
 Route::get('/', [HomeController::class, 'index'])->name('user.home');
@@ -87,10 +83,7 @@ Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.st
 
 
 
-// Public route example
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth');
+
 
 
 // product

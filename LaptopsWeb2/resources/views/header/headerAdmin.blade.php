@@ -2,9 +2,6 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>K-WD Dashboard | Blank Page</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&display=swap"
         rel="stylesheet" />
@@ -69,7 +66,21 @@
                         </a>
                     </nav>
 
-
+                    <div class="flex items-center p-2 w-full justify-center my-3">
+                        @guest
+                        <!-- Buttons for Guests -->
+                        <a href="{{ route('login') }}" class="text-sm text-white bg-purple-600 hover:bg-purple-400 rounded-md px-4 py-2 transition duration-200 w-full">
+                            Login
+                        </a>
+                        @else
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="text-sm w-52 text-purple-700 border border-purple-600 bg-white hover:bg-purple-100 rounded-md px-4 py-2 transition duration-200">
+                                Logout
+                            </button>
+                        </form>
+                        @endguest
+                    </div>
                 </div>
             </aside>
 
