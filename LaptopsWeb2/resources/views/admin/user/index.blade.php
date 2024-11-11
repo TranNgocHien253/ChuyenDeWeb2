@@ -6,7 +6,7 @@
 
 <div class="container mx-auto">
     <!-- Header Section -->
-    <div class="relative mb-6 bg-blue-50  rounded-md shadow">
+    <div class="relative mb-6 bg-blue-50 rounded-md shadow">
         <div class="flex justify-center">
             @if(session('success'))
             <div class="absolute w-2/3 bg-green-100 text-green-700 p-4 rounded my-2 fade-in ">
@@ -14,7 +14,7 @@
             </div>
             @endif
         </div>
-        <div class="p-4  flex justify-between items-center">
+        <div class="p-4 flex justify-between items-center">
             <form action="{{ route('admin.user.index') }}" method="GET" class="flex items-center">
                 <input type="hidden" name="page" value="{{ request('page', 1) }}">
                 <select name="order" class="p-2 border rounded-lg shadow-sm" onchange="this.form.submit()">

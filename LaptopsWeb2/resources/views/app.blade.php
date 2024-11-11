@@ -11,12 +11,12 @@
 
 <body>
   @if(auth()->check() && auth()->user()->role === 1)
-  <div class="flex gap-4 p-2">
-    <div class="h-auto border rounded-lg bg-slate-200">
+  <div class="flex gap-4">
+    <div class="border rounded-lg bg-slate-200 z-50">
       @include('Header.dashbroad')
     </div>
     <div class="w-full">
-      @yield('content')
+      @include('Header.headerAdmin')
     </div>
   </div>
   @else
