@@ -127,7 +127,7 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->save();
 
-        return redirect()->route('admin.user.index')->with('success', 'Cập nhật người dùng thành công');
+        return redirect()->route('admin.user.index')->with('success', "Cập nhật người dùng {$user->full_name} thành công");
     }
 
     // Xử lý việc xóa người dùng
@@ -136,6 +136,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('admin.user.index')->with('success', 'User deleted successfully');
+        return redirect()->route('admin.user.index')->with('success', "Xóa người dùng {$user->full_name} thành công");
     }
 }

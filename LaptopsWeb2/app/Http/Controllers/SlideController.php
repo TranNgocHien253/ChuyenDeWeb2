@@ -70,7 +70,7 @@ class SlideController extends Controller
         }
 
         $slide->save();
-        return redirect()->route('admin.slides.index')->with('success', "Slide với ID: {$slide->id} đã được sửa thành công!");
+        return redirect()->route('admin.slides.index')->with('success', "Slide với ID: {$slide->link} đã được sửa thành công!");
     }
 
     // Xóa slide
@@ -87,6 +87,6 @@ class SlideController extends Controller
         }
         $slide->delete();
 
-        return redirect()->route('admin.slides.index')->with('success', "Slide {$slide->id} deleted successfully!");
+        return redirect()->route('admin.slides.index')->with('success', "Slide {$slide->link} xóa thành công!");
     }
 }
