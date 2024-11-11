@@ -9,24 +9,20 @@
   @vite('resources/css/app.css')
 </head>
 
-<body>
+<body class="min-h-screen bg-gray-100">
   @if(auth()->check() && auth()->user()->role === 1)
-  <div class="flex gap-4">
-    <div class="border rounded-lg bg-slate-200 z-50">
-      @include('Header.dashbroad')
-    </div>
-    <div class="w-full">
-      @include('Header.headerAdmin')
-    </div>
-  </div>
+  @include('Header.headerAdmin')
   @else
-  @include('Header.header')
-  <div class="w-full">
+  <header class="p-4 bg-white shadow-md">
+    @include('Header.header')
+  </header>
+  <main class="p-4">
     @yield('content')
-  </div>
-  @include('Footer.footer')
+  </main>
+  <footer class="p-4 bg-gray-800 text-white">
+    @include('Footer.footer')
+  </footer>
   @endif
-
 </body>
 
 </html>
