@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Slide;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -11,13 +12,10 @@ class HomeController extends Controller
     public function index()
     {
         $slides = Slide::orderBy('updated_at', 'desc')->take(25)->get();
-
-        // // Kiểm tra xem slides có dữ liệu không
-        // if ($slides->isEmpty()) {
-        //     // Nếu không có slides, bạn có thể trả về một thông báo hoặc xử lý khác
-        //     return view('user.home_list.home')->with('message', 'No slides available.');
-        // }
-
+        if (Auth::check() && Auth::user()->role == 1) {
+            // Trả về view trang chủ cho admin
+            return view('user.home_list.homeadmin', compact('slides'));
+        }
         return view('user.home_list.home', compact('slides'));
     }
 }

@@ -24,8 +24,11 @@
             <aside class="flex-shrink-0 hidden w-64 bg-gray-300 border-r rounded-xl dark:border-primary-darker dark:bg-darker md:block">
                 <div class="flex flex-col h-full">
                     <div class="flex items-center justify-center mt-8">
-                        <div class="flex items-center">
-                            <span class="mx-2 text-2xl font-semibold text-purple-600">Dashboard</span>
+                        <div class="flex items-center cursor-pointer">
+                            <a href="/">
+                                <span class="mx-2 text-2xl font-semibold text-purple-600">Dashboard</span>
+
+                            </a>
                         </div>
                     </div>
                     <!-- Sidebar links -->
@@ -107,7 +110,7 @@
 
                         <!-- Brand -->
                         <a
-                            href="#"
+                            href="/"
                             class="inline-block text-2xl font-bold tracking-wider text-primary-dark dark:text-light">
                             LAPTOPs Admin
                         </a>
