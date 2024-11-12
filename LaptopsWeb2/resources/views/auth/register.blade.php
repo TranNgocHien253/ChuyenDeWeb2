@@ -20,7 +20,7 @@
 
             <!-- Full Name -->
             <div class="mb-4">
-                <label for="full_name" class="block text-gray-700">Họ và tên</label>
+                <label for="full_name" class="block text-gray-300">Họ và tên</label>
                 <input type="text" name="full_name" id="full_name" value="{{ old('full_name') }}"
                     class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
                     placeholder="Nhập họ và tên">
@@ -31,7 +31,7 @@
 
             <!-- Email -->
             <div class="mb-4">
-                <label for="email" class="block text-gray-700">Email</label>
+                <label for="email" class="block text-gray-300">Email</label>
                 <input type="email" name="email" id="email" value="{{ old('email') }}"
                     class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Nhập email">
@@ -42,7 +42,7 @@
 
             <!-- Password -->
             <div class="mb-4">
-                <label for="password" class="block text-gray-700">Mật khẩu</label>
+                <label for="password" class="block text-gray-300">Mật khẩu</label>
                 <input type="password" name="password" id="password"
                     class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Nhập mật khẩu">
