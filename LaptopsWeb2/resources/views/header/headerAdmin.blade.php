@@ -27,7 +27,6 @@
                         <div class="flex items-center cursor-pointer">
                             <a href="/">
                                 <span class="mx-2 text-2xl font-semibold text-purple-600">Dashboard</span>
-
                             </a>
                         </div>
                     </div>
