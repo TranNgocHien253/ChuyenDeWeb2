@@ -48,6 +48,7 @@ class UserController extends Controller
             'gender' => 'nullable|string|max:50',
             'address' => 'nullable|string',
             'phone' => 'nullable|string|max:15',
+
         ]);
 
         if ($validator->fails()) {
@@ -70,7 +71,6 @@ class UserController extends Controller
             'address' => $request->address,
             'phone' => $request->phone,
         ]);
-
         return redirect()->route('admin.user.create')
             ->with('success', 'User created successfully');
     }

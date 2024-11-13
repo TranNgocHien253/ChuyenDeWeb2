@@ -148,7 +148,9 @@
             <div class="flex transition-transform duration-500 ease-out" id="slideContainer">
                 @foreach ($slides as $slide)
                 <div class="w-full flex-shrink-0">
-                    <img src="{{ asset($slide->image)}}" class="w-full h-80 object-cover">
+                    <a href="{{ asset($slide->link)}}">
+                        <img src="{{ asset($slide->image)}}" class="w-full h-80 object-cover">
+                    </a>
                 </div>
                 @endforeach
             </div>

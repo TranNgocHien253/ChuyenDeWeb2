@@ -25,17 +25,18 @@ use App\Http\Controllers\TypeProductController;
 Route::get('/', function () {
     return view('app');
 });
-// Route::get('/', function () {
-//     return view('user.home_list.home');
-// });
-
 
 // Route cho sản phẩm
 Route::get('/', [HomeController::class, 'index'])->name('user.home');
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
+    Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
 });
+
+Route::get('/appAdmin', function () {
+    return view('appAdmin');
+})->middleware('auth')->name('appAdmin');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
@@ -82,15 +83,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name('admin.typeproduct.update');
     Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
 });
-Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
 
 
 
 
-// Public route example
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth');
+
 
 
 // product
