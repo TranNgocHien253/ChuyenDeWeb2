@@ -143,13 +143,44 @@ class UserController extends Controller
         return redirect()->route('admin.user.index')->with('success', "Profile updated for {$user->full_name}");
     }
 
+    public function destroyfe($id)
+    {
+        $user = User::withTrashed()->findOrFail($id); // Lấy cả những người dùng đã bị xóa mềm
+        $user->forceDelete(); // Xóa vĩnh viễn
 
-    // Xử lý việc xóa người dùng
+        return redirect()->route('admin.user.index')->with('success', "Xóa người dùng {$user->full_name} thành công");
+    }
+
+    // Xử lý việc xóa người dùng nhưng còn lưu
     public function destroy($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
+        if (Auth::check() && Auth::id() === $user->id) {
+            // Đăng xuất người dùng ngay sau khi xóa tài khoản
+            Auth::logout();
 
-        return redirect()->route('admin.user.index')->with('success', "Xóa người dùng {$user->full_name} thành công");
+            // Hủy session và làm mới token CSRF
+            session()->invalidate();
+            session()->regenerateToken();
+
+            // Chuyển hướng về trang login với thông báo
+            return redirect('/login')->with('success', 'Tài khoản của bạn đã bị xóa. Phiên của bạn đã hết.');
+        }
+
+        return redirect()->route('profile')->with('success', "Xóa người dùng {$user->full_name} thành công");
+    }
+    public function showRecoveryForm()
+    {
+        return view('user.profile.restoreaccount'); // Trả về view chứa form khôi phục tài khoản
+    }
+    public function restoreUser($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        if ($user->trashed()) {
+            $user->restore(); // Khôi phục người dùng
+            return redirect()->route('login')->with('message', 'Khôi phục tài khoản thành công. Vui lòng đăng nhập.');
+        }
+        return redirect()->route('login')->with('message', 'Người dùng không cần khôi phục.');
     }
 }

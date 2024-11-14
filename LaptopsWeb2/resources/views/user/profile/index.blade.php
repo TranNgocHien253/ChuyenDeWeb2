@@ -13,8 +13,13 @@
             <h1 class="text-2xl font-bold text-indigo-800  mb-2">{{ $user->full_name }}</h1>
             <p class="text-gray-600">{{ $user->email }}</p>
             <form action="{{ route('user.profile.edit', ['id' => $user->id]) }}">
-                <button class="mt-4 bg-indigo-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors duration-300">Edit Profile</button>
+                <button class="mt-4 bg-indigo-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 ring ring-transparent hover:ring-blue-300 transition-all duration-300">Edit Profile</button>
             </form>
+            <button
+                id="deleteAccountBtn"
+                class="mt-4 bg-red-900 text-white px-4 py-2 rounded-lg hover:bg-red-700 ring ring-transparent hover:ring-red-300 transition-all duration-300">
+                Delete Account
+            </button>
         </div>
         <div class="md:w-2/3 md:pl-8">
 
@@ -47,7 +52,29 @@
         </div>
     </div>
 </div>
+<!-- Modal xác nhận -->
+<div id="modal" class="animate-fade-in hidden fixed inset-0 z-50 bg-gray-600 bg-opacity-50 flex justify-center items-center shadow-lg shadow-pink-200">
+    <div class="max-w-md mx-auto mt-10 p-6 bg-white border border-gray-300 rounded-lg shadow-md">
+        <h2 class="text-xl font-bold text-center mb-4">Xóa tài khoản</h2>
+        <p class="text-center mb-6">Bạn có chắc chắn muốn xóa tài khoản này không?</p>
 
+        <div class="flex justify-between">
+            <!-- Nút Chấp nhận -->
+            <form id="deleteForm" action="{{ route('user.destroy', $user->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="bg-red-800 text-white px-4 py-2 rounded-lg hover:bg-red-900 transition-colors duration-300 ring ring-gray-300 hover:ring-red-300">
+                    Chắn chắn
+                </button>
+            </form>
+
+            <!-- Nút Hủy -->
+            <button id="cancelBtn" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">
+                Hủy
+            </button>
+        </div>
+    </div>
+</div>
 <style>
     @keyframes fadeIn {
         from {
@@ -83,6 +110,23 @@
             tag.classList.remove('bg-blue-900', 'text-white');
             tag.classList.add('bg-indigo-100', 'text-indigo-800');
         });
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy các phần tử cần thiết
+        const deleteAccountBtn = document.getElementById('deleteAccountBtn');
+        const modal = document.getElementById('modal');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        // Hiển thị modal khi nhấn nút Delete Account
+        deleteAccountBtn.addEventListener('click', function() {
+            modal.classList.remove('hidden'); // Hiện modal
+        });
+
+        // Đóng modal khi nhấn nút Hủy
+        cancelBtn.addEventListener('click', function() {
+            modal.classList.add('hidden'); // Ẩn modal
+        });
+
     });
 </script>
 @endsection

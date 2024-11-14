@@ -33,8 +33,9 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
     Route::get('/profile/{id}/edit', [UserController::class, 'edit'])->name('user.profile.edit');
     Route::put('/profile/{id}', [UserController::class, 'update'])->name('user.profile.update');
-    Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
+    Route::delete('/profile/{id}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
 });
+Route::post('/profile/restore/{id}', [UserController::class, 'restoreUser'])->name('user.restore');
 
 Route::get('/appAdmin', function () {
     return view('appAdmin');
@@ -55,7 +56,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/slides', [SlideController::class, 'index'])->name('admin.slides.index');
 
     Route::get('/slides/create', [SlideController::class, 'create'])->name('admin.slides.create');
-
+    Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
     Route::get('/slides/{id}/edit', [SlideController::class, 'edit'])->name('admin.slides.edit');
     Route::put('/slides/{id}', [SlideController::class, 'update'])->name('admin.slides.update');
 
@@ -67,7 +68,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/user', [UserController::class, 'store'])->name('admin.user.store');
     Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit');
     Route::put('/user/{id}', [UserController::class, 'update'])->name('admin.user.update');
-    Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('admin.user.destroy');
+    Route::delete('/user/{id}', [UserController::class, 'destroyfe'])->name('admin.user.destroyfe');
 
     // Routes for order
     Route::get('/order', [OrderController::class, 'index'])->name('admin.order.index');
@@ -93,19 +94,6 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 
 // product
-// Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('admin.product.edit');
-// Route::get('/product/delete/{id}', [ProductController::class, 'delete'])->name('admin.product.delete');
-
-
-// Route::put('/product/{id}', [ProductController::class, 'update'])->name('admin.product.update');
-
-// Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
-// //them san pham
-// Route::get('/product/create', [ProductController::class, 'create'])->name('admin.product.create');
-// Route::post('/product', [ProductController::class, 'store'])->name('admin.product.store');
-
-// Route::get('/product', [ProductController::class, 'index'])->name('admin.product.manageProduct');
-
 
 Route::get('/product', [ProductController::class, 'index'])->name('admin.product.index'); // Thay 'manageProduct' bằng 'index'
 Route::get('/product/create', [ProductController::class, 'create'])->name('admin.product.create');
