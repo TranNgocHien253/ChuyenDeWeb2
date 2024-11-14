@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -81,6 +82,10 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
+        if (Auth::check() && Auth::user()->role !== 1) {
+            // Trả về view trang chủ cho admin
+            return view('user.profile.edit', compact('user'));
+        }
         return view('admin.user.edit', compact('user'));
     }
 
@@ -104,31 +109,40 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            // return response()->json($validator->errors(), 422);
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
         if ($request->hasFile('imageAvatar')) {
+            // Xóa ảnh cũ nếu có
             if ($user->imageAvatar) {
                 Storage::disk('public')->delete($user->imageAvatar);
             }
 
+            // Lưu ảnh mới vào thư mục 'avatars'
             $imagePath = $request->file('imageAvatar')->store('avatars', 'public');
             $user->imageAvatar = $imagePath;
         }
 
+        // Update user data
         $user->full_name = $request->full_name;
         $user->email = $request->email;
+
         if ($request->password) {
             $user->password = Hash::make($request->password);
         }
+
         $user->gender = $request->gender;
         $user->address = $request->address;
         $user->phone = $request->phone;
         $user->save();
 
-        return redirect()->route('admin.user.index')->with('success', "Cập nhật người dùng {$user->full_name} thành công");
+        if (Auth::check() && Auth::user()->role !== 1) {
+            return redirect()->route('profile')->with('success', "Profile updated for {$user->full_name}");
+        }
+
+        return redirect()->route('admin.user.index')->with('success', "Profile updated for {$user->full_name}");
     }
+
 
     // Xử lý việc xóa người dùng
     public function destroy($id)

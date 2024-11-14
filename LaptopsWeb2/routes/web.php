@@ -31,6 +31,8 @@ Route::get('/', [HomeController::class, 'index'])->name('user.home');
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
+    Route::get('/profile/{id}/edit', [UserController::class, 'edit'])->name('user.profile.edit');
+    Route::put('/profile/{id}', [UserController::class, 'update'])->name('user.profile.update');
     Route::post('/slides', [SlideController::class, 'store'])->name('admin.slides.store');
 });
 
