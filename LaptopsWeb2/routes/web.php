@@ -11,6 +11,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TypeProductController;
 
+use App\Http\Controllers\CartController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -83,6 +85,17 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name('admin.typeproduct.update');
     Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
 });
+
+
+
+// Route cart
+Route::get('/cart', [CartController::class, 'getListCart'])->name('cart.list');
+Route::get('/products/{id}', [CartController::class, 'show'])->name('product.show');
+// In routes/web.php
+Route::delete('/cart/remove/{id}', [CartController::class, 'removeProduct'])->name('cart.remove');
+Route::delete('/cart/delete/{id}', [CartController::class, 'removeProduct'])->name('cart.delete');
+
+Route::post('/cart/delete/{productId}/{full_name}/{phone}/{address}', [CartController::class, 'deleteProductQuantity'])->name('cart.deleteQuantity');
 
 
 
