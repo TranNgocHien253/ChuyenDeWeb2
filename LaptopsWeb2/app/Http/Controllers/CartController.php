@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Slide;
 
 class CartController extends Controller
 {
@@ -40,9 +41,13 @@ class CartController extends Controller
     // Các phương thức của controller
     public function getListCart()
     {
-        $carts = Cart::with('product')->get();
         $user = Auth::user();
-        return view('user.cart.cart', compact('carts', 'user'));
+        $slides = Slide::orderBy('updated_at', 'desc')->take(25)->get();
+        if ($user) {
+            $carts = Cart::with('product')->get();
+            return view('user.cart.cart', compact('carts', 'user'));
+        }
+        return view('user.home_list.home', compact('slides')); 
     }
 
     public function show($id)
@@ -58,7 +63,7 @@ class CartController extends Controller
 
         return view('cart.index', compact('selectedProducts'));
     }
-    public function deleteProductQuantity(Request $request, $productId)
+    public function deleteProductQuantity(Request $request, $productId, $full_name, $phone, $address)
     {
         // Nhận số lượng cần xóa từ yêu cầu
         $quantityToDelete = $request->input('quantity', 1); // Mặc định là 1 nếu không có giá trị
@@ -69,19 +74,21 @@ class CartController extends Controller
         if ($cartItem) {
             // Lấy sản phẩm từ bảng Product dựa trên product_id từ giỏ hàng
             $product = Product::find($cartItem->product_id);
-            $user = Auth::user();
 
-            Order::create([
-                'category_id' => $product->id_type, // Giả định product có thuộc tính category_id
-                'product_id' => $product->id,
-                'name' => "Man", 
-                'phone' => "0131463567", // Thêm thông tin khách hàng cần thiết
-                'quantity' => $cartItem->quantity,
-                'address' => "35.11", // Thêm địa chỉ nếu có
-                'total' => $cartItem->quantity * $product->unit_price, // Tổng giá trị (giá * số lượng)
-                'price' => $product->unit_price, // Giá của sản phẩm
-                'status' => 'approved', // Trạng thái đơn hàng mặc định
-            ]);
+
+            if ($full_name || $phone || $address) {
+                Order::create([
+                    'category_id' => $product->id_type, // Giả định product có thuộc tính category_id
+                    'product_id' => $product->id,
+                    'name' => $full_name, 
+                    'phone' => $phone, // Thêm thông tin khách hàng cần thiết
+                    'quantity' => $cartItem->quantity,
+                    'address' => $address, // Thêm địa chỉ nếu có
+                    'total' => $cartItem->quantity * $product->unit_price, // Tổng giá trị (giá * số lượng)
+                    'price' => $product->unit_price, // Giá của sản phẩm
+                    'status' => 'approved', // Trạng thái đơn hàng mặc định
+                ]);
+            }
 
             if ($product) {
                 // Giảm số lượng trong kho của sản phẩm

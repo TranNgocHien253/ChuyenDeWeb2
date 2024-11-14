@@ -93,9 +93,9 @@ Route::get('/cart', [CartController::class, 'getListCart'])->name('cart.list');
 Route::get('/products/{id}', [CartController::class, 'show'])->name('product.show');
 // In routes/web.php
 Route::delete('/cart/remove/{id}', [CartController::class, 'removeProduct'])->name('cart.remove');
-Route::delete('/cart/delete/{id}', [CartController::class, 'removeProduct'])->name('cart.delete');
+Route::delete('/cart/delete/{id}/{full_name}/{phone}/{address}', [CartController::class, 'removeProduct'])->name('cart.delete');
 
-Route::post('/cart/delete/{productId}', [CartController::class, 'deleteProductQuantity'])->name('cart.deleteQuantity');
+Route::post('/cart/delete/{productId}/{full_name}/{phone}/{address}', [CartController::class, 'deleteProductQuantity'])->name('cart.deleteQuantity');
 
 
 
