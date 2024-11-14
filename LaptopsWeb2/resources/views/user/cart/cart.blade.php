@@ -89,15 +89,16 @@
                     <div class="form-section">
                         <div class="form-group">
                             <label>Liên Hệ</label>
-                            <input value="{{ $user->full_name }}" type="text" class="form-input" placeholder="Họ Và Tên" id="name" required autofocus pattern="[A-Za-zÀ-ỹ\s]+" maxlength="50" oninput="this.value = this.value.replace(/[^A-Za-zÀ-ỹ\s]/g, '');">
-                            <input value="{{ $user->phone }}" type="tel" class="form-input" placeholder="Số Điện Thoại" id="phone" maxlength="11" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);">
+                            <input value="{{ isset($user) ? $user->full_name : '' }}" type="text" class="form-input" placeholder="Họ Và Tên" id="name" required autofocus pattern="[A-Za-zÀ-ỹ\s]+" maxlength="50" oninput="this.value = this.value.replace(/[^A-Za-zÀ-ỹ\s]/g, '');">
+<input value="{{ isset($user) ? $user->phone : '' }}" type="tel" class="form-input" placeholder="Số Điện Thoại" id="phone" maxlength="11" pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11);">
 
                         </div>
 
                         <div class="form-group">
                             <label>Địa Chỉ</label>
-                            <input value="{{ $user->address }}" type="text" class="form-input" placeholder="Tỉnh/Thành phố, Quận/huyện, Phường/Xã" maxlength="100" id="address1" 
-                                oninput="this.value = this.value.replace(/[^A-Za-zÀ-ỹ0-9\s]/g, '');">
+                            <input value="{{ isset($user) ? $user->address : '' }}" type="text" class="form-input" placeholder="Tỉnh/Thành phố, Quận/huyện, Phường/Xã" maxlength="100" id="address1" 
+       oninput="this.value = this.value.replace(/[^A-Za-zÀ-ỹ0-9\s]/g, '');">
+
 
                             <input type="text" class="form-input" placeholder="Tên đường, Số nhà" maxlength="50" id="address2" 
                                 oninput="this.value = this.value.replace(/[^A-Za-zÀ-ỹ0-9\s]/g, '');">
@@ -535,12 +536,12 @@
             return;
            
         }
-        deleteCartItem(productId, name, phone, fullAdress);
+        deleteCartItem(productId);
     }
 
-    async function deleteCartItem(productId, full_name, phone, address) {
+    async function deleteCartItem(productId) {
         try {
-            const response = await fetch(`/cart/delete/${productId}/${full_name}/${phone}/${address}`, {
+            const response = await fetch(`/cart/delete/${productId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

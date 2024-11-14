@@ -58,7 +58,7 @@ class CartController extends Controller
 
         return view('cart.index', compact('selectedProducts'));
     }
-    public function deleteProductQuantity(Request $request, $productId, $full_name, $phone, $address)
+    public function deleteProductQuantity(Request $request, $productId)
     {
         // Nhận số lượng cần xóa từ yêu cầu
         $quantityToDelete = $request->input('quantity', 1); // Mặc định là 1 nếu không có giá trị
@@ -74,10 +74,10 @@ class CartController extends Controller
             Order::create([
                 'category_id' => $product->id_type, // Giả định product có thuộc tính category_id
                 'product_id' => $product->id,
-                'name' => $user->full_name, // Giả định product có thuộc tính name
-                'phone' => $user->phone, // Thêm thông tin khách hàng cần thiết
+                'name' => "Man", 
+                'phone' => "0131463567", // Thêm thông tin khách hàng cần thiết
                 'quantity' => $cartItem->quantity,
-                'address' => $user->address, // Thêm địa chỉ nếu có
+                'address' => "35.11", // Thêm địa chỉ nếu có
                 'total' => $cartItem->quantity * $product->unit_price, // Tổng giá trị (giá * số lượng)
                 'price' => $product->unit_price, // Giá của sản phẩm
                 'status' => 'approved', // Trạng thái đơn hàng mặc định
