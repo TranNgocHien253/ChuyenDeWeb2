@@ -60,7 +60,7 @@
                             </svg>
                         </button>
                     </form>
-                    <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST">
+                    <form action="{{ route('admin.user.destroyfe', $user->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="text-white px-2 py-1 rounded hover:bg-red-600 transition duration-150 ease-in-out text-sm" onclick="confirmDelete(event);">

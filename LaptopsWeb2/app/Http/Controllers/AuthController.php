@@ -2,36 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    // Phương thức hiển thị form đăng nhập
     public function showLoginForm()
     {
         return view('login');
     }
 
-    // Phương thức xử lý đăng nhập
     public function login(Request $request)
     {
-        // Xác thực thông tin đăng nhập
+
         $credentials = $request->only('email', 'password');
 
+        $user = User::withTrashed()->where('email', $credentials['email'])->first();
+
+        if ($user && $user->trashed()) {
+            // Kiểm tra nếu tài khoản còn trong thời gian khôi phục
+            $deletionTime = $user->deleted_at;
+            $currentTime = now();
+            $restoreLimit = $deletionTime->addSeconds(30); // Thời gian cho phép khôi phục là 30 ngày
+
+            if ($currentTime <= $restoreLimit) {
+                return view('user.profile.restore', ['user' => $user]);
+            } else {
+                // Nếu quá thời gian khôi phục, xóa tài khoản khỏi DB
+                $user->forceDelete();
+                return back();
+            }
+        }
         if (Auth::attempt($credentials)) {
-            // Đăng nhập thành công, chuyển hướng tới trang chủ
             return redirect()->intended('/');
+        } else {
+            return back()->withErrors([
+                'email' => 'Thông tin đăng nhập không hợp lệ.',
+            ]);
         }
 
-        // Đăng nhập thất bại, quay lại form đăng nhập với thông báo lỗi
+
         return back()->with('error', 'Email hoặc mật khẩu không chính xác.');
     }
 
-    // Phương thức đăng xuất
     public function logout()
     {
-        // Đảm bảo rằng chúng ta xóa sạch session khi logout
+
         Auth::logout();
         session()->flush();
 

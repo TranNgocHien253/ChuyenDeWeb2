@@ -114,8 +114,6 @@
         </div>
     </form>
 
-    <!-- các trường để sửa thông tin-->
-    </form>
 </div>
 <script>
     function togglePasswordForm() {

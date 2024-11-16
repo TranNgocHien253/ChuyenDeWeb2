@@ -21,7 +21,7 @@
   <main class="p-4">
     @yield('content')
   </main>
-  <footer class="p-4 bg-gray-800 text-white">
+  <footer>
     @include('Footer.footer')
   </footer>
   @endif
