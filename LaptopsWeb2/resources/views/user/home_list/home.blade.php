@@ -142,7 +142,7 @@
     </div>
     @if ($slides->isNotEmpty())
     <!--slides======================================================================================-->
-    <div class="mx-20 mt-10">
+    <div class="mx-1 mt-10 sm:mx-20">
         <div class="relative w-full overflow-hidden">
             <!-- Slide Wrapper -->
             <div class="flex transition-transform duration-500 ease-out" id="slideContainer">
