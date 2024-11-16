@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\OrdersTableSeeder;
 use Database\Seeders\TypeProductsTableSeeder;
 use Database\Seeders\ProductsTableSeeder;
+use Database\Seeders\CartsTableSeeder;
 
 
 class DatabaseSeeder extends Seeder
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
             OrdersTableSeeder::class,
             UserSeeder::class,
             SlideSeeder::class,
+            CartsTableSeeder::class,
         ]);
     }
 }
