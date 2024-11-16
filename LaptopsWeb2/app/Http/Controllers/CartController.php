@@ -117,4 +117,59 @@ class CartController extends Controller
 
         return response()->json(['error' => 'Không tìm thấy sản phẩm'], 404);
     }
+    public function addProductToCart(Request $request)
+{
+    // Validate dữ liệu đầu vào
+    $validated = $request->validate([
+        'product_id' => 'required|exists:products,id', // Kiểm tra product_id tồn tại trong bảng products
+        'quantity' => 'required|integer|min:1' // Số lượng phải là số nguyên và >= 1
+    ]);
+
+    // Lấy thông tin sản phẩm và người dùng
+    $productId = $request->input('product_id');
+    $quantity = $request->input('quantity');
+    $user = Auth::user();
+
+    if (!$user) {
+        return response()->json(['error' => 'Bạn phải đăng nhập để thêm sản phẩm vào giỏ hàng'], 401);
+    }
+
+    // Tìm sản phẩm trong kho
+    $product = Product::find($productId);
+
+    if (!$product || $product->quantity < $quantity) {
+        return response()->json(['error' => 'Sản phẩm không đủ số lượng trong kho'], 400);
+    }
+
+    // Kiểm tra xem sản phẩm đã có trong giỏ hàng của người dùng chưa
+    $cartItem = Cart::where('id', $user->id)
+        ->where('product_id', $productId)
+        ->first();
+
+    if ($cartItem) {
+        // Nếu đã tồn tại, tăng số lượng
+        $cartItem->quantity += $quantity;
+        $cartItem->save();
+    } else {
+        // Nếu chưa, thêm mới
+        Cart::create([
+            'id' => $user->id,
+            'product_id' => $productId,
+            'quantity' => $quantity
+        ]);
+    }
+
+    // Giảm số lượng sản phẩm trong kho
+    $product->quantity -= $quantity;
+    $product->save();
+
+   // return response()->json(['message' => 'Sản phẩm đã được thêm vào giỏ hàng'], 200);
+    return redirect()->route('cart.list')->with('success', 'Sản phẩm đã được thêm vào giỏ hàng');
+}
+public function index()
+{
+    $products = Product::all(); // Lấy tất cả sản phẩm từ CSDL
+    return view('products.index', compact('products'));
+}
+
 }

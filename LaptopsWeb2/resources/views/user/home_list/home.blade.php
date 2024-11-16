@@ -174,7 +174,7 @@
 
 
     @endif
-    <main class="my-8">
+    <!-- <main class="my-8">
         <div class="container mx-auto px-6">
             <div class="h-64 rounded-md overflow-hidden bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1577655197620-704858b270ac?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1280&q=144')">
                 <div class="bg-gray-900 bg-opacity-50 flex items-center h-full">
@@ -327,6 +327,13 @@
                                 </svg>
                             </button>
                         </div>
+                        <form action="/cart/add" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="1">
+                            <label for="quantity">Số lượng:</label>
+                            <input type="number" name="quantity" min="1" required>
+                            <button type="submit">Thêm vào giỏ hàng</button>
+                        </form>
                         <div class="px-5 py-3">
                             <h3 class="text-gray-700 uppercase">woman mix</h3>
                             <span class="text-gray-500 mt-2">$12</span>
@@ -335,7 +342,42 @@
                 </div>
             </div>
         </div>
-    </main>
+    </main> -->
+
+
+
+    <main class="my-8">
+    <div class="container mx-auto px-6">
+        <div class="mt-16">
+            <h3 class="text-gray-600 text-2xl font-medium">Fashions</h3>
+            <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
+                @foreach ($products as $product)
+                    <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
+                        <div class="flex items-end justify-end h-56 w-full bg-cover"
+                            style="background-image: url('{{ asset('images/' . $product->image) }}')">
+                        </div>
+                        <div class="px-5 py-3">
+                            <h3 class="text-gray-700 uppercase">{{ $product->name }}</h3>
+                            <span class="text-gray-500 mt-2 block">${{ $product->unit_price }}</span>
+                            <form action="/cart/add" method="POST" class="mt-4">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit"
+                                    class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                                    Thêm vào giỏ hàng
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
 
     <footer class="bg-gray-200">
         <div class="container mx-auto px-6 py-3 flex justify-between items-center">
@@ -347,5 +389,25 @@
 
 
 <!-- Kết nối với tệp JavaScript -->
-<script src="{{ asset('js/slider.js') }}"></script>
+<script src="{{ asset('js/slider.js') }}">
+
+document.querySelector('#addToCartButton').addEventListener('click', function() {
+    const productId = 1; // ID sản phẩm
+    const quantity = 2;  // Số lượng
+
+    fetch('/cart/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({ product_id: productId, quantity: quantity })
+    }).then(response => response.json())
+      .then(data => {
+          if (data.message) alert(data.message);
+          else alert(data.error);
+      }).catch(error => console.error('Lỗi:', error));
+});
+
+</script>
 @endsection

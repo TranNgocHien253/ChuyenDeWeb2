@@ -97,7 +97,7 @@ Route::delete('/cart/delete/{id}/{full_name}/{phone}/{address}', [CartController
 
 Route::post('/cart/delete/{productId}/{full_name}/{phone}/{address}', [CartController::class, 'deleteProductQuantity'])->name('cart.deleteQuantity');
 
-
+Route::post('/cart/add', [CartController::class, 'addProductToCart'])->middleware('auth');
 
 
 

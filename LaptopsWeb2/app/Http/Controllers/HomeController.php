@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Slide;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Product;
 class HomeController extends Controller
 {
 
@@ -16,6 +16,14 @@ class HomeController extends Controller
             // Trả về view trang chủ cho admin
             return view('user.home_list.homeadmin', compact('slides'));
         }
-        return view('user.home_list.home', compact('slides'));
+        $products = Product::all(); 
+        return view('user.home_list.home', compact('slides','products'));
     }
+
+
+
+public function getPoduct()
+{
+   
+}
 }
