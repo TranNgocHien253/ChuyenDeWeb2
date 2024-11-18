@@ -68,6 +68,7 @@
         <thead>
             <tr>
                 <th>STT</th>
+                <th>Hình ảnh</th>
                 <th>Tên</th>
                 <th>Mô tả</th>
                 <th>Giá Tiền</th>
@@ -80,6 +81,13 @@
             @foreach($products as $key => $product)
             <tr>
                 <td>{{ $key + 1 }}</td>
+                <td>
+                    @if($product->image)
+                    <img src="data:image;base64,{{ $product->image }}" alt="image">
+                @else
+                    Không có hình ảnh
+                @endif
+                </td>
                 <td>{{ $product->name}}</td>
                 <td>{{ $product->description }}</td>
                 <td>{{$product->unit_price }} VND</td>
@@ -88,7 +96,7 @@
                     <a href="{{ route('admin.product.edit', $product->id) }}" class="edit fas fa-edit" title="Chỉnh sửa"></a>
                     <form action="" method="POST" style="display:inline;">
                         @csrf
-                        @method('DELETE')
+                        @method('delete')
                         <button type="button" class="delete delete-btn" onclick="confirmDelete(this)">Xóa</button>
                     </form>
                 </td>

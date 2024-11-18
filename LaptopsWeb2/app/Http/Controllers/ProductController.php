@@ -23,17 +23,31 @@ class ProductController extends Controller
 
 public function store(Request $request)
 {
-    // Tạo đối tượng Product mới và gán các giá trị từ form
+    // Validate dữ liệu
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+        'unit_price' => 'required|numeric',
+        'new' => 'required|boolean',
+        'id_type' => 'required|integer',
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    $imageName = base64_encode(file_get_contents($request->file('image')->path()));
+
+    // Tạo sản phẩm mới
     $product = new Product();
     $product->name = $request->input('name');
     $product->description = $request->input('description');
     $product->unit_price = $request->input('unit_price');
     $product->new = $request->input('new');
-    $product->id_type = $request->input('id_type'); // Gán giá trị id_type từ request
+    $product->id_type = $request->input('id_type');
+    $product->image = $imageName; // Lưu đường dẫn ảnh
     $product->save();
 
     return redirect()->route('admin.product.index')->with('success', 'Sản phẩm đã được thêm!');
 }
+
 
 
 

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->decimal('unit_price', 10, 2);
-            $table->decimal('promotion_price', 10, 2);
+            $table->decimal('promotion_price', 10, 2)->default(0);
             $table->string('image');
             $table->integer('new')->default(0);
             $table->integer('quantity')->default(0);
