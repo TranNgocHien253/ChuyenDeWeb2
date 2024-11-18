@@ -97,7 +97,6 @@
                     <form action="{{ route('admin.product.destroy',$product->id) }}" method="POST" class="delete-form"
                         data-id="{{ $product->id }}" style="display:inline;">
                         @csrf
-                        
                         <button type="button" class="delete fas fa-trash" title="Xóa" onclick="confirmDelete(this)"></button>
                     </form>
                 </td>

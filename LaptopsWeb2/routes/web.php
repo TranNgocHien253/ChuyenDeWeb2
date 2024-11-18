@@ -88,9 +88,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 
+Route::get('/user product', [HomeController::class,'userProduct'])->name('admin.product.usersProducts');
 
-Route::get('/user', [HomeController::class, 'userProduct'])->name('admin.product.usersProducts');
 
+Route::get('/find product', [HomeController::class,'seachProduct'])->name('product.seach');
 
 
 // product

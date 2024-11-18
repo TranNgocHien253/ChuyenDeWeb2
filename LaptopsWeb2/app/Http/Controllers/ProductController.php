@@ -47,6 +47,18 @@ public function store(Request $request)
 
     return redirect()->route('admin.product.index')->with('success', 'Sản phẩm đã được thêm!');
 }
+// app/Http/Controllers/ProductController.php
+
+public function search(Request $request)
+{
+    $keyword = $request->input('keyword');
+    $products = Product::where('name', 'like', '%' . $keyword . '%')
+                        ->orWhere('description', 'like', '%' . $keyword . '%')
+                        ->paginate(10);
+
+    return view('product.index', compact('products'));
+}
+
 
 
 
@@ -102,6 +114,7 @@ public function destroy($id)
     // Chuyển hướng về trang quản lý sản phẩm với thông báo thành công
     return redirect()->route('admin.product.index')->with('success', 'Sản phẩm đã được xóa thành công!');
 }
+
 
 
 
