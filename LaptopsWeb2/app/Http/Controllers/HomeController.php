@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Slide;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,5 +18,12 @@ class HomeController extends Controller
             return view('user.home_list.homeadmin', compact('slides'));
         }
         return view('user.home_list.home', compact('slides'));
+    }
+
+    public function userProduct(Request $request){
+        $order = $request->input('order', 'desc');
+        $products = Product::orderBy('unit_price', $order)->get(); 
+        return view("admin.product.usersProducts", compact('products', 'order'));
+      
     }
 }

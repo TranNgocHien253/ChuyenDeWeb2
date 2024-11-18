@@ -89,7 +89,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 
 
-
+Route::get('/user', [HomeController::class, 'userProduct'])->name('admin.product.usersProducts');
 
 
 
@@ -100,7 +100,7 @@ Route::get('/product/create', [ProductController::class, 'create'])->name('admin
 Route::post('/product', [ProductController::class, 'store'])->name('admin.product.store');
 Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
 Route::put('/product/{id}', [ProductController::class, 'update'])->name('admin.product.update');
-Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
+Route::post('/product/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
 
 
 

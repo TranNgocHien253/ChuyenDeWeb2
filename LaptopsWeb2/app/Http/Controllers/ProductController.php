@@ -106,7 +106,12 @@ public function destroy($id)
 
 
     
+public function userProduct()
+{
+     
     
+}
+   
     
 
 }

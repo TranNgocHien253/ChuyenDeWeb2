@@ -94,10 +94,11 @@
                 <td>{{ $product->new }}</td>
                 <td class="actions">
                     <a href="{{ route('admin.product.edit', $product->id) }}" class="edit fas fa-edit" title="Chỉnh sửa"></a>
-                    <form action="" method="POST" style="display:inline;">
+                    <form action="{{ route('admin.product.destroy',$product->id) }}" method="POST" class="delete-form"
+                        data-id="{{ $product->id }}" style="display:inline;">
                         @csrf
-                        @method('delete')
-                        <button type="button" class="delete delete-btn" onclick="confirmDelete(this)">Xóa</button>
+                        
+                        <button type="button" class="delete fas fa-trash" title="Xóa" onclick="confirmDelete(this)"></button>
                     </form>
                 </td>
             </tr>
