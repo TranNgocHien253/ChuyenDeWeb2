@@ -47,3 +47,72 @@ function updateDots() {
 
 // Thiết lập interval tự động chuyển đổi giữa các slide
 setInterval(nextSlide, slideInterval);
+
+var scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+  window.onscroll = function() {
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+      scrollToTopBtn.classList.remove("opacity-0", "invisible");
+      scrollToTopBtn.classList.add("opacity-100", "visible");
+    } else {
+      scrollToTopBtn.classList.remove("opacity-100", "visible");
+      scrollToTopBtn.classList.add("opacity-0", "invisible");
+    }
+  };
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+function openMapModal() {
+    document.getElementById('mapModal').classList.remove('hidden');
+    initMap();  // Gọi hàm initMap khi modal hiển thị
+}
+
+function closeMapModal() {
+    document.getElementById('mapModal').classList.add('hidden');
+}
+
+function loadMap() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            const userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            const map = new google.maps.Map(document.getElementById('map'), {
+                center: userLocation,
+                zoom: 14
+            });
+
+            new google.maps.Marker({
+                position: userLocation,
+                map: map,
+                title: "Vị trí của bạn",
+                icon: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+            });
+
+            const stores = [
+                { name: "Cửa hàng 1", lat: 21.028511, lng: 105.804817 },
+                { name: "Cửa hàng 2", lat: 21.028000, lng: 105.805000 },
+                { name: "Cửa hàng 3", lat: 21.029000, lng: 105.806000 }
+            ];
+
+            stores.forEach(function(store) {
+                new google.maps.Marker({
+                    position: { lat: store.lat, lng: store.lng },
+                    map: map,
+                    title: store.name
+                });
+            });
+        }, function(error) {
+            alert("Không thể lấy vị trí người dùng.");
+        });
+    } else {
+        alert("Trình duyệt không hỗ trợ Geolocation.");
+    }
+}

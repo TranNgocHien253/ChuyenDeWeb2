@@ -11,13 +11,24 @@
     <header>
         <div class="container mx-auto px-6 py-3">
             <div class="flex items-center justify-between">
-                <div class="hidden w-full text-gray-600 md:flex md:items-center">
+                <!-- Nút bấm với biểu tượng và văn bản -->
+                <button onclick="openMapModal()" class=" hidden w-full text-gray-600 md:flex md:items-center bg-transparent border-none cursor-pointer">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M16.2721 10.2721C16.2721 12.4813 14.4813 14.2721 12.2721 14.2721C10.063 14.2721 8.27214 12.4813 8.27214 10.2721C8.27214 8.06298 10.063 6.27212 12.2721 6.27212C14.4813 6.27212 16.2721 8.06298 16.2721 10.2721ZM14.2721 10.2721C14.2721 11.3767 13.3767 12.2721 12.2721 12.2721C11.1676 12.2721 10.2721 11.3767 10.2721 10.2721C10.2721 9.16755 11.1676 8.27212 12.2721 8.27212C13.3767 8.27212 14.2721 9.16755 14.2721 10.2721Z" fill="currentColor" />
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M5.79417 16.5183C2.19424 13.0909 2.05438 7.39409 5.48178 3.79417C8.90918 0.194243 14.6059 0.054383 18.2059 3.48178C21.8058 6.90918 21.9457 12.6059 18.5183 16.2059L12.3124 22.7241L5.79417 16.5183ZM17.0698 14.8268L12.243 19.8965L7.17324 15.0698C4.3733 12.404 4.26452 7.97318 6.93028 5.17324C9.59603 2.3733 14.0268 2.26452 16.8268 4.93028C19.6267 7.59603 19.7355 12.0268 17.0698 14.8268Z" fill="currentColor" />
                     </svg>
                     <span class="mx-1 text-sm">NY</span>
+                </button>
+                <div id="mapModal" class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center transition-all duration-100 ease-in-out hidden">
+                    <div class="bg-white p-4 rounded-lg w-11/12 md:w-1/2">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-xl font-bold">Vị trí cửa hàng</h2>
+                            <button onclick="closeMapModal()" class="text-red-500">X</button>
+                        </div>
+                        <div id="myMap" style="width: 100%; height: 400px;"></div>
+                    </div>
                 </div>
+
                 <div class="w-full text-gray-700 md:text-center text-xl font-semibold">
                     <nav :class="isOpen ? '' : 'hidden'" class="sm:flex sm:justify-center sm:items-center">
                         <div class="flex flex-col sm:flex-row">
@@ -345,6 +356,11 @@
     </footer>
 </div>
 
+<button id="scrollToTopBtn" onclick="scrollToTop()" class="fixed bottom-10 right-5 bg-blue-500 bg-opacity-55 text-white rounded-full p-3 text-2xl shadow-lg hover:bg-indigo-600 transition-all duration-300 opacity-0 invisible">
+    <svg height="1.2em" class="arrow" viewBox="0 0 512 512">
+        <path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"></path>
+    </svg>
+</button>
 
 <!-- Kết nối với tệp JavaScript -->
 <script src="{{ asset('js/slider.js') }}"></script>
