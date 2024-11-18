@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Slide;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Product;
+
 class HomeController extends Controller
 {
 
@@ -20,10 +21,40 @@ class HomeController extends Controller
         return view('user.home_list.home', compact('slides','products'));
     }
 
-
-
-public function getPoduct()
+    // public function userProduct(Request $request){
+    //     $order = $request->input('order', 'desc');
+    //     $products = Product::orderBy('unit_price', $order)->get(); 
+    //     return view("admin.product.usersProducts", compact('products', 'order'));
+      
+    // }
+    public function userProduct(Request $request)
 {
-   
+    $order = $request->input('order', 'desc');
+    $products = Product::orderBy('unit_price', $order)->paginate(10); // Lấy 10 sản phẩm mỗi trang
+    return view("admin.product.usersProducts", compact('products', 'order'));
 }
+public function productDetail($id)
+{
+    $product = Product::findOrFail($id); // Tìm sản phẩm theo ID, lỗi nếu không tìm thấy
+    return view('admin.product.productDetail', compact('product')); // Trả về view với thông tin sản phẩm
+}
+public function seachProduct(Request $request)
+{
+    $query = Product::query();
+
+    // Check if there's a search term and filter products by name or description
+    if ($request->has('search') && $request->search != '') {
+        $query->where(function($q) use ($request) {
+            $q->where('name', 'like', '%' . $request->search . '%')
+              ->orWhere('description', 'like', '%' . $request->search . '%');
+        });
+    }
+
+    // Paginate the results
+    $products = $query->paginate(9);
+
+    return view('admin.product.usersProducts', compact('products'));
+}
+    
+    
 }
