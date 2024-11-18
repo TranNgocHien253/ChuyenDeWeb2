@@ -142,14 +142,14 @@
     </div>
     @if ($slides->isNotEmpty())
     <!--slides======================================================================================-->
-    <div class="mx-1 mt-10 sm:mx-20">
+    <div class="mx-1 mt-10">
         <div class="relative w-full overflow-hidden">
             <!-- Slide Wrapper -->
             <div class="flex transition-transform duration-500 ease-out" id="slideContainer">
                 @foreach ($slides as $slide)
                 <div class="w-full flex-shrink-0">
                     <a href="{{ asset($slide->link)}}">
-                        <img src="{{ asset($slide->image)}}" class="w-full h-80 object-cover">
+                        <img src="{{ asset($slide->image)}}" class="w-full h-96 object-cover">
                     </a>
                 </div>
                 @endforeach

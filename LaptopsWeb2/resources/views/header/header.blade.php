@@ -1,10 +1,13 @@
 <header class="h-15">
     <nav class="bg-white border-gray-200">
-        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-2xl p-4">
-            <a href="/" class="flex items-center">
+        <div class="flex justify-between gap-2 items-center mx-auto max-w-screen-2xl p-4 w-full">
+            <!-- Logo - Chiếm không gian ít nhất -->
+            <a href="/" class="flex items-center flex-shrink-0">
                 <img src="{{ asset('logo/logoJWEB.jpg') }}" alt="Logo" class="h-10 w-auto object-contain">
             </a>
-            <form class="flex items-center max-w-sm w-full" action="{{ route('search') }}" method="GET">
+
+            <!-- Thanh Tìm Kiếm - Chiếm không gian chính giữa -->
+            <form class="flex items-center w-full max-w-md mx-auto lg:mx-0 flex-grow" action="{{ route('search') }}" method="GET">
                 <label for="simple-search" class="sr-only">Search</label>
                 <div class="relative w-full">
                     <input type="text" name="search" id="simple-search"
@@ -18,8 +21,9 @@
                     </button>
                 </div>
             </form>
-            <!-- User Actions -->
-            <div class="flex items-center space-x-6 rtl:space-x-reverse">
+
+            <!-- User Actions - Chiếm không gian ít nhất -->
+            <div class="flex items-center space-x-6 rtl:space-x-reverse flex-shrink-0">
                 @guest
                 <!-- Buttons for Guests -->
                 <a href="{{ route('login') }}" class="text-sm text-white bg-purple-600 hover:bg-purple-400 rounded-md px-4 py-2 transition duration-200">
@@ -36,16 +40,17 @@
                     </button>
                 </form>
                 @endguest
+
+                <!-- Toggle Button -->
                 <button class="flex items-center justify-center rounded-full bg-transparent cursor-pointer" id="toggleBtn">
                     <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" class="rounded-full w-9 h-9 fill-black animation-fadeout">
                         <path d="M140,128a12,12,0,1,1-12-12A12,12,0,0,1,140,128ZM128,72a12,12,0,1,0-12-12A12,12,0,0,0,128,72Zm0,112a12,12,0,1,0,12,12A12,12,0,0,0,128,184Z"></path>
                     </svg>
                 </button>
-
             </div>
-
         </div>
     </nav>
+
     <div id="slideDiv" class="fixed right-[-100px] top-24 z-50 transition-all duration-500 ease-in-out transform">
         <div class="flex flex-col justify-center items-center relative transition-all duration-[450ms] ease-in-out w-16">
             <article
