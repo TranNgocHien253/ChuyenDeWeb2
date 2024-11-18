@@ -13,7 +13,9 @@
             </div>
             @endforeach
         </div>
+        
 
+        
         <!-- Previous and Next Buttons -->
         <button id="prevSlide" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2">
             ‹
@@ -28,6 +30,10 @@
         @endforeach
     </div>
 </div>
+
+
+
+
 <!--endslides==================================================================================-->
 
 

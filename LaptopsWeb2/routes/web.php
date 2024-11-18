@@ -8,6 +8,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TypeProductController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
+// routes/web.php
+use App\Http\Controllers\ProductControllerr;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +69,8 @@ Route::get('/order/{id}/edit', [OrderController::class, 'edit'])->name('admin.or
 Route::put('/order/{id}', [OrderController::class, 'update'])->name('admin.order.update');
 Route::delete('/order/delete/{id}', [OrderController::class, 'destroy'])->name('admin.order.destroy');
 
+//tao giao dien trang web
+Route::get('/productss', [ProductControllerr::class, 'index'])->name('productss.index');
 
 Route::get('/typeproduct', [TypeProductController::class, 'index'])->name('admin.typeproduct.index');
 Route::get('/typeproduct/add', [TypeProductController::class, 'create'])->name('admin.typeproduct.create');
