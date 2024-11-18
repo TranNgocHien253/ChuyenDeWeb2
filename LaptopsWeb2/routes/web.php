@@ -87,6 +87,14 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/typeproduct/{id}/edit', [TypeProductController::class, 'edit'])->name('admin.typeproduct.edit');
     Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name('admin.typeproduct.update');
     Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
+
+    
+        Route::get('/product', [ProductController::class, 'index'])->name('admin.product.index'); // Thay 'manageProduct' bằng 'index'
+        Route::get('/product/create', [ProductController::class, 'create'])->name('admin.product.create');
+        Route::post('/product', [ProductController::class, 'store'])->name('admin.product.store');
+        Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
+        Route::put('/product/{id}', [ProductController::class, 'update'])->name('admin.product.update');
+        Route::post('/product/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
 });
 
 
@@ -109,12 +117,6 @@ Route::get('/find product', [HomeController::class,'seachProduct'])->name('produ
 
 // product
 
-Route::get('/product', [ProductController::class, 'index'])->name('admin.product.index'); // Thay 'manageProduct' bằng 'index'
-Route::get('/product/create', [ProductController::class, 'create'])->name('admin.product.create');
-Route::post('/product', [ProductController::class, 'store'])->name('admin.product.store');
-Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
-Route::put('/product/{id}', [ProductController::class, 'update'])->name('admin.product.update');
-Route::post('/product/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
 
 
 

@@ -50,11 +50,15 @@ public function seachProduct(Request $request)
         });
     }
 
+    // Get slides for the homepage
+    $slides = Slide::orderBy('updated_at', 'desc')->take(25)->get();
+
     // Paginate the results
     $products = $query->paginate(9);
 
-    return view('admin.product.usersProducts', compact('products'));
+    return view('user.home_list.home', compact('products', 'slides'));
 }
+
     
     
 }

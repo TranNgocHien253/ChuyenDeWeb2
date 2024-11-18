@@ -4,7 +4,8 @@
             <a href="/" class="flex items-center">
                 <img src="{{ asset('logo/logoJWEB.jpg') }}" alt="Logo" class="h-10 w-auto object-contain">
             </a>
-            <form class="flex items-center max-w-sm w-full" action="{{ route('search') }}" method="GET">
+
+            <form class="flex items-center max-w-sm w-full" action="{{ route('product.seach') }}" method="GET">
                 <label for="simple-search" class="sr-only">Search</label>
                 <div class="relative w-full">
                     <input type="text" name="search" id="simple-search"
@@ -18,6 +19,7 @@
                     </button>
                 </div>
             </form>
+
             <!-- User Actions -->
             <div class="flex items-center space-x-6 rtl:space-x-reverse">
                 @guest

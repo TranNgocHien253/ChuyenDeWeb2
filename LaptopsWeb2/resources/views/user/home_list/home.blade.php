@@ -21,7 +21,7 @@
                 <div class="w-full text-gray-700 md:text-center text-xl font-semibold">
                     <nav :class="isOpen ? '' : 'hidden'" class="sm:flex sm:justify-center sm:items-center">
                         <div class="flex flex-col sm:flex-row">
-                            <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Home</a>
+                            <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="{{ route('user.home') }}">Home</a>
                             <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Shop</a>
                             <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Categories</a>
                             <a class="mt-3 text-gray-600 hover:underline sm:mx-3 sm:mt-0" href="#">Contact</a>
@@ -352,25 +352,27 @@
             <h3 class="text-gray-600 text-2xl font-medium">Fashions</h3>
             <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                 @foreach ($products as $product)
-                    <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                        <div class="flex items-end justify-end h-56 w-full bg-cover"
-                            style="background-image: url('{{ asset('images/' . $product->image) }}')">
-                        </div>
-                        <div class="px-5 py-3">
-                            <h3 class="text-gray-700 uppercase">{{ $product->name }}</h3>
-                            <span class="text-gray-500 mt-2 block">${{ $product->unit_price }}</span>
-                            <form action="/cart/add" method="POST" class="mt-4">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <input type="hidden" name="quantity" value="1">
-                                <button type="submit"
-                                    class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                                    Thêm vào giỏ hàng
-                                </button>
-                            </form>
-                        </div>
+                <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden border border-gray-300">
+                    <div class="flex items-end justify-end h-56 w-full">
+                        <img src="data:image;base64,{{ $product->image }}" alt="image"
+                            class="h-full w-full object-cover" />
                     </div>
+                    <div class="px-5 py-3">
+                        <h3 class="text-gray-700 uppercase">{{ $product->name }}</h3>
+                        <span class="text-gray-500 mt-2 block">${{ $product->unit_price }}</span>
+                        <form action="/cart/add" method="POST" class="mt-4">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
+                            <input type="hidden" name="quantity" value="1">
+                            <button type="submit"
+                                class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                                Thêm vào giỏ hàng
+                            </button>
+                        </form>
+                    </div>
+                </div>
                 @endforeach
+                
             </div>
         </div>
     </div>
