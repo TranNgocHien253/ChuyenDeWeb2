@@ -18,4 +18,5 @@ class Product extends Model
     {
         return $this->hasMany(Order::class, 'product_id'); // Khóa ngoại phải là 'product_id'
     }
+    
 }
