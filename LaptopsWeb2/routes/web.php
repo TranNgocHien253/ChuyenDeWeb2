@@ -11,6 +11,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TypeProductController;
 
+use App\Http\Controllers\CartController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -85,22 +87,36 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/typeproduct/{id}/edit', [TypeProductController::class, 'edit'])->name('admin.typeproduct.edit');
     Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name('admin.typeproduct.update');
     Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
+
+    
+        Route::get('/product', [ProductController::class, 'index'])->name('admin.product.index'); // Thay 'manageProduct' bằng 'index'
+        Route::get('/product/create', [ProductController::class, 'create'])->name('admin.product.create');
+        Route::post('/product', [ProductController::class, 'store'])->name('admin.product.store');
+        Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
+        Route::put('/product/{id}', [ProductController::class, 'update'])->name('admin.product.update');
+        Route::post('/product/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
 });
 
 
+Route::get('/user product', [HomeController::class,'userProduct'])->name('admin.product.usersProducts');
+
+// Route cart
+Route::get('/cart', [CartController::class, 'getListCart'])->name('cart.list');
+Route::get('/products/{id}', [CartController::class, 'show'])->name('product.show');
+// In routes/web.php
+Route::delete('/cart/remove/{id}', [CartController::class, 'removeProduct'])->name('cart.remove');
+Route::delete('/cart/delete/{id}/{full_name}/{phone}/{address}', [CartController::class, 'removeProduct'])->name('cart.delete');
+
+Route::post('/cart/delete/{productId}/{full_name}/{phone}/{address}', [CartController::class, 'deleteProductQuantity'])->name('cart.deleteQuantity');
+
+Route::post('/cart/add', [CartController::class, 'addProductToCart'])->middleware('auth');
 
 
-
+Route::get('/find product', [HomeController::class,'seachProduct'])->name('product.seach');
 
 
 // product
 
-Route::get('/product', [ProductController::class, 'index'])->name('admin.product.index'); // Thay 'manageProduct' bằng 'index'
-Route::get('/product/create', [ProductController::class, 'create'])->name('admin.product.create');
-Route::post('/product', [ProductController::class, 'store'])->name('admin.product.store');
-Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
-Route::put('/product/{id}', [ProductController::class, 'update'])->name('admin.product.update');
-Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
 
 
 

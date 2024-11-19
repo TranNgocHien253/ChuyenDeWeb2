@@ -49,7 +49,7 @@
 <div class="product-create-container">
     <h1>Thêm Sản Phẩm Mới</h1>
 
-    <form action="{{ route('admin.product.store') }}" method="POST">
+    <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group">
@@ -60,9 +60,10 @@
                 <!-- Các lựa chọn khác -->
             </select>
         </div>
-
-
-
+        <div class="form-group">
+            <label for="image">Hình ảnh:</label>
+            <input type="file" id="image" name="image"  required>
+        </div>
         <div class="form-group">
             <label for="name">Tên sản phẩm:</label>
             <input type="text" id="name" name="name" required>
@@ -77,7 +78,10 @@
             <label for="unit_price">Giá Tiền:</label>
             <input type="number" id="unit_price" name="unit_price" required>
         </div>
-
+        {{-- <div class="form-group">
+            <label for="promotion_price">Tiền:</label>
+            <input type="number" id="promotion_price" name="promotion_price" required>
+        </div> --}}
         <div class="form-group">
             <label for="new">Hàng Mới:</label>
             <input type="number" id="new" name="new" required>

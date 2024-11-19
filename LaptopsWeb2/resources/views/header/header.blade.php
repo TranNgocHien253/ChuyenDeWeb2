@@ -6,8 +6,11 @@
                 <img src="{{ asset('logo/logoJWEB.jpg') }}" alt="Logo" class="h-10 w-auto object-contain">
             </a>
 
-            <!-- Thanh Tìm Kiếm - Chiếm không gian chính giữa -->
+          <!-- Thanh Tìm Kiếm - Chiếm không gian chính giữa -->
             <form class="flex items-center w-full max-w-md mx-auto lg:mx-0 flex-grow" action="{{ route('search') }}" method="GET">
+
+            <!-- <form class="flex items-center max-w-sm w-full" action="{{ route('product.seach') }}" method="GET"> -->
+
                 <label for="simple-search" class="sr-only">Search</label>
                 <div class="relative w-full">
                     <input type="text" name="search" id="simple-search"
@@ -24,6 +27,7 @@
 
             <!-- User Actions - Chiếm không gian ít nhất -->
             <div class="flex items-center space-x-6 rtl:space-x-reverse flex-shrink-0">
+
                 @guest
                 <!-- Buttons for Guests -->
                 <a href="{{ route('login') }}" class="text-sm text-white bg-purple-600 hover:bg-purple-400 rounded-md px-4 py-2 transition duration-200">
