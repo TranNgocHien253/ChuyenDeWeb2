@@ -114,13 +114,6 @@ Route::post('/cart/add', [CartController::class, 'addProductToCart'])->middlewar
 
 Route::get('/find product', [HomeController::class,'seachProduct'])->name('product.seach');
 
-
-// product
-
-
-
-
-
-
-
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+Route::get('/products/type/{id}', [HomeController::class, 'getProductsByType'])->name('products.by.type');
