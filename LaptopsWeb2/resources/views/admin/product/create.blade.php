@@ -84,7 +84,10 @@
         </div> --}}
         <div class="form-group">
             <label for="new">Hàng Mới:</label>
-            <input type="number" id="new" name="new" required>
+            <select name="new" class="border rounded px-3 py-2 w-full">
+                <option value="1">Mới</option>
+                <option value="0">Cũ</option>
+            </select>
         </div>
 
         <button type="submit" class="submit-btn">Lưu Sản Phẩm</button>

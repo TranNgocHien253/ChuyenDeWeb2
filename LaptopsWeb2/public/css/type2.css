@@ -1,4 +1,21 @@
+/* Căn giữa toàn bộ trang nhưng không ảnh hưởng đến navbar */
+body, html {
+    height: 100%; /* Đảm bảo chiều cao của trang là 100% */
+    margin: 0;
+    display: block;
+    background-color: #f4f4f4; /* Màu nền trang */
+}
 
+/* Thêm một container để căn giữa form */
+.form-container {
+    display: flex;
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: flex-start; /* Căn form lên phía trên cùng */
+    height: 100vh; /* Căn giữa theo chiều dọc trong khung nhìn */
+    margin-top: 100px; /* Đẩy form lên 20px từ trên cùng */
+}
+
+/* Đảm bảo form có chiều rộng cố định và kiểu dáng */
 .order-form {
     width: 600px;
     border: 1px solid #003366;
@@ -8,10 +25,10 @@
 }
 
 .form-title {
-    text-align: center; /* Center the title */
+    text-align: center;
     margin-bottom: 20px;
     color: black;
-    font-size: 1.5em; /* Increased font size for the title */
+    font-size: 1.5em;
     font-weight: bold;
 }
 
@@ -29,9 +46,9 @@
 }
 
 .form-group {
-    width: 48%; /* Adjust the width of form groups */
+    width: 48%;
     display: flex;
-    flex-direction: column; /* Align label and input vertically */
+    flex-direction: column;
 }
 
 .form-group label {
@@ -46,7 +63,7 @@
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box; /* Ensures padding is included in the width */
+    box-sizing: border-box;
 }
 
 .form-group input[readonly] {
@@ -54,7 +71,7 @@
 }
 
 .form-actions {
-    text-align: right; /* Align buttons to the right */
+    text-align: right;
     margin-top: 20px;
 }
 
@@ -74,24 +91,22 @@
 .submit-btn {
     background-color: #0b08ab;
 }
+
 .error-message {
     color: red;
     font-size: 0.8em;
 }
+
 .cancel-btn {
-    background-color: red; /* Màu nền đỏ */
-    color: white; /* Màu chữ trắng */
-    padding: 10px 20px; /* Kích thước nút */
-    text-decoration: none; /* Bỏ gạch chân */
-    border: none; /* Bỏ viền */
-    border-radius: 5px; /* Bo góc */
-    cursor: pointer; /* Con trỏ chuột khi di chuột qua */
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .cancel-btn:hover {
-    background-color: darkred; /* Màu nền khi di chuột qua */
-}
-.error-message {
-    color: red;
-    font-size: 0.8em;
+    background-color: darkred;
 }

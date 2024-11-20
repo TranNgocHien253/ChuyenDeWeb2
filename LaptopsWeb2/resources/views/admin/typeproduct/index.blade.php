@@ -16,7 +16,6 @@
 </head>
 
 <body>
-    <h3>Quản Lý Loại Sản Phẩm</h3>
     <div class="top-controls">
         <div class="sort-controls">
             <button class="sort-button">Sắp xếp</button>

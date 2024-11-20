@@ -30,7 +30,7 @@ public function store(Request $request)
         'unit_price' => 'required|numeric',
         'new' => 'required|boolean',
         'id_type' => 'required|integer',
-        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
     ]);
 
     $imageName = base64_encode(file_get_contents($request->file('image')->path()));
@@ -94,16 +94,28 @@ public function search(Request $request)
     }
     public function update(Request $request, $id)
 {
-    $product = Product::findOrFail($id);
-
-    $product->update([
-        'name' => $request->name,
-        'description' => $request->description,
-        'unit_price' => $request->unit_price,
-        'new' => $request->new,
+    $request->validate([
+        'name' => 'required|max:255',
+        'description' => 'required',
+        'unit_price' => 'required|numeric|min:0',
+        'new' => 'required|boolean',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120' 
     ]);
 
-    return redirect()->route('admin.product.index')->with('success', 'Sản phẩm đã được cập nhật thành công!');
+    $product = Product::findOrFail($id);
+    
+    $data = $request->only(['name', 'description', 'unit_price', 'new']);
+    
+    if ($request->hasFile('image')) {
+        $imageName = base64_encode(file_get_contents($request->file('image')->path()));
+        $data['image'] = $imageName;
+    }
+
+    $product->update($data);
+
+    return redirect()
+        ->route('admin.product.index')
+        ->with('success', 'Sản phẩm đã được cập nhật thành công!');
 }
 public function destroy($id)
 {
