@@ -68,6 +68,22 @@
             @enderror
         </div>
 
+        <!-- Dòng chỉnh sửa số lượng -->
+        <div class="mb-4">
+            <label class="block text-gray-700 font-bold mb-2" for="quantity">
+                Số Lượng:
+            </label>
+            <input type="number" 
+                   name="quantity" 
+                   id="quantity"
+                   value="{{ old('quantity', $product->quantity) }}"
+                   class="border rounded px-3 py-2 w-full">
+            @error('quantity')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
+        </div>
+        
+
         <div class="mb-4">
             <label class="block text-gray-700 font-bold mb-2">
                 Tình Trạng:

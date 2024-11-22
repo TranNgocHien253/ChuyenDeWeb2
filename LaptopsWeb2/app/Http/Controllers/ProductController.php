@@ -24,31 +24,35 @@ class ProductController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // Validate dữ liệu
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'unit_price' => 'required|numeric|min:1',
-            'new' => 'required|boolean',
-            'id_type' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
-        ]);
+{
+    // Validate data
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'description' =>  'required|max:200',
+        'unit_price' => 'required|numeric|min:1',
+        'new' => 'required|boolean',
+        'id_type' => 'required|integer',
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+        'quantity' => 'required|integer|min:0', // Validate quantity
+    ]);
 
-        $imageName = base64_encode(file_get_contents($request->file('image')->path()));
+    // Handle image upload
+    $imageName = base64_encode(file_get_contents($request->file('image')->path()));
 
-        // Tạo sản phẩm mới
-        $product = new Product();
-        $product->name = $request->input('name');
-        $product->description = $request->input('description');
-        $product->unit_price = $request->input('unit_price');
-        $product->new = $request->input('new');
-        $product->id_type = $request->input('id_type');
-        $product->image = $imageName; // Lưu đường dẫn ảnh
-        $product->save();
+    // Create a new product
+    $product = new Product();
+    $product->name = $request->input('name');
+    $product->description = $request->input('description');
+    $product->unit_price = $request->input('unit_price');
+    $product->new = $request->input('new');
+    $product->id_type = $request->input('id_type');
+    $product->image = $imageName;
+    $product->quantity = $request->input('quantity'); // Store the quantity
+    $product->save();
 
-        return redirect()->route('admin.product.index')->with('success', 'Sản phẩm đã được thêm!');
-    }
+    return redirect()->route('admin.product.index')->with('success', 'Sản phẩm đã được thêm!');
+}
+
 
     public function show($id)
     {
@@ -64,33 +68,33 @@ class ProductController extends Controller
         // Trả về view chỉnh sửa với thông tin sản phẩm
         return view('admin.product.edit', compact('product'));
     }
-
     public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required|max:255',
-            'description' => 'required',
+            'description' => 'required|max:200',
             'unit_price' => 'required|numeric|min:1',
             'new' => 'required|boolean',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120' 
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'quantity' => 'required|integer|min:0', // Validate quantity
         ]);
-
+    
         $product = Product::findOrFail($id);
-
-        $data = $request->only(['name', 'description', 'unit_price', 'new']);
-
+    
+        $data = $request->only(['name', 'description', 'unit_price', 'new', 'quantity']); // Add 'quantity' here
+    
         if ($request->hasFile('image')) {
             $imageName = base64_encode(file_get_contents($request->file('image')->path()));
             $data['image'] = $imageName;
         }
-
-        $product->update($data);
-
+    
+        $product->update($data);  // Update the product with the new data
+    
         return redirect()
             ->route('admin.product.index')
             ->with('success', 'Sản phẩm đã được cập nhật thành công!');
     }
-
+    
     public function destroy($id)
     {
         // Tìm và xóa sản phẩm theo ID

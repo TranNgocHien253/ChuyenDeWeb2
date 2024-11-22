@@ -91,6 +91,12 @@
             </select>
         </div>
 
+        <div class="form-group">
+            <label for="quantity">Số lượng:</label>
+            <input type="number" id="quantity" name="quantity" required min="0">
+        </div>
+        
+
         <button type="submit" class="submit-btn">Lưu Sản Phẩm</button>
     </form>
 

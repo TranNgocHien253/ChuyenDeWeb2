@@ -72,6 +72,7 @@
                 <th>Tên</th>
                 <th>Mô tả</th>
                 <th>Giá Tiền</th>
+                <th>Số Lượng</th> <!-- Thêm cột số lượng -->
                 <th>Hàng</th>
                 <th>Thao Tác</th>
             </tr>
@@ -84,20 +85,20 @@
                 <td>
                     @if($product->image)
                     <img src="data:image;base64,{{ $product->image }}" alt="image">
-                @else
+                    @else
                     Không có hình ảnh
-                @endif
+                    @endif
                 </td>
-                <td>{{ $product->name}}</td>
+                <td>{{ $product->name }}</td>
                 <td>{{ $product->description }}</td>
-                <td>{{$product->unit_price }} VND</td>
+                <td>{{ $product->unit_price }} VND</td>
+                <td>{{ $product->quantity }} <!-- Hiển thị số lượng sản phẩm --></td>
                 <td>{{ $product->new }}</td>
                 <td class="actions">
-                    <a href="{{ route('admin.product.edit', $product->id) }}" class="edit fas fa-edit" title="Chỉnh sửa"></a>
-                    <form action="{{ route('admin.product.destroy',$product->id) }}" method="POST" class="delete-form"
-                        data-id="{{ $product->id }}" style="display:inline;">
+                    <a href="{{ route('admin.product.edit', $product->id) }}" class="edit-btn fas fa-edit" title="Chỉnh sửa"></a>
+                    <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST" class="delete-form" data-id="{{ $product->id }}" style="display:inline;">
                         @csrf
-                        <button type="button" class="delete fas fa-trash" title="Xóa" onclick="confirmDelete(this)"></button>
+                        <button type="button" class="delete-btn fas fa-trash" title="Xóa" onclick="confirmDelete(this)"></button>
                     </form>
                 </td>
             </tr>
@@ -114,33 +115,4 @@
         }
     }
 </script>
-
-{{-- <div class="product-management-container">
-    <table class="product-table">
-        <tbody>
-            <!-- Giả sử bạn đang trong vòng lặp hiển thị sản phẩm -->
-            @foreach($products as $key => $product)
-            <tr>
-                <td>{{ $key + 1 }}</td>
-                <td>{{ $product->name }}</td>
-                <td>{{ $product->description }}</td>
-                <td>{{ $product->unit_price }} VND</td>
-                <td>{{ $product->new }}</td>
-                <td class="actions">
-                    <a href="{{ route('admin.product.edit', $product->id) }}" class="edit-btn">Chỉnh sửa</a>
-                    
-                    <!-- Form xóa sản phẩm -->
-                    <form action="" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="button" class="delete delete-btn" onclick="confirmDelete(this)">Xóa</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div> --}}
-
-
 @endsection

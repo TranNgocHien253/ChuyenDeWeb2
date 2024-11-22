@@ -9,7 +9,8 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'id_type', 'description', 'unit_price', 'promotion_price', 'image', 'new', 'quantity'];
+    protected $fillable = ['name', 'description', 'unit_price', 'new', 'id_type', 'image', 'quantity'];
+
 
     // Mối quan hệ với TypeProduct
     public function typeProduct()
