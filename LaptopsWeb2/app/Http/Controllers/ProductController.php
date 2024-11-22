@@ -47,17 +47,24 @@ public function store(Request $request)
 
     return redirect()->route('admin.product.index')->with('success', 'Sản phẩm đã được thêm!');
 }
+
+public function show($id)
+{
+    $product = Product::with('reviews')->findOrFail($id); // Lấy sản phẩm cùng các đánh giá
+    return view('admin.product.detail', compact('product'));
+}
+
 // app/Http/Controllers/ProductController.php
 
-public function search(Request $request)
-{
-    $keyword = $request->input('keyword');
-    $products = Product::where('name', 'like', '%' . $keyword . '%')
-                        ->orWhere('description', 'like', '%' . $keyword . '%')
-                        ->paginate(10);
+// public function search(Request $request)
+// {
+//     $keyword = $request->input('keyword');
+//     $products = Product::where('name', 'like', '%' . $keyword . '%')
+//                         ->orWhere('description', 'like', '%' . $keyword . '%')
+//                         ->paginate(10);
 
-    return view('product.index', compact('products'));
-}
+//     return view('product.index', compact('products'));
+// }
 
 
 
