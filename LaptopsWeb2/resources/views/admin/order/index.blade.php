@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Admin Order')
+@section('title', 'Quản Lý Đơn Hàng')
 
 @section('content')
 <!DOCTYPE html>
@@ -15,7 +15,6 @@
 </head>
 
 <body>
-    <h3>Quản Lý Đơn Hàng</h3>
     <div class="top-controls">
         <div class="sort-controls">
             <button class="sort-button">Sắp xếp</button>

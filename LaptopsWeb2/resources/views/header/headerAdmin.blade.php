@@ -42,15 +42,17 @@
 
                         <a class="flex items-center px-6 py-2 mt-4 {{ request()->routeIs('admin.user.index') ? 'text-purple-600 bg-white bg-opacity-25' : 'text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100' }}" href="{{ route('admin.user.index') }}">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zM12 14c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
                             </svg>
+
                             <span class="mx-3">User</span>
                         </a>
 
                         <a class="flex items-center px-6 py-2 mt-4 {{ request()->routeIs('admin.order.index') ? 'text-purple-600 bg-white bg-opacity-25' : 'text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100' }}" href="/order">
                             <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h18l-1.5 9H4.5L3 3zM5 19a2 2 0 110-4 2 2 0 010 4zm14 0a2 2 0 110-4 2 2 0 010 4z" />
                             </svg>
+
                             <span class="mx-3">Order</span>
                         </a>
                         <a class="flex items-center px-6 py-2 mt-4 {{ request()->routeIs('admin.product.index') ? 'text-purple-600 bg-white bg-opacity-25' : 'text-gray-500 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100' }}" href="/product">
@@ -78,7 +80,7 @@
                         @else
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            <button type="submit" class="text-sm w-52 text-purple-700 border border-purple-600 bg-white hover:bg-purple-100 rounded-md px-4 py-2 transition duration-200">
+                            <button type="submit" class="text-sm w-52 text-purple-700 border border-purple-600 bg-white hover:bg-purple-800 hover:text-zinc-50 rounded-md px-4 py-2 transition duration-200">
                                 Logout
                             </button>
                         </form>
@@ -500,13 +502,21 @@
                                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                             </svg>
                         </span>
+<<<<<<< HEAD
                       
+=======
+>>>>>>> 8e688aa4c8b45af852d721fec63aa3227703b97a
                         <form class="flex items-center max-w-sm w-full" action="{{ route('search') }}" method="GET">
                 <label for="simple-search" class="sr-only">Search</label>
                 <div class="relative w-full">
                     <input type="text" name="search" id="simple-search"
+<<<<<<< HEAD
                            class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg shadow-md focus:ring-2 focus:ring-purple-600 focus:border-transparent block w-full pl-3 p-2.5"
                            placeholder="Search..." required />
+=======
+                        class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg shadow-md focus:ring-2 focus:ring-purple-600 focus:border-transparent block w-full pl-3 p-2.5"
+                        placeholder="Search..." required />
+>>>>>>> 8e688aa4c8b45af852d721fec63aa3227703b97a
                     <button type="submit" class="absolute inset-y-0 right-0 flex items-center px-3">
                         <svg class="w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
@@ -515,7 +525,10 @@
                     </button>
                 </div>
             </form>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8e688aa4c8b45af852d721fec63aa3227703b97a
                     </div>
 
                     <!-- Panel content (Search result) -->

@@ -10,6 +10,14 @@ function validateForm() {
 
     // Check if name type is empty
     if (nameType === "") {
+        document.getElementById('name_type-error').innerText = "Tên loại sản phẩm không được để trống!";
+        document.getElementById('name_type-error').style.display = 'block';
+        return false; // Prevent form submission
+    }
+
+    // Check if name type exceeds 255 characters
+    if (nameType.length > 255) {
+        document.getElementById('name_type-error').innerText = "Tên loại sản phẩm không được vượt quá 255 ký tự!";
         document.getElementById('name_type-error').style.display = 'block';
         return false; // Prevent form submission
     }

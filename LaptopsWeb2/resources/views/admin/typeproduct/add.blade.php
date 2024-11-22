@@ -1,3 +1,8 @@
+@extends('app')
+
+@section('title', 'Thêm Loại Sản Phẩm')
+
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +14,7 @@
 </head>
 
 <body>
+<div class="form-container">
     <form action="{{ route('admin.typeproduct.store') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
         @csrf
         <div class="order-form">
@@ -41,7 +47,9 @@
             </div>
         </div>
     </form>
+</div>
     <script src="{{asset('js/type_add.js')}}"></script>
 </body>
 
 </html>
+@endsection

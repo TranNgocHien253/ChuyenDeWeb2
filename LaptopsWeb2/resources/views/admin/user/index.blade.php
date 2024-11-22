@@ -13,7 +13,15 @@
                 {{ session('success') }}
             </div>
             @endif
+            @if (session('error'))
+            <div class="absolute w-2/3 bg-red-100 text-red-700 p-4 rounded my-2 fade-in ">
+                {{ session('error') }}
+            </div>
+            @endif
         </div>
+
+
+
         <div class="p-4  flex justify-between items-center">
             <form action="{{ route('admin.user.index') }}" method="GET" class="flex items-center">
                 <input type="hidden" name="page" value="{{ request('page', 1) }}">
@@ -60,7 +68,7 @@
                             </svg>
                         </button>
                     </form>
-                    <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST">
+                    <form action="{{ route('admin.user.destroyfe', $user->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="text-white px-2 py-1 rounded hover:bg-red-600 transition duration-150 ease-in-out text-sm" onclick="confirmDelete(event);">
