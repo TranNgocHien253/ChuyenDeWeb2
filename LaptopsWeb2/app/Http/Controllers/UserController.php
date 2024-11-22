@@ -100,10 +100,16 @@ class UserController extends Controller
                 ->with('error', 'Người dùng không tồn tại.');
         }
 
-        if ($user->trashed()) {
-            // Nếu người dùng đã bị xóa mềm, hiển thị thông báo phù hợp
-            return redirect()->route('admin.user.index')
-                ->with('error', 'Không thể cập nhật vì người dùng đã bị xóa.');
+        // Kiểm tra mật khẩu hiện tại
+        if (!Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng.']);
+        }
+
+        // Kiểm tra mật khẩu mới không trùng với mật khẩu cũ
+        if ($request->password && Hash::check($request->password, $user->password)) {
+            return redirect()->back()
+                ->withErrors(['password' => 'Mật khẩu mới không được trùng với mật khẩu cũ.'])
+                ->withInput();
         }
 
         // Thực hiện cập nhật dữ liệu
@@ -149,8 +155,15 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->save();
 
-        return redirect()->route('admin.user.index')
-            ->with('success', "Cập nhật thông tin người dùng {$user->full_name} thành công.");
+        if (Auth::user()->role === 1) {
+            // Nếu là admin, chuyển về trang admin.user.index
+            return redirect()->route('admin.user.index')
+                ->with('success', "Cập nhật thông tin người dùng {$user->full_name} thành công.");
+        } else {
+            // Nếu là user, chuyển về trang user.profile.edit
+            return redirect()->route('profile')
+                ->with('success', "Cập nhật thông tin của bạn thành công.");
+        }
     }
 
 

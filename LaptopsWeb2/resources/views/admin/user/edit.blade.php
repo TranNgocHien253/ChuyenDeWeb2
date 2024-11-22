@@ -20,17 +20,34 @@
     </div>
     @endif
 
-    <form action="{{ route('admin.user.update', $user->id) }}" method="POST" enctype="multipart/form-data" class="bg-white px-6 pb-5 rounded-lg shadow-md" require>
+
+    <form action="{{ route('admin.user.update', $user->id) }}" method="POST" enctype="multipart/form-data" class="bg-white px-6 pb-5 rounded-lg shadow-md">
         @csrf
         @method('PUT')
+        @if ($errors->has('current_password'))
+        <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+            {{ $errors->first('current_password') }}
+        </div>
+        @endif
+
+        @if ($errors->has('password'))
+        <div class="bg-red-500 text-white p-4 rounded-lg mb-4">
+            {{ $errors->first('password') }}
+        </div>
+        @endif
         <div class="flex w-full justify-end">
-            <!-- Nút đổi mật khẩu -->
             <button type="button" onclick="togglePasswordForm()" class="py-2 px-4 bg-blue-500 text-white rounded mt-4">
                 Đổi mật khẩu
             </button>
         </div>
-        <!-- Form đổi mật khẩu, mặc định ẩn -->
+
         <div id="passwordForm" class="hidden mt-4 border-2 border-gray-500 p-2 rounded-lg">
+            @if (session('error'))
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <strong class="font-bold">Lỗi!</strong>
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+            @endif
             <div class="mb-4">
                 <label for="current_password" class="block text-gray-700">Mật khẩu hiện tại</label>
                 <input type="password" name="current_password" id="current_password" class="w-full mt-2 p-2 border rounded">
