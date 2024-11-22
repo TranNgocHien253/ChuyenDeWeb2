@@ -80,7 +80,18 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+        if (!$user) {
+            // Nếu người dùng không tồn tại, chuyển hướng đến trang profile của user với thông báo lỗi
+            if (Auth::check() && Auth::user()->role !== 1) {
+                return redirect()->route('profile')
+                    ->with('error', 'User not found.');
+            }
+
+            // Nếu không tìm thấy và là admin, chuyển hướng về trang danh sách người dùng
+            return redirect()->route('admin.user.index')
+                ->with('error', 'User not found.');
+        }
         if (Auth::check() && Auth::user()->role !== 1) {
             // Trả về view trang chủ cho admin
             return view('user.profile.edit', compact('user'));
