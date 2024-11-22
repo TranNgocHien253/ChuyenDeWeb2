@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->decimal('unit_price', 10, 2);
-            $table->decimal('promotion_price', 10, 2);
-            $table->string('image');
+            $table->decimal('promotion_price', 10, 2)->default(0);
+            $table->longText('image');
             $table->integer('new')->default(0);
             $table->integer('quantity')->default(0);
             $table->timestamps();

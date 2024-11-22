@@ -12,6 +12,12 @@
             <div class="absolute w-2/3 bg-green-100 text-green-700 p-4 rounded my-2 fade-in ">
                 {{ session('success') }}
             </div>
+
+            @endif
+            @if ($errors->has('error'))
+            <div class="absolute w-2/3 bg-red-100 text-red-700 p-4 rounded my-2 fade-in ">
+                {{ $errors->first('error') }}
+            </div>
             @endif
         </div>
         <div class="p-4  flex justify-between items-center">
