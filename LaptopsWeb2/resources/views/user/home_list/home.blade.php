@@ -354,7 +354,6 @@
                             </svg>
                         </button>
                     </div>
-        
                     <!-- Product Details -->
                     <div class="px-5 py-3">
                         <h3 class="text-gray-700 uppercase font-bold">{{ $product->name }}</h3>
@@ -370,7 +369,7 @@
                                     </svg>
                                 @endfor
                             </div>
-                            <span class="text-gray-600 ml-2">({{ $product->reviews_count }} đánh giá)</span>
+                            <span class="text-gray-600 ml-2">({{ $product->reviews_count }}đánh giá)</span>
                         </div>
                         <span class="text-gray-500 mt-2 block">${{ $product->unit_price }}</span>
                         <!-- Buttons -->
