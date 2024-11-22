@@ -13,7 +13,15 @@
                 {{ session('success') }}
             </div>
             @endif
+            @if (session('error'))
+            <div class="absolute w-2/3 bg-red-100 text-red-700 p-4 rounded my-2 fade-in ">
+                {{ session('error') }}
+            </div>
+            @endif
         </div>
+
+
+
         <div class="p-4  flex justify-between items-center">
             <form action="{{ route('admin.user.index') }}" method="GET" class="flex items-center">
                 <input type="hidden" name="page" value="{{ request('page', 1) }}">

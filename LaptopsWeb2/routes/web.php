@@ -95,6 +95,11 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
         Route::put('/product/{id}', [ProductController::class, 'update'])->name('admin.product.update');
         Route::post('/product/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
+
+
+//         Route::post('product/{id}', 'ProductController@update');
+// Route::put('product/{id}', 'ProductController@store');
+
 });
 
 

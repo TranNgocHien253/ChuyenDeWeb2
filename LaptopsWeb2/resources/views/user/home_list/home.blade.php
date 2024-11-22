@@ -11,7 +11,8 @@
     <header>
         <div class="container mx-auto px-6 py-3">
             <div class="flex items-center justify-between">
-                <div class="hidden w-full text-gray-600 md:flex md:items-center">
+                <!-- Nút bấm với biểu tượng và văn bản -->
+                <button onclick="openMapModal()" class=" hidden w-full text-gray-600 md:flex md:items-center bg-transparent border-none cursor-pointer">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" clip-rule="evenodd"
                             d="M16.2721 10.2721C16.2721 12.4813 14.4813 14.2721 12.2721 14.2721C10.063 14.2721 8.27214 12.4813 8.27214 10.2721C8.27214 8.06298 10.063 6.27212 12.2721 6.27212C14.4813 6.27212 16.2721 8.06298 16.2721 10.2721ZM14.2721 10.2721C14.2721 11.3767 13.3767 12.2721 12.2721 12.2721C11.1676 12.2721 10.2721 11.3767 10.2721 10.2721C10.2721 9.16755 11.1676 8.27212 12.2721 8.27212C13.3767 8.27212 14.2721 9.16755 14.2721 10.2721Z"
@@ -21,7 +22,17 @@
                             fill="currentColor" />
                     </svg>
                     <span class="mx-1 text-sm">NY</span>
+                </button>
+                <div id="mapModal" class="z-50 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center transition-all duration-100 ease-in-out hidden">
+                    <div class="bg-white p-4 rounded-lg w-11/12 md:w-1/2">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-xl font-bold">Vị trí cửa hàng</h2>
+                            <button onclick="closeMapModal()" class="text-red-500">X</button>
+                        </div>
+                        <div id="myMap" style="width: 100%; height: 400px;"></div>
+                    </div>
                 </div>
+
                 <div class="w-full text-gray-700 md:text-center text-xl font-semibold">
                     <nav :class="isOpen ? '' : 'hidden'" class="sm:flex sm:justify-center sm:items-center">
                         <div class="flex flex-col sm:flex-row">
@@ -170,39 +181,40 @@
         </a>
     </div>
     @if ($slides->isNotEmpty())
-        <!--slides======================================================================================-->
-        <div class="mx-1 mt-10 sm:mx-20">
-            <div class="relative w-full overflow-hidden">
-                <!-- Slide Wrapper -->
-                <div class="flex transition-transform duration-500 ease-out" id="slideContainer">
-                    @foreach ($slides as $slide)
-                        <div class="w-full flex-shrink-0">
-                            <a href="{{ asset($slide->link)}}">
-                                <img src="{{ asset($slide->image)}}" class="w-full h-80 object-cover">
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
 
-                <!-- Previous and Next Buttons -->
-                <button id="prevSlide"
-                    class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2">
-                    ‹
-                </button>
-                <button id="nextSlide"
-                    class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2">
-                    ›
-                </button>
-            </div>
-            <div class="flex justify-center mt-4">
-                @foreach ($slides as $index => $slide)
-                    <button
-                        class="dot h-2 w-2 mx-1 rounded-full bg-gray-400 opacity-50 transition-opacity duration-300 {{ $index === 0 ? 'opacity-100' : '' }}"
-                        data-index="{{ $index }}"></button>
+    <!--slides======================================================================================-->
+    <div class="mx-1 mt-10">
+        <div class="relative w-full overflow-hidden">
+            <!-- Slide Wrapper -->
+            <div class="flex transition-transform duration-500 ease-out" id="slideContainer">
+                @foreach ($slides as $slide)
+                <div class="w-full flex-shrink-0">
+                    <a href="{{ asset($slide->link)}}">
+                        <img src="{{ asset($slide->image)}}" class="w-full h-96 object-cover">
+                    </a>
+                </div>
                 @endforeach
             </div>
+
+            <!-- Previous and Next Buttons -->
+            <button id="prevSlide"
+                class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2">
+                ‹
+            </button>
+            <button id="nextSlide"
+                class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-2">
+                ›
+            </button>
         </div>
-        <!--endslides==================================================================================-->
+        <div class="flex justify-center mt-4">
+            @foreach ($slides as $index => $slide)
+            <button
+                class="dot h-2 w-2 mx-1 rounded-full bg-gray-400 opacity-50 transition-opacity duration-300 {{ $index === 0 ? 'opacity-100' : '' }}"
+                data-index="{{ $index }}"></button>
+            @endforeach
+        </div>
+    </div>
+    <!--endslides==================================================================================-->
     @endif
 
     <main class="my-8">
@@ -217,37 +229,37 @@
 
                 <div class="grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
                     @foreach ($typeProducts as $type)
-                        <div
-                            class="group relative rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                            <!-- Card Background với Gradient -->
-                            <div class="h-40 w-full bg-cover bg-center relative"
-                                style="background-image: url('{{ asset($type->image) }}')">
-                                <!-- Gradient Overlay -->
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div
+                        class="group relative rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+                        <!-- Card Background với Gradient -->
+                        <div class="h-40 w-full bg-cover bg-center relative"
+                            style="background-image: url('{{ asset($type->image) }}')">
+                            <!-- Gradient Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
 
-                                <!-- Icon Category -->
-                                <div
-                                    class="absolute top-3 right-3 bg-white/90 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M9 5l7 7-7 7"></path>
-                                    </svg>
-                                </div>
-
-                                <!-- Category Name -->
-                                <div class="absolute bottom-0 left-0 right-0 p-3">
-                                    <h3 class="text-sm font-medium text-white">{{ $type->name_type }}</h3>
-                                    <p class="text-xs text-gray-300 mt-1">{{ $type->products_count ?? 0 }} sản phẩm</p>
-                                </div>
+                            <!-- Icon Category -->
+                            <div
+                                class="absolute top-3 right-3 bg-white/90 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5l7 7-7 7"></path>
+                                </svg>
                             </div>
 
-                            <!-- Hover Overlay với Animation -->
-                            <div onclick="loadProducts({{ $type->id }}, '{{ $type->name_type }}', {{ $type->products_count ?? 0 }})"
-                                class="absolute inset-0 flex items-center justify-center bg-blue-500/0 hover:bg-blue-500/20 transition-colors duration-300 cursor-pointer">
-                                <span class="sr-only">Xem danh mục {{ $type->name_type }}</span>
+                            <!-- Category Name -->
+                            <div class="absolute bottom-0 left-0 right-0 p-3">
+                                <h3 class="text-sm font-medium text-white">{{ $type->name_type }}</h3>
+                                <p class="text-xs text-gray-300 mt-1">{{ $type->products_count ?? 0 }} sản phẩm</p>
                             </div>
                         </div>
+
+                        <!-- Hover Overlay với Animation -->
+                        <div onclick="loadProducts({{ $type->id }}, '{{ $type->name_type }}', {{ $type->products_count ?? 0 }})"
+                            class="absolute inset-0 flex items-center justify-center bg-blue-500/0 hover:bg-blue-500/20 transition-colors duration-300 cursor-pointer">
+                            <span class="sr-only">Xem danh mục {{ $type->name_type }}</span>
+                        </div>
+                    </div>
                     @endforeach
                 </div>
 
@@ -297,22 +309,54 @@
         <!-- Products Container - Đây là container mới để hiển thị sản phẩm theo danh mục -->
         <div id="products-container" class="container mx-auto px-6 mt-16">
             @if(isset($currentType))
-                <h3 class="text-gray-600 text-2xl font-medium">{{ $currentType->name_type }}</h3>
+            <h3 class="text-gray-600 text-2xl font-medium">{{ $currentType->name_type }}</h3>
             @else
-                <h3 class="text-gray-600 text-2xl font-medium">Tất cả sản phẩm</h3>
+            <h3 class="text-gray-600 text-2xl font-medium">Tất cả sản phẩm</h3>
             @endif
 
             <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                 @foreach ($products as $product)
-                    <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden border border-gray-300">
-                        <div class="flex items-end justify-end h-56 w-full">
-                            <img src="data:image;base64,{{ $product->image }}" alt="image"
-                                class="h-full w-full object-cover" />
+
+                <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden border border-gray-300">
+                    <!-- Product Image -->
+                    <div class="relative">
+                        <img src="data:image;base64,{{ $product->image }}" alt="image"
+                            class="h-56 w-full object-cover" />
+                        <!-- Favorite Button -->
+                        <button
+                            class="absolute top-2 right-2 text-gray-600 hover:text-red-500 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M20.84 4.61a5.5 5.5 0 01.02 7.77L12 20.39l-8.86-8.01a5.5 5.5 0 017.78-7.78l1.1 1.1 1.1-1.1a5.5 5.5 0 017.77.01z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Product Details -->
+                    <div class="px-5 py-3">
+                        <h3 class="text-gray-700 uppercase font-bold">{{ $product->name }}</h3>
+                        <p class="text-gray-500 text-sm mt-2">{{ $product->description }}</p>
+                        <div class="flex items-center mt-2">
+                            <!-- Rating -->
+                            <div class="flex text-yellow-500">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="{{ $i <= $product->rating ? 'currentColor' : 'none' }}"
+                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.158 6.63a1 1 0 00.95.69h6.905c.969 0 1.371 1.24.588 1.81l-5.634 4.1a1 1 0 00-.364 1.118l2.157 6.63c.3.921-.755 1.688-1.54 1.118l-5.634-4.1a1 1 0 00-1.175 0l-5.634 4.1c-.784.57-1.839-.197-1.539-1.118l2.157-6.63a1 1 0 00-.364-1.118L2.322 11.057c-.783-.57-.38-1.81.589-1.81h6.905a1 1 0 00.95-.69l2.157-6.63z" />
+                                    </svg>
+                                    @endfor
+                            </div>
+                            <span class="text-gray-600 ml-2">({{ $product->reviews_count }} đánh giá)</span>
                         </div>
-                        <div class="px-5 py-3">
-                            <h3 class="text-gray-700 uppercase">{{ $product->name }}</h3>
-                            <span class="text-gray-500 mt-2 block">${{ $product->unit_price }}</span>
-                            <form action="/cart/add" method="POST" class="mt-4">
+                        <span class="text-gray-500 mt-2 block">${{ $product->unit_price }}</span>
+                        <!-- Buttons -->
+                        <div class="flex items-center justify-between mt-4">
+                            <a href="/product/{{ $product->id }}" class="text-blue-600 underline">
+                                Xem chi tiết
+                            </a>
+                            <form action="/cart/add" method="POST">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
                                 <input type="hidden" name="quantity" value="1">
@@ -323,75 +367,43 @@
                             </form>
                         </div>
                     </div>
-                @endforeach
-            </div>
 
-        </div>
-</div>
-</main>
-
-<main class="my-8">
-    <div class="container mx-auto px-6">
-        <div class="mt-16">
-            <h3 class="text-gray-600 text-2xl font-medium">Fashions</h3>
-            <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
-                @foreach ($products as $product)
-                    <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden border border-gray-300">
-                        <div class="flex items-end justify-end h-56 w-full">
-                            <img src="data:image;base64,{{ $product->image }}" alt="image"
-                                class="h-full w-full object-cover" />
-                        </div>
-                        <div class="px-5 py-3">
-                            <h3 class="text-gray-700 uppercase">{{ $product->name }}</h3>
-                            <span class="text-gray-500 mt-2 block">${{ $product->unit_price }}</span>
-                            <form action="/cart/add" method="POST" class="mt-4">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <input type="hidden" name="quantity" value="1">
-                                <button type="submit"
-                                    class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                                    Thêm vào giỏ hàng
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+                </div>
                 @endforeach
             </div>
         </div>
-    </div>
+
+</div>
 </main>
 
 
-
-<footer class="bg-gray-200">
-    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-        <a href="#" class="text-xl font-bold text-gray-500 hover:text-gray-400">Brand</a>
-        <p class="py-2 text-gray-500 sm:py-0">All rights reserved</p>
-    </div>
-</footer>
-</div>
-
+<button id="scrollToTopBtn" onclick="scrollToTop()" class="fixed bottom-10 right-5 bg-blue-500 bg-opacity-55 text-white rounded-full p-3 text-2xl shadow-lg hover:bg-indigo-600 transition-all duration-300 opacity-0 invisible">
+    <svg height="1.2em" class="arrow" viewBox="0 0 512 512">
+        <path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"></path>
+    </svg>
+</button>
 
 <!-- Kết nối với tệp JavaScript -->
 <script src="{{ asset('js/slider.js') }}">
-
-    document.querySelector('#addToCartButton').addEventListener('click', function () {
+    document.querySelector('#addToCartButton').addEventListener('click', function() {
         const productId = 1; // ID sản phẩm
-        const quantity = 2;  // Số lượng
+        const quantity = 2; // Số lượng
 
         fetch('/cart/add', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({ product_id: productId, quantity: quantity })
-        }).then(response => response.json())
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    quantity: quantity
+                })
+            }).then(response => response.json())
             .then(data => {
                 if (data.message) alert(data.message);
                 else alert(data.error);
             }).catch(error => console.error('Lỗi:', error));
     });
-
 </script>
 @endsection
