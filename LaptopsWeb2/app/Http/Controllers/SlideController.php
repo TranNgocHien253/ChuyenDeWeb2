@@ -57,36 +57,59 @@ class SlideController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $slide = Slide::findOrFail($id);
+        // Tìm slide
+        $slide = Slide::find($id);
+
+        // Nếu không tìm thấy slide, trả về thông báo lỗi
+        if (!$slide) {
+            return redirect()->route('admin.slides.index')
+                ->withErrors(['error' => 'Slide không tồn tại hoặc đã bị xóa.']);
+        }
+
+        // Cập nhật thông tin slide
         $slide->link = $request->link;
+
         if ($request->hasFile('image')) {
-            if (file_exists(public_path($slide->image))) {
+            // Xóa ảnh cũ nếu có
+            if ($slide->image && file_exists(public_path($slide->image))) {
                 unlink(public_path($slide->image));
             }
 
+            // Lưu ảnh mới
             $imageName = time() . '.' . $request->image->extension();
             $request->image->move(public_path('images'), $imageName);
             $slide->image = 'images/' . $imageName;
         }
 
         $slide->save();
-        return redirect()->route('admin.slides.index')->with('success', "Slide với ID: {$slide->link} đã được sửa thành công!");
+
+        return redirect()->route('admin.slides.index')
+            ->with('success', "Slide với ID: {$slide->id} đã được sửa thành công!");
     }
+
+
 
     // Xóa slide
     public function destroy($id)
     {
-        // Kiểm tra quyền của người dùng
-        // if (Auth::user()->cannot('delete', Slide::class)) {
-        //     abort(403); // Nếu không có quyền, trả về lỗi 403
-        // }
+        // Tìm slide theo ID
+        $slide = Slide::find($id);
 
-        $slide = Slide::findOrFail($id);
-        if (file_exists(public_path($slide->image))) {
+        if (!$slide) {
+            // Nếu không tìm thấy slide, trả về thông báo lỗi
+            return redirect()->route('admin.slides.index')
+                ->with('error', 'Slide không tồn tại.');
+        }
+
+        // Kiểm tra nếu file ảnh tồn tại và xóa nó
+        if ($slide->image && file_exists(public_path($slide->image))) {
             unlink(public_path($slide->image));
         }
+
+        // Xóa slide
         $slide->delete();
 
-        return redirect()->route('admin.slides.index')->with('success', "Slide {$slide->link} xóa thành công!");
+        return redirect()->route('admin.slides.index')
+            ->with('success', "Slide {$slide->link} xóa thành công!");
     }
 }
