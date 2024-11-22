@@ -91,8 +91,22 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        // Tìm người dùng, bao gồm cả người dùng đã bị xóa mềm
+        $user = User::withTrashed()->find($id);
 
+        if (!$user) {
+            // Nếu người dùng không tồn tại, chuyển hướng về trang danh sách với thông báo
+            return redirect()->route('admin.user.index')
+                ->with('error', 'Người dùng không tồn tại.');
+        }
+
+        if ($user->trashed()) {
+            // Nếu người dùng đã bị xóa mềm, hiển thị thông báo phù hợp
+            return redirect()->route('admin.user.index')
+                ->with('error', 'Không thể cập nhật vì người dùng đã bị xóa.');
+        }
+
+        // Thực hiện cập nhật dữ liệu
         $validator = Validator::make($request->all(), [
             'full_name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
@@ -112,18 +126,17 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        // Nếu có file ảnh mới
         if ($request->hasFile('imageAvatar')) {
-            // Xóa ảnh cũ nếu có
             if ($user->imageAvatar) {
+                // Xóa ảnh cũ nếu có
                 Storage::disk('public')->delete($user->imageAvatar);
             }
-
-            // Lưu ảnh mới vào thư mục 'avatars'
             $imagePath = $request->file('imageAvatar')->store('avatars', 'public');
             $user->imageAvatar = $imagePath;
         }
 
-        // Update user data
+        // Cập nhật các thông tin khác
         $user->full_name = $request->full_name;
         $user->email = $request->email;
 
@@ -136,20 +149,29 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->save();
 
-        if (Auth::check() && Auth::user()->role !== 1) {
-            return redirect()->route('profile')->with('success', "Profile updated for {$user->full_name}");
-        }
-
-        return redirect()->route('admin.user.index')->with('success', "Profile updated for {$user->full_name}");
+        return redirect()->route('admin.user.index')
+            ->with('success', "Cập nhật thông tin người dùng {$user->full_name} thành công.");
     }
+
 
     public function destroyfe($id)
     {
-        $user = User::withTrashed()->findOrFail($id); // Lấy cả những người dùng đã bị xóa mềm
-        $user->forceDelete(); // Xóa vĩnh viễn
+        // Tìm người dùng, bao gồm cả người dùng đã bị xóa mềm
+        $user = User::withTrashed()->find($id);
 
-        return redirect()->route('admin.user.index')->with('success', "Xóa người dùng {$user->full_name} thành công");
+        if (!$user) {
+            // Nếu không tìm thấy người dùng, báo lỗi và chuyển hướng
+            return redirect()->route('admin.user.index')
+                ->with('error', 'Người dùng không tồn tại.');
+        }
+
+        // Xóa vĩnh viễn người dùng (bất kể trạng thái xóa mềm)
+        $user->forceDelete();
+
+        return redirect()->route('admin.user.index')
+            ->with('success', "Xóa người dùng {$user->full_name} thành công");
     }
+
 
     // Xử lý việc xóa người dùng nhưng còn lưu
     public function destroy($id)
