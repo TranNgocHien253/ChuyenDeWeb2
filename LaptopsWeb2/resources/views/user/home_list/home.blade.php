@@ -341,9 +341,11 @@
                     <!-- Product Image -->
                     <div class="relative">
                         <a href="/product/{{ $product->id }}">
-                            <img src="data:image;base64,{{ $product->image }}" alt="image"
-                                class="h-56 w-full object-cover" />
-                        </a>
+                            <img src="{{ asset('storage/images/' . $product->image) }}" alt="image" class="h-56 w-full object-cover" />
+
+
+
+                        </a>        
                         <!-- Favorite Button -->
                         <button
                             class="absolute top-2 right-2 text-gray-600 hover:text-red-500 focus:outline-none">

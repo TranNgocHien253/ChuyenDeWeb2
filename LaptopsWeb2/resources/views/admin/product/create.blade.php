@@ -55,11 +55,12 @@
         <div class="form-group">
             <label for="id_type">Loại sản phẩm:</label>
             <select id="id_type" name="id_type" required>
-                <option value="1">Loại 1</option>
-                <option value="2">Loại 2</option>
-                <!-- Các lựa chọn khác -->
+                @foreach ($typeProducts as $type)
+                    <option value="{{ $type->id }}">{{ $type->name_type }}</option>
+                @endforeach
             </select>
         </div>
+        
         <div class="form-group">
             <label for="image">Hình ảnh:</label>
             <input type="file" id="image" name="image"  required>
