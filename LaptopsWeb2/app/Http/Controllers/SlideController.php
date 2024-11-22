@@ -96,9 +96,8 @@ class SlideController extends Controller
         $slide = Slide::find($id);
 
         if (!$slide) {
-            // Nếu không tìm thấy slide, trả về thông báo lỗi
             return redirect()->route('admin.slides.index')
-                ->with('error', 'Slide không tồn tại.');
+                ->withErrors(['error' => 'Slide không tồn tại hoặc đã bị xóa.']);
         }
 
         // Kiểm tra nếu file ảnh tồn tại và xóa nó

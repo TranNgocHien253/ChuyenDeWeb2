@@ -42,14 +42,13 @@ class UserController extends Controller
             'password' => [
                 'required',
                 'string',
-                'min:3',
+                'min:6',
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/'
             ],
             'imageAvatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow image files
-            'gender' => 'nullable|string|max:50',
-            'address' => 'nullable|string',
-            'phone' => 'nullable|string|max:15',
-
+            'gender' => 'required|string|max:50',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|regex:/^0\d{9}$/',
         ]);
 
         if ($validator->fails()) {
@@ -100,8 +99,8 @@ class UserController extends Controller
                 ->with('error', 'Người dùng không tồn tại.');
         }
 
-        // Kiểm tra mật khẩu hiện tại
-        if (!Hash::check($request->current_password, $user->password)) {
+        // Kiểm tra nếu mật khẩu hiện tại được nhập
+        if ($request->current_password && !Hash::check($request->current_password, $user->password)) {
             return redirect()->back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng.']);
         }
 
@@ -123,9 +122,9 @@ class UserController extends Controller
                 'regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/'
             ],
             'imageAvatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gender' => 'nullable|string|max:50',
-            'address' => 'nullable|string',
-            'phone' => 'nullable|string|max:15',
+            'gender' => 'required|string|max:50',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|regex:/^0\d{9}$/',
         ]);
 
         if ($validator->fails()) {
