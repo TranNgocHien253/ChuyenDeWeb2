@@ -96,12 +96,16 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::put('/product/{id}', [ProductController::class, 'update'])->name('admin.product.update');
         Route::post('/product/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
 
+       
+
 
 //         Route::post('product/{id}', 'ProductController@update');
 // Route::put('product/{id}', 'ProductController@store');
 
 });
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
+// xem chi tiết
 
 Route::get('/user product', [HomeController::class,'userProduct'])->name('admin.product.usersProducts');
 

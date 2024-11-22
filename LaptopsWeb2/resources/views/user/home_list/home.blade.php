@@ -313,15 +313,17 @@
             @else
             <h3 class="text-gray-600 text-2xl font-medium">Tất cả sản phẩm</h3>
             @endif
-
+        
             <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                 @foreach ($products as $product)
-
+        
                 <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden border border-gray-300">
                     <!-- Product Image -->
                     <div class="relative">
-                        <img src="data:image;base64,{{ $product->image }}" alt="image"
-                            class="h-56 w-full object-cover" />
+                        <a href="/product/{{ $product->id }}">
+                            <img src="data:image;base64,{{ $product->image }}" alt="image"
+                                class="h-56 w-full object-cover" />
+                        </a>
                         <!-- Favorite Button -->
                         <button
                             class="absolute top-2 right-2 text-gray-600 hover:text-red-500 focus:outline-none">
@@ -332,7 +334,7 @@
                             </svg>
                         </button>
                     </div>
-
+        
                     <!-- Product Details -->
                     <div class="px-5 py-3">
                         <h3 class="text-gray-700 uppercase font-bold">{{ $product->name }}</h3>
@@ -346,16 +348,13 @@
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.158 6.63a1 1 0 00.95.69h6.905c.969 0 1.371 1.24.588 1.81l-5.634 4.1a1 1 0 00-.364 1.118l2.157 6.63c.3.921-.755 1.688-1.54 1.118l-5.634-4.1a1 1 0 00-1.175 0l-5.634 4.1c-.784.57-1.839-.197-1.539-1.118l2.157-6.63a1 1 0 00-.364-1.118L2.322 11.057c-.783-.57-.38-1.81.589-1.81h6.905a1 1 0 00.95-.69l2.157-6.63z" />
                                     </svg>
-                                    @endfor
+                                @endfor
                             </div>
                             <span class="text-gray-600 ml-2">({{ $product->reviews_count }} đánh giá)</span>
                         </div>
                         <span class="text-gray-500 mt-2 block">${{ $product->unit_price }}</span>
                         <!-- Buttons -->
                         <div class="flex items-center justify-between mt-4">
-                            <a href="/product/{{ $product->id }}" class="text-blue-600 underline">
-                                Xem chi tiết
-                            </a>
                             <form action="/cart/add" method="POST">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{ $product->id }}">
@@ -367,10 +366,11 @@
                             </form>
                         </div>
                     </div>
-
                 </div>
                 @endforeach
             </div>
+        </div>
+        
         </div>
 
 </div>
