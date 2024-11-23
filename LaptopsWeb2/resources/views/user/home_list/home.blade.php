@@ -341,7 +341,7 @@
                     <!-- Product Image -->
                     <div class="relative">
                         <a href="/product/{{ $product->id }}">
-                            <img src="data:image;base64,{{ $product->image }}" alt="image"
+                            <img src="images/{{ $product->image }}" alt="image"
                                 class="h-56 w-full object-cover" />
                         </a>
                         <!-- Favorite Button -->
