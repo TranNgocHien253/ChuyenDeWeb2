@@ -57,6 +57,7 @@
     <div class="max-w-md mx-auto mt-10 p-6 bg-white border border-gray-300 rounded-lg shadow-md">
         <h2 class="text-xl font-bold text-center mb-4">Xóa tài khoản</h2>
         <p class="text-center mb-6">Bạn có chắc chắn muốn xóa tài khoản này không?</p>
+        <p class="text-center mb-6 font-thin">(Nếu trong 30 ngày thì bạn đăng nhập lại sẽ khôi phục lại tài khoản)</p>
 
         <div class="flex justify-between">
             <!-- Nút Chấp nhận -->

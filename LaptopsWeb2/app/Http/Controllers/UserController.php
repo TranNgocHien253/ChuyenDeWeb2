@@ -84,13 +84,13 @@ class UserController extends Controller
         $id = Crypt::decrypt($encryptedId);
         $user = User::find($id);
         if (!$user) {
-            // Nếu người dùng không tồn tại, chuyển hướng đến trang profile của user với thông báo lỗi
+            // Nếu người dùng không tồn tại
             if (Auth::check() && Auth::user()->role !== 1) {
                 return redirect()->route('profile')
                     ->with('error', 'User not found.');
             }
 
-            // Nếu không tìm thấy và là admin, chuyển hướng về trang danh sách người dùng
+            // Nếu không tìm thấy và là admin
             return redirect()->route('admin.user.index')
                 ->with('error', 'User not found.');
         }
@@ -104,11 +104,10 @@ class UserController extends Controller
     public function update(Request $request, $encryptedId)
     {
         $id = Crypt::decrypt($encryptedId);
-        // Tìm người dùng, bao gồm cả người dùng đã bị xóa mềm
         $user = User::withTrashed()->find($id);
 
         if (!$user) {
-            // Nếu người dùng không tồn tại, chuyển hướng về trang danh sách với thông báo
+            // Nếu người dùng không tồn tại
             return redirect()->route('admin.user.index')
                 ->with('error', 'Người dùng không tồn tại.');
         }
