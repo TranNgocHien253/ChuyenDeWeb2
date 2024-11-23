@@ -202,7 +202,7 @@
             const productQuantityElement = document.querySelector('.popup-product-quantity');
             const productPriceElement = document.querySelector('.popup-product-price');
             const productImageElement = document.querySelector('.popup-product-image');
-
+            var tong = "";
 
             const buyButton = document.getElementById('buyButton');
             const successPopup = document.getElementById('successPopup');
@@ -275,7 +275,8 @@ paymentMethodSelect.addEventListener('change', function() {
                 // Kiểm tra nếu tất cả các trường thông tin có giá trị
                 if (name && phone && address1 && address2) {
                     const qrCodeContainer = document.getElementById('qrCodeContainer');
-                    const qrData = `Số tài khoản: ${data.account_number} Ngân hàng: ${data.bank_name} Tên: ${name}`;
+                    const qrData = `STK: ${data.account_number}    Bank: ${data.bank_name} \nName: ${name} \nAmount payable: ${tong} VNĐ\n`;
+
                     
                     const qrCodeElement = document.createElement('img');
                     qrCodeElement.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`;
@@ -425,6 +426,7 @@ paymentMethodSelect.addEventListener('change', function() {
 
                     // Cập nhật tổng giá vào giao diện
                     const totalElement = document.querySelectorAll('.popup-product-price');
+                    tong = totalPrice.toLocaleString();
                     totalElement.textContent = `Giá: ${totalPrice.toLocaleString()} đ`;
 
                     // Hiển thị popup và khóa cuộn trang
