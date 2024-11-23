@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Slide;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class SlideController extends Controller
 {
@@ -46,12 +47,14 @@ class SlideController extends Controller
     // Sửa slide
     public function edit($id)
     {
+        $id = Crypt::decryptString($id);
         $slide = Slide::findOrFail($id);
         return view('admin.slides.edit', compact('slide'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $encryptedId)
     {
+        $id = Crypt::decryptString($encryptedId);
         $request->validate([
             'link' => 'required|url',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -82,9 +85,10 @@ class SlideController extends Controller
         }
 
         $slide->save();
-
+        $encryptedId = Crypt::encryptString($slide->id);
+        $shortEncryptedId = substr($encryptedId, 0, 20) . '...';
         return redirect()->route('admin.slides.index')
-            ->with('success', "Slide với ID: {$slide->id} đã được sửa thành công!");
+            ->with('success', "Slide với ID: {$shortEncryptedId} đã được sửa thành công!");
     }
 
 

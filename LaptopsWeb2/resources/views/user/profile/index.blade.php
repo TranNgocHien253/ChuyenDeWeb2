@@ -12,7 +12,7 @@
             @endif
             <h1 class="text-2xl font-bold text-indigo-800  mb-2">{{ $user->full_name }}</h1>
             <p class="text-gray-600">{{ $user->email }}</p>
-            <form action="{{ route('user.profile.edit', ['id' => $user->id]) }}">
+            <form action="{{ route('user.profile.edit', ['encryptedId' => Crypt::encrypt($user->id)]) }}">
                 <button class="mt-4 bg-indigo-800 text-white px-4 py-2 rounded-lg hover:bg-blue-900 ring ring-transparent hover:ring-blue-300 transition-all duration-300">Edit Profile</button>
             </form>
             <button
