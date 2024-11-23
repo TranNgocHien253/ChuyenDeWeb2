@@ -16,3 +16,8 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+*.zip
+/Register/
+/Tìm kiếm,products,order,user,typeproduct theo name/
+/Sắp xếp lên tải bề, bề tải lên/
+

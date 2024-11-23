@@ -12,10 +12,10 @@ class OrderController extends Controller
     // Hiển thị danh sách đơn hàng
     public function index(Request $request)
     {
-        // Get the number of items per page from the request or set a default
+        // Lấy số lượng mục mỗi trang từ yêu cầu hoặc thiết lập mặc định
         $perPage = $request->input('perPage', 10);
 
-        // Retrieve the orders with pagination
+        // Lấy danh sách đơn hàng với phân trang
         $orders = Order::paginate($perPage);
 
         return view('admin.order.index', compact('orders'));
@@ -26,25 +26,41 @@ class OrderController extends Controller
     {
         $categories = TypeProduct::all(); // Lấy tất cả danh mục
         $products = Product::all(); // Lấy tất cả sản phẩm
+
         return view('admin.order.add', compact('categories', 'products'));
     }
 
     // Lưu đơn hàng mới vào database
     public function store(Request $request)
     {
-        // Thêm 'status' với giá trị mặc định là 'Đã duyệt'
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
         $data = $request->all();
-        $data['status'] = 'Approved';
-        $order = Order::create($request->all());
+        $data['status'] = 'Approved'; // Đặt trạng thái mặc định
+        Order::create($data);
+
         return redirect()->route('admin.order.index')->with('success', 'Đơn hàng đã được thêm thành công!');
     }
 
     // Hiển thị form chỉnh sửa đơn hàng
-    public function edit($id)
+    public function edit($id, Request $request)
     {
+        // Kiểm tra ID hợp lệ
+        if (!preg_match('/^\d+$/', $id)) {
+            return redirect()->route('admin.order.index')->with('error', 'URL không hợp lệ để tìm đơn hàng.');
+        }
+
         $order = Order::find($id);
-        $categories = TypeProduct::all(); // Lấy tất cả danh mục
-        $products = Product::all(); // Lấy tất cả sản phẩm
+        if (!$order) {
+            return redirect()->route('admin.order.index')->with('error', 'Đơn hàng không tồn tại.');
+        }
+
+        $categories = TypeProduct::all();
+        $products = Product::all();
+
         return view('admin.order.edit', compact('order', 'categories', 'products'));
     }
 
@@ -52,7 +68,19 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::find($id);
+        if (!$order) {
+            return redirect()->route('admin.order.index')->with('error', 'Đơn hàng không tồn tại.');
+        }
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'product_id' => 'required|exists:products,id',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
         $order->update($request->all());
+
         return redirect()->route('admin.order.index')->with('success', 'Đơn hàng đã được cập nhật thành công.');
     }
 
@@ -60,7 +88,12 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $order = Order::find($id);
+        if (!$order) {
+            return redirect()->route('admin.order.index')->with('error', 'Đơn hàng không tồn tại hoặc đã bị xóa.');
+        }
+
         $order->delete();
-        return redirect()->route('admin.order.index')->with('success', 'Đơn hàng đã được xóa.');
+
+        return redirect()->route('admin.order.index')->with('success', 'Đơn hàng đã được xóa thành công.');
     }
 }

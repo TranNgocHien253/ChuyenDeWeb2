@@ -20,19 +20,17 @@
     </div>
     @endif
 
-
-    <form action="{{ route('admin.user.update', $user->id) }}" method="POST" enctype="multipart/form-data" class="bg-white px-6 pb-5 rounded-lg shadow-md">
+    <form action="{{ route('admin.user.update', ['encryptedId' => Crypt::encrypt($user->id)]) }}" method="POST" enctype="multipart/form-data" class="bg-white px-6 pb-5 rounded-lg shadow-md" require>
         @csrf
         @method('PUT')
-
         <div class="flex w-full justify-end">
+            <!-- Nút đổi mật khẩu -->
             <button type="button" onclick="togglePasswordForm()" class="py-2 px-4 bg-blue-500 text-white rounded mt-4">
                 Đổi mật khẩu
             </button>
         </div>
-
+        <!-- Form đổi mật khẩu, mặc định ẩn -->
         <div id="passwordForm" class="hidden mt-4 border-2 border-gray-500 p-2 rounded-lg">
-
             <div class="mb-4">
                 <label for="current_password" class="block text-gray-700">Mật khẩu hiện tại</label>
                 <input type="password" name="current_password" id="current_password" class="w-full mt-2 p-2 border rounded">

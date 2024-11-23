@@ -29,7 +29,7 @@
                     data-name="{{ $cart->product->name }}"
                     data-price="{{ $cart->product->unit_price }}"
                     data-quantity="{{ $cart->quantity }}"
-                    data-image="images/{{ $cart->product->image }}"
+                    data-image="{{ $cart->product->image }}"
                     data-id="{{ $cart->id }}"> <!-- Use the cart item's ID -->
                 <div class="product-content">
                     <div class="product-source">Apple.vn</div>

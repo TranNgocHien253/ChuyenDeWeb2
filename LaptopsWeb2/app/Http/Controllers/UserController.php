@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -78,17 +79,18 @@ class UserController extends Controller
 
 
 
-    public function edit($id)
+    public function edit($encryptedId)
     {
+        $id = Crypt::decrypt($encryptedId);
         $user = User::find($id);
         if (!$user) {
-            // Nếu người dùng không tồn tại, chuyển hướng đến trang profile của user với thông báo lỗi
+            // Nếu người dùng không tồn tại
             if (Auth::check() && Auth::user()->role !== 1) {
                 return redirect()->route('profile')
                     ->with('error', 'User not found.');
             }
 
-            // Nếu không tìm thấy và là admin, chuyển hướng về trang danh sách người dùng
+            // Nếu không tìm thấy và là admin
             return redirect()->route('admin.user.index')
                 ->with('error', 'User not found.');
         }
@@ -99,13 +101,13 @@ class UserController extends Controller
         return view('admin.user.edit', compact('user'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $encryptedId)
     {
-        // Tìm người dùng, bao gồm cả người dùng đã bị xóa mềm
+        $id = Crypt::decrypt($encryptedId);
         $user = User::withTrashed()->find($id);
 
         if (!$user) {
-            // Nếu người dùng không tồn tại, chuyển hướng về trang danh sách với thông báo
+            // Nếu người dùng không tồn tại
             return redirect()->route('admin.user.index')
                 ->with('error', 'Người dùng không tồn tại.');
         }

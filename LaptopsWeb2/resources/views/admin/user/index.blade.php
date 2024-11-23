@@ -13,8 +13,8 @@
                 {{ session('success') }}
             </div>
             @endif
-            @if(session('error'))
-            <div class="absolute w-2/3 bg-red-100 text-red-700 p-4 rounded my-2 fade-in">
+            @if (session('error'))
+            <div class="absolute w-2/3 bg-red-100 text-red-700 p-4 rounded my-2 fade-in ">
                 {{ session('error') }}
             </div>
             @endif
@@ -60,7 +60,7 @@
                 <div class="w-2/12 text-left px-2">{{ $user->address }}</div>
                 <div class="w-2/12 text-left px-2">{{ $user->gender }}</div>
                 <div class="w-2/12 flex justify-evenly items-center border-l-2 border-gray-300">
-                    <form action="{{ route('admin.user.edit', $user->id) }}" method="GET">
+                    <form action="{{ route('admin.user.edit', ['encryptedId' => Crypt::encrypt($user->id)]) }}" method="GET">
                         <button type="submit" class="px-2 py-1 rounded hover:bg-yellow-100 text-sm transition duration-150 ease-in-out">
                             <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M20.9888 4.28491L19.6405 2.93089C18.4045 1.6897 16.4944 1.6897 15.2584 2.93089L13.0112 5.30042L18.7416 11.055L21.1011 8.68547C21.6629 8.1213 22 7.33145 22 6.54161C22 5.75176 21.5506 4.84908 20.9888 4.28491Z" fill="#030D45" />
