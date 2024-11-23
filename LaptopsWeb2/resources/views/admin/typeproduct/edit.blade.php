@@ -3,6 +3,13 @@
 @section('title', 'Sửa Loại Sản Phẩm')
 
 @section('content')
+
+@if(session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,19 +21,23 @@
     <style>
         /* Style for the disabled button */
         .submit-btn:disabled {
-            background-color: #ccc; /* Gray background */
-            cursor: not-allowed; /* Change cursor to not-allowed */
+            background-color: #ccc;
+            /* Gray background */
+            cursor: not-allowed;
+            /* Change cursor to not-allowed */
         }
 
         .error-message {
-            color: red; /* Red color for error messages */
-            display: none; /* Hidden by default */
+            color: red;
+            /* Red color for error messages */
+            display: none;
+            /* Hidden by default */
         }
     </style>
 </head>
 
 <body>
-<form action="{{ route('admin.typeproduct.update', $typeProduct->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.typeproduct.update', $typeProduct->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-container">
@@ -36,8 +47,8 @@
                 <div class="form-group-row">
                     <div class="form-group">
                         <label for="name_type">Tên Danh Mục:</label>
-                        <input type="text" id="name_type" name="name_type" 
-                               value="{{ old('name_type', $typeProduct->name_type) }}" required>
+                        <input type="text" id="name_type" name="name_type"
+                            value="{{ old('name_type', $typeProduct->name_type) }}" required>
                         <div id="name_type-error" class="error-message">Tên danh mục không được để trống hoặc không vượt quá 255 ký tự!</div>
                     </div>
 
@@ -46,7 +57,7 @@
                         <input type="file" id="image" name="image" accept="image/png, image/jpeg">
                         <div id="image-error" class="error-message">Chỉ chấp nhận tệp hình ảnh PNG hoặc JPG!</div>
                         <img src="{{ asset($typeProduct->image) }}" alt="Hình Ảnh Danh Mục"
-                             style="width: 100px; height: auto; display: {{ $typeProduct->image ? 'block' : 'none' }};">
+                            style="width: 100px; height: auto;">
                     </div>
                 </div>
 
@@ -54,7 +65,8 @@
                     <div class="form-group">
                         <label for="updated_at">Ngày Cập Nhật:</label>
                         <input type="text" id="updated_at" name="updated_at"
-                         value="{{ $typeProduct->updated_at ? $typeProduct->updated_at->format('d/m/Y') : 'N/A' }}" readonly>
+                            value="{{ $typeProduct->updated_at ? $typeProduct->updated_at->format('d/m/Y') : now()->format('d/m/Y') }}" readonly>
+
                     </div>
                 </div>
 
@@ -121,4 +133,3 @@
 
 </html>
 @endsection
-        
