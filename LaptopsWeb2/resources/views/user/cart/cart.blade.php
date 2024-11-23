@@ -262,46 +262,50 @@
             const qrCodeContainer = document.getElementById('qrCodeContainer');
 
             // Lắng nghe sự kiện thay đổi của dropdown
-          // Lắng nghe sự kiện thay đổi phương thức thanh toán
-paymentMethodSelect.addEventListener('change', function() {
-    if (paymentMethodSelect.value === 'bank-transfer') {
-        // Gọi API để lấy thông tin tài khoản ngân hàng
-        fetch('/bank-account')
-            .then(response => response.json())
-            .then(data => {
-                const name = data.account_holder; // Tên chủ tài khoản
-               
-                
-                // Kiểm tra nếu tất cả các trường thông tin có giá trị
-                if (name && phone && address1 && address2) {
-                    const qrCodeContainer = document.getElementById('qrCodeContainer');
-                    const qrData = `STK: ${data.account_number}    Bank: ${data.bank_name} \nName: ${name} \nAmount payable: ${tong} VNĐ\n`;
+            // Lắng nghe sự kiện thay đổi phương thức thanh toán
+            paymentMethodSelect.addEventListener('change', function() {
+                if (paymentMethodSelect.value === 'bank-transfer') {
+                    // Gọi API để lấy thông tin tài khoản ngân hàng
+                    fetch('/bank-account')
+                        .then(response => response.json())
+                        .then(data => {
+                            const name = data.account_holder; // Tên chủ tài khoản
 
-                    
-                    const qrCodeElement = document.createElement('img');
-                    qrCodeElement.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`;
-                    qrCodeElement.alt = "QR Code Thanh Toán";
 
-                    // Xóa nội dung mã QR trước đó (nếu có)
-                    qrCodeContainer.innerHTML = '';
-                    
-                    // Hiển thị mã QR
-                    qrCodeContainer.appendChild(qrCodeElement);
-                    qrCodeContainer.style.display = 'block'; // Đảm bảo QR code được hiển thị
+                            // Kiểm tra nếu tất cả các trường thông tin có giá trị
+                            if (name && phone && address1 && address2) {
+                                const qrCodeContainer = document.getElementById('qrCodeContainer');
+                                const qrData = `STK: ${data.account_number}    Bank: ${data.bank_name} \nName: ${name} \nAmount payable: ${tong} VNĐ\n`;
+                                var nameBank = "";
+                                
+
+                                const qrCodeElement = document.createElement('img');
+                                qrCodeElement.width = 400; // Kích thước rộng của ảnh
+qrCodeElement.height = 400;
+                                // qrCodeElement.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`;
+                                qrCodeElement.src = `https://img.vietqr.io/image/${data.bank_name}-${data.account_number}-compact2.jpg?amount=${tong}&accountName=${name} `;
+                                qrCodeElement.alt = "QR Code Thanh Toán";
+
+                                // Xóa nội dung mã QR trước đó (nếu có)
+                                qrCodeContainer.innerHTML = '';
+
+                                // Hiển thị mã QR
+                                qrCodeContainer.appendChild(qrCodeElement);
+                                qrCodeContainer.style.display = 'block'; // Đảm bảo QR code được hiển thị
+                            } else {
+                                alert('Vui lòng nhập đầy đủ thông tin!');
+                                qrCodeContainer.style.display = 'none';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Lỗi khi gọi API:', error);
+                        });
                 } else {
-                    alert('Vui lòng nhập đầy đủ thông tin!');
+                    // Nếu không chọn "Chuyển Khoản Ngân Hàng 24/7", ẩn mã QR
+                    const qrCodeContainer = document.getElementById('qrCodeContainer');
                     qrCodeContainer.style.display = 'none';
                 }
-            })
-            .catch(error => {
-                console.error('Lỗi khi gọi API:', error);
             });
-    } else {
-        // Nếu không chọn "Chuyển Khoản Ngân Hàng 24/7", ẩn mã QR
-        const qrCodeContainer = document.getElementById('qrCodeContainer');
-        qrCodeContainer.style.display = 'none';
-    }
-});
 
 
 
