@@ -13,7 +13,9 @@ use App\Http\Controllers\RegisterController;
 
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\TypeProductController;
+use App\Http\Controllers\QRPaymentController;
 
+use App\Http\Controllers\BankAccountController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -129,3 +131,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/wishlist/{productId}/remove', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
     Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.index');
 });
+
+
+Route::get('/qr-payment', [QRPaymentController::class, 'generateQR'])->name('qrPayment');
+
+// routes/web.php
+
+Route::get('/bank-account', [BankAccountController::class, 'getBankAccount']);

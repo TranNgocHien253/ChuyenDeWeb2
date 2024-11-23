@@ -106,9 +106,8 @@
                         <div class="form-group">
                             <label>Phương Thức Thanh Toán</label>
                             <select class="form-input" id="payment-method">
-                                <option value="">Chọn phương thức thanh toán</option>
-                                <option>Thanh Toán Khi Nhận Hàng</option>
-                                <option>Chuyển Khoản Ngân Hàng 24/7</option>
+                                <option value="cash">Thanh Toán Khi Nhận Hàng</option>
+                                <option value="bank-transfer">Chuyển Khoản Ngân Hàng</option>
                             </select>
                         </div>
                     </div>
@@ -148,7 +147,10 @@
             <div class="popup-content1">
                 <h2>Đặt Hàng Thành Công!</h2>
                 <br>
-                <p>Cảm ơn bạn đã đặt hàng. Chúng tôi sẽ xử lý đơn hàng của bạn sớm nhất có thể.</p>
+                <div id="qrCodeContainer" style="display: block;">
+
+                </div>
+                <p> Chúng tôi sẽ xử lý đơn hàng của bạn sớm nhất có thể.</p>
                 <button class="close-success-popup">Đóng</button>
             </div>
         </div>
@@ -188,6 +190,8 @@
 
 
 
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const checkoutButton = document.getElementById('checkoutButton');
@@ -198,6 +202,7 @@
             const productQuantityElement = document.querySelector('.popup-product-quantity');
             const productPriceElement = document.querySelector('.popup-product-price');
             const productImageElement = document.querySelector('.popup-product-image');
+
 
             const buyButton = document.getElementById('buyButton');
             const successPopup = document.getElementById('successPopup');
@@ -235,7 +240,7 @@
                     if (response.ok) {
                         console.log("1");
                         popup.style.display = 'none'; // Ẩn popup
-                        successPopup.style.display = 'flex'; // Hiện popup thành công
+                        successPopup.style.display = 'flex';
 
                         // Xóa sản phẩm khỏi giao diện
                         document.querySelector(`input[data-id="${productId}"]`).closest('.product-card').remove();
@@ -252,6 +257,50 @@
 
 
 
+            // Lấy phần tử dropdown và phần tử chứa mã QR
+            const paymentMethodSelect = document.getElementById('payment-method');
+            const qrCodeContainer = document.getElementById('qrCodeContainer');
+
+            // Lắng nghe sự kiện thay đổi của dropdown
+          // Lắng nghe sự kiện thay đổi phương thức thanh toán
+paymentMethodSelect.addEventListener('change', function() {
+    if (paymentMethodSelect.value === 'bank-transfer') {
+        // Gọi API để lấy thông tin tài khoản ngân hàng
+        fetch('/bank-account')
+            .then(response => response.json())
+            .then(data => {
+                const name = data.account_holder; // Tên chủ tài khoản
+               
+                
+                // Kiểm tra nếu tất cả các trường thông tin có giá trị
+                if (name && phone && address1 && address2) {
+                    const qrCodeContainer = document.getElementById('qrCodeContainer');
+                    const qrData = `Số tài khoản: ${data.account_number} Ngân hàng: ${data.bank_name} Tên: ${name}`;
+                    
+                    const qrCodeElement = document.createElement('img');
+                    qrCodeElement.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`;
+                    qrCodeElement.alt = "QR Code Thanh Toán";
+
+                    // Xóa nội dung mã QR trước đó (nếu có)
+                    qrCodeContainer.innerHTML = '';
+                    
+                    // Hiển thị mã QR
+                    qrCodeContainer.appendChild(qrCodeElement);
+                    qrCodeContainer.style.display = 'block'; // Đảm bảo QR code được hiển thị
+                } else {
+                    alert('Vui lòng nhập đầy đủ thông tin!');
+                    qrCodeContainer.style.display = 'none';
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi khi gọi API:', error);
+            });
+    } else {
+        // Nếu không chọn "Chuyển Khoản Ngân Hàng 24/7", ẩn mã QR
+        const qrCodeContainer = document.getElementById('qrCodeContainer');
+        qrCodeContainer.style.display = 'none';
+    }
+});
 
 
 
@@ -281,6 +330,16 @@
                         // Đóng popup thanh toán và hiển thị popup thành công
                         popup.style.display = 'none';
                         successPopup.style.display = 'flex';
+
+                        // const qrCodeContainer = document.getElementById('qrCodeContainer');
+                        // const qrData = `Họ tên: ${name}, Số điện thoại: ${phone}, Địa chỉ: ${address1} ${address2}`;
+                        // const qrCodeElement = document.createElement('img');
+                        // qrCodeElement.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(qrData)}`;
+                        // qrCodeElement.alt = "QR Code Thanh Toán";
+                        // qrCodeContainer.appendChild(qrCodeElement);
+
+
+
 
 
                     } else {
@@ -375,6 +434,10 @@
                     // Cập nhật tổng thanh toán trong footer
                     document.querySelector('.total-price').innerHTML =
                         `Tổng thanh toán: ${totalPrice.toLocaleString()} VNĐ`;
+
+
+
+
                 } else {
                     alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán.");
                 }
