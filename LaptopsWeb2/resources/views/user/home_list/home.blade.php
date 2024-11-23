@@ -341,7 +341,7 @@
                     <!-- Product Image -->
                     <div class="relative">
                         <a href="/product/{{ $product->id }}">
-                            <img src="{{ asset('storage/images/' . $product->image) }}" alt="image" class="h-56 w-full object-cover" />
+                            <img src="{{ asset('/images/' . $product->image) }}" alt="image" class="h-56 w-full object-cover" />
 
 
 
