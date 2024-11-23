@@ -223,143 +223,158 @@
             </div>
         </form>
     </div>
-    <script src="{{asset('js/orders_add.js')}}"></script>
-        <script>
-            // Load product options based on selected category
-            document.getElementById('category').addEventListener('change', function () {
-                var productSelect = document.getElementById('product');
-                var priceInput = document.getElementById('price');
-                productSelect.innerHTML = '<option value="">Chọn sản phẩm</option>'; // Clear existing options
-                priceInput.value = ''; // Clear price when category changes
+    <script>
+        // Đặt ngày hiện tại làm ngày tạo
+document.getElementById('date').value = new Date().toLocaleDateString('vi-VN');
 
-                // Get the selected category's products data
-                var products = JSON.parse(this.selectedOptions[0].getAttribute('data-products') || '[]');
+// Cập nhật danh sách sản phẩm theo danh mục được chọn
+document.getElementById('category').addEventListener('change', function () {
+    var productSelect = document.getElementById('product');
+    productSelect.innerHTML = '<option value="">Chọn sản phẩm</option>'; // Xóa các tùy chọn hiện có
 
-                // Populate the product dropdown
-                products.forEach(function (product) {
-                    var option = document.createElement('option');
-                    option.value = product.id;
-                    option.textContent = product.name;
-                    option.setAttribute('data-price', product.unit_price); // Store product price as a data attribute
-                    productSelect.appendChild(option);
-                });
-            });
+    // Lấy danh sách sản phẩm từ danh mục được chọn
+    var products = JSON.parse(this.selectedOptions[0].getAttribute('data-products') || '[]');
 
-            document.getElementById('product').addEventListener('change', function () {
-                var selectedOption = this.selectedOptions[0];
-                var priceInput = document.getElementById('price');
+    products.forEach(function (product) {
+        var option = document.createElement('option');
+        option.value = product.id;
+        option.textContent = product.name;
+        option.setAttribute('data-price', product.price); // Lưu giá sản phẩm dưới dạng thuộc tính
+        productSelect.appendChild(option);
+    });
+});
 
-                if (selectedOption) {
-                    var price = selectedOption.getAttribute('data-price'); // Get product price
-                    priceInput.value = price; // Set price in the input field
-                    calculateTotal(); // Recalculate total when product changes
-                } else {
-                    priceInput.value = ''; // Clear price if no product is selected
-                }
-            });
+// Hiển thị giá khi chọn sản phẩm
+document.getElementById('product').addEventListener('change', function () {
+    var selectedOption = this.selectedOptions[0];
+    var priceInput = document.getElementById('price');
 
-            document.getElementById('quantity').addEventListener('input', function () {
-                var quantity = parseInt(this.value);
-                var errorMessage = document.getElementById('quantity-error');
+    if (selectedOption) {
+        var price = selectedOption.getAttribute('data-price'); // Lấy giá sản phẩm
+        priceInput.value = price; // Hiển thị giá trong ô nhập
+        calculateTotal(); // Tính lại tổng tiền
+    } else {
+        priceInput.value = ''; // Xóa giá nếu không chọn sản phẩm
+    }
+});
 
-                if (quantity < 0 || quantity === 0) {
-                    errorMessage.style.display = 'block'; // Show error message
-                } else {
-                    errorMessage.style.display = 'none'; // Hide error message
-                    calculateTotal(); // Calculate total when quantity is valid
-                }
-            });
+// Kiểm tra số lượng và tính tổng tiền
+document.getElementById('quantity').addEventListener('input', function () {
+    var quantity = parseInt(this.value);
+    var errorMessage = document.getElementById('quantity-error');
 
-            document.getElementById('phone').addEventListener('input', function () {
-                // Remove spaces from the input value
-                this.value = this.value.replace(/\s/g, '');
-            });
+    if (quantity <= 0 || isNaN(quantity)) {
+        errorMessage.style.display = 'block'; // Hiển thị thông báo lỗi
+    } else {
+        errorMessage.style.display = 'none'; // Ẩn thông báo lỗi
+        calculateTotal(); // Tính tổng tiền
+    }
+});
 
-            function calculateTotal() {
-                var price = parseFloat(document.getElementById('price').value) || 0;
-                var quantity = parseInt(document.getElementById('quantity').value) || 0;
-                var total = price * quantity;
-                document.getElementById('total').value = total; // Set total in the input field
-            }
+// Xóa khoảng trắng khi nhập số điện thoại
+document.getElementById('phone').addEventListener('input', function () {
+    this.value = this.value.replace(/\s/g, '');
+});
 
-            function validateForm() {
-                var recipient = document.getElementById('recipient').value;
-                var address = document.getElementById('address').value;
-                var category = document.getElementById('category').value;
-                var product = document.getElementById('product').value;
-                var phone = document.getElementById('phone').value;
-                var quantity = parseInt(document.getElementById('quantity').value);
-                var isValid = true;
+// Ngăn chặn nhập chuỗi chỉ có khoảng trắng ở trường "Họ tên"
+document.getElementById('recipient').addEventListener('input', function () {
+    var recipient = this.value.trim();
+    var errorMessage = document.getElementById('recipient-error');
 
-                // Reset error messages
-                document.getElementById('recipient-error').style.display = 'none';
-                document.getElementById('address-error').style.display = 'none';
-                document.getElementById('category-error').style.display = 'none';
-                document.getElementById('product-error').style.display = 'none';
-                document.getElementById('phone-error').style.display = 'none';
-                document.getElementById('quantity-error').style.display = 'none'; // Reset quantity error
+    if (recipient.length === 0) {
+        errorMessage.style.display = 'block'; // Hiển thị lỗi
+    } else {
+        errorMessage.style.display = 'none'; // Ẩn lỗi
+    }
+});
 
-                // Validate recipient
-                if (recipient.length < 1 || recipient.length > 255) {
-                    document.getElementById('recipient-error').style.display = 'block';
-                    isValid = false;
-                }
+// Ngăn chặn nhập chuỗi chỉ có khoảng trắng ở trường "Địa chỉ"
+document.getElementById('address').addEventListener('input', function () {
+    var address = this.value.trim();
+    var errorMessage = document.getElementById('address-error');
 
-                // Validate address
-                if (address.length < 1 || address.length > 255) {
-                    document.getElementById('address-error').style.display = 'block';
-                    isValid = false;
-                }
+    if (address.length === 0) {
+        errorMessage.style.display = 'block'; // Hiển thị lỗi
+    } else {
+        errorMessage.style.display = 'none'; // Ẩn lỗi
+    }
+});
 
-                // Validate category
-                if (!category) {
-                    document.getElementById('category-error').style.display = 'block';
-                    isValid = false;
-                }
+// Tính tổng tiền
+function calculateTotal() {
+    var price = parseFloat(document.getElementById('price').value) || 0;
+    var quantity = parseInt(document.getElementById('quantity').value) || 0;
+    var total = price * quantity;
+    document.getElementById('total').value = total; // Hiển thị tổng tiền
+}
 
-                // Validate product
-                if (!product) {
-                    document.getElementById('product-error').style.display = 'block';
-                    isValid = false;
-                }
+// Kiểm tra toàn bộ form
+function validateForm() {
+    var recipient = document.getElementById('recipient').value.trim();
+    var address = document.getElementById('address').value.trim();
+    var category = document.getElementById('category').value;
+    var product = document.getElementById('product').value;
+    var phone = document.getElementById('phone').value;
+    var quantity = parseInt(document.getElementById('quantity').value);
+    var isValid = true;
 
-                // Validate phone number
-                var phoneRegex = /^(0|\+84)([0-9]{9})$/;
-                if (!phoneRegex.test(phone)) {
-                    document.getElementById('phone-error').style.display = 'block';
-                    isValid = false;
-                }
+    // Reset thông báo lỗi
+    document.getElementById('recipient-error').style.display = 'none';
+    document.getElementById('address-error').style.display = 'none';
+    document.getElementById('category-error').style.display = 'none';
+    document.getElementById('product-error').style.display = 'none';
+    document.getElementById('phone-error').style.display = 'none';
+    document.getElementById('quantity-error').style.display = 'none';
 
-                // Validate quantity
-                if (quantity <= 0) {
-                    document.getElementById('quantity-error').style.display = 'block'; // Show error message
-                    isValid = false; // Prevent form submission
-                }
+    // Kiểm tra "Họ tên"
+    if (recipient.length === 0) {
+        document.getElementById('recipient-error').style.display = 'block';
+        isValid = false;
+    }
 
-                return isValid; // Prevent form submission if validation fails
-            }
-            document.addEventListener('DOMContentLoaded', function () {
-                const alert = document.querySelector('.alert');
+    // Kiểm tra "Địa chỉ"
+    if (address.length === 0) {
+        document.getElementById('address-error').style.display = 'block';
+        isValid = false;
+    }
 
-                if (alert) {
-                    // Hiển thị thông báo
-                    setTimeout(function () {
-                        alert.classList.add('alert-show');
-                    }, 100); // Đợi 100ms để thêm hiệu ứng xuất hiện
+    // Kiểm tra danh mục
+    if (!category) {
+        document.getElementById('category-error').style.display = 'block';
+        isValid = false;
+    }
 
-                    // Ẩn thông báo sau 1.5 giây
-                    setTimeout(function () {
-                        alert.classList.remove('alert-show');
-                        alert.classList.add('alert-hide');
-                    }, 1500); // Hiển thị trong 1.5 giây
+    // Kiểm tra sản phẩm
+    if (!product) {
+        document.getElementById('product-error').style.display = 'block';
+        isValid = false;
+    }
 
-                    // Sau 2 giây (kể từ khi bắt đầu ẩn), xóa thông báo khỏi DOM
-                    setTimeout(function () {
-                        alert.remove();
-                    }, 2000); // Chờ thêm 500ms để hoàn thành quá trình ẩn
-                }
-            });
-        </script>
+    // Kiểm tra số điện thoại
+    var phoneRegex = /^(0|\+84)([0-9]{9})$/;
+    if (!phoneRegex.test(phone)) {
+        document.getElementById('phone-error').style.display = 'block';
+        isValid = false;
+    }
+
+    // Kiểm tra số lượng
+    if (quantity <= 0 || isNaN(quantity)) {
+        document.getElementById('quantity-error').style.display = 'block';
+        isValid = false;
+    }
+
+    return isValid; // Chặn gửi form nếu không hợp lệ
+}
+
+// Gắn sự kiện validateForm vào submit form
+document.getElementById('order-form').addEventListener('submit', function (e) {
+    if (!validateForm()) {
+        e.preventDefault(); // Ngăn chặn form gửi nếu không hợp lệ
+    }
+});
+
+    </script>
+        
     </body>
     </html>
 @endsection

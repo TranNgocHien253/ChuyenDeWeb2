@@ -3,6 +3,17 @@
 @section('title', 'Admin Type Product')
 
 @section('content')
+@if(session('success'))
+<div class="alert alert-success">
+    {{ session('success') }}
+</div>
+@endif
+@if(session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,37 +51,27 @@
         </thead>
         <tbody>
             @foreach($types as $type)
-                <tr>
-                    <td>{{ $type->id }}</td>
-                    <td>{{ $type->name_type }}</td>
-                    <td><img src="{{ asset($type->image) }}" alt="{{ $type->name_type }}"
-                            style="width: 100px; height: 100px;"></td>
-                    <td>{{ $type->created_at ? $type->created_at->format('d/m/Y') : 'N/A' }}</td>
-                    <td class="actions">
-                        <a href="{{ route('admin.typeproduct.edit', $type->id) }}" class="edit fas fa-edit"
-                            title="Chỉnh sửa"></a>
-                        <form action="{{ route('admin.typeproduct.destroy', $type->id) }}" method="POST" class="delete-form"
-                            data-id="{{ $type->id }}" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button" class="delete fas fa-trash" title="Xóa"></button>
-                        </form>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ $type->id }}</td>
+                <td>{{ $type->name_type }}</td>
+                <td><img src="{{ asset($type->image) }}" alt="{{ $type->name_type }}"
+                        style="width: 100px; height: 100px; object-fit: cover;"></td>
+                <td>{{ $type->created_at ? $type->created_at->format('d/m/Y') : 'N/A' }}</td>
+                <td class="actions">
+                    <a href="{{ route('admin.typeproduct.edit', $type->id) }}" class="edit fas fa-edit"
+                        title="Chỉnh sửa"></a>
+                    <form action="{{ route('admin.typeproduct.destroy', $type->id) }}" method="POST" class="delete-form"
+                        data-id="{{ $type->id }}" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" class="delete fas fa-trash" title="Xóa"></button>
+                    </form>
+                </td>
+            </tr>
             @endforeach
         </tbody>
     </table>
     {{ $types->links('vendor.pagination.bootstrap-4') }}
-    <script>
-        @if(Session::has('success'))
-            toastr.success('{{ Session::get('success') }}');
-        @endif
-
-        @if(Session::has('error'))
-            toastr.error('{{ Session::get('error') }}');
-        @endif
-    </script>
-
 
     <!-- Confirmation Popup -->
     <div id="deletePopup" class="popup">
@@ -89,7 +90,7 @@
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
-            "positionClass": "toast-top-right",  // You can change the position here
+            "positionClass": "toast-top-right", // You can change the position here
             "showDuration": "300",
             "hideDuration": "1000",
             "timeOut": "5000",
