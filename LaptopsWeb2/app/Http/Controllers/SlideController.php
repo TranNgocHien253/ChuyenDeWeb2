@@ -48,18 +48,26 @@ class SlideController extends Controller
     public function edit($id)
     {
         $id = Crypt::decryptString($id);
-        $slide = Slide::findOrFail($id);
+        // Tìm slide theo ID
+        $slide = Slide::find($id);
+
+        if (!$slide) {
+            // Nếu không tìm thấy slide, trả về trang danh sách với thông báo lỗi
+            return redirect()->route('admin.slides.index')
+                ->withErrors(['error' => 'Slide không tồn tại.']);
+        }
+
+        // Nếu tìm thấy slide, trả về view sửa slide
         return view('admin.slides.edit', compact('slide'));
     }
 
     public function update(Request $request, $encryptedId)
     {
-        $id = Crypt::decryptString($encryptedId);
         $request->validate([
             'link' => 'required|url',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+        $id = Crypt::decryptString($encryptedId);
         // Tìm slide
         $slide = Slide::find($id);
 
@@ -85,6 +93,7 @@ class SlideController extends Controller
         }
 
         $slide->save();
+
         $encryptedId = Crypt::encryptString($slide->id);
         $shortEncryptedId = substr($encryptedId, 0, 20) . '...';
         return redirect()->route('admin.slides.index')
@@ -96,13 +105,13 @@ class SlideController extends Controller
     // Xóa slide
     public function destroy($id)
     {
+        $id = Crypt::decryptString($id);
         // Tìm slide theo ID
         $slide = Slide::find($id);
 
         if (!$slide) {
-            // Nếu không tìm thấy slide, trả về thông báo lỗi
             return redirect()->route('admin.slides.index')
-                ->with('error', 'Slide không tồn tại.');
+                ->withErrors(['error' => 'Slide không tồn tại hoặc đã bị xóa.']);
         }
 
         // Kiểm tra nếu file ảnh tồn tại và xóa nó
