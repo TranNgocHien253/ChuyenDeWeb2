@@ -25,6 +25,10 @@ class User extends Authenticatable
         'address',
         'phone',
     ];
+    public function wishlists()
+{
+    return $this->hasMany(Wishlist::class);
+}
 
     /**
      * Các thuộc tính nên ẩn khi model được chuyển thành mảng hoặc JSON.

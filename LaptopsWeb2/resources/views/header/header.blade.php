@@ -7,7 +7,7 @@
             </a>
 
           <!-- Thanh Tìm Kiếm - Chiếm không gian chính giữa -->
-            <form class="flex items-center w-full max-w-md mx-auto lg:mx-0 flex-grow" action="{{ route('product.seach') }}" method="GET">
+            <form class="flex items-center w-full max-w-md mx-auto lg:mx-0 flex-grow" action="{{ route('search') }}" method="GET">
 
             <!-- <form class="flex items-center max-w-sm w-full" action="{{ route('product.seach') }}" method="GET"> -->
 
