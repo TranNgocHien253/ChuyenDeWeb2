@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -78,8 +79,9 @@ class UserController extends Controller
 
 
 
-    public function edit($id)
+    public function edit($encryptedId)
     {
+        $id = Crypt::decrypt($encryptedId);
         $user = User::find($id);
         if (!$user) {
             // Nếu người dùng không tồn tại, chuyển hướng đến trang profile của user với thông báo lỗi
@@ -99,8 +101,9 @@ class UserController extends Controller
         return view('admin.user.edit', compact('user'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $encryptedId)
     {
+        $id = Crypt::decrypt($encryptedId);
         // Tìm người dùng, bao gồm cả người dùng đã bị xóa mềm
         $user = User::withTrashed()->find($id);
 

@@ -68,8 +68,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('admin.user.index');
     Route::get('/user/create', [UserController::class, 'create'])->name('admin.user.create');
     Route::post('/user', [UserController::class, 'store'])->name('admin.user.store');
-    Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('admin.user.edit');
-    Route::put('/user/{id}', [UserController::class, 'update'])->name('admin.user.update');
+    Route::get('/user/{encryptedId}/edit', [UserController::class, 'edit'])->name('admin.user.edit');
+    Route::put('/user/{encryptedId}', [UserController::class, 'update'])->name('admin.user.update');
     Route::delete('/user/{id}', [UserController::class, 'destroyfe'])->name('admin.user.destroyfe');
 
     // Routes for order
@@ -88,26 +88,26 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/typeproduct/{id}', [TypeProductController::class, 'update'])->name('admin.typeproduct.update');
     Route::delete('/typeproduct/delete/{id}', [TypeProductController::class, 'destroy'])->name('admin.typeproduct.destroy');
 
-    
-        Route::get('/product', [ProductController::class, 'index'])->name('admin.product.index'); // Thay 'manageProduct' bằng 'index'
-        Route::get('/product/create', [ProductController::class, 'create'])->name('admin.product.create');
-        Route::post('/product', [ProductController::class, 'store'])->name('admin.product.store');
-        Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
-        Route::put('/product/{id}', [ProductController::class, 'update'])->name('admin.product.update');
-        Route::post('/product/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
 
-       
+    Route::get('/product', [ProductController::class, 'index'])->name('admin.product.index'); // Thay 'manageProduct' bằng 'index'
+    Route::get('/product/create', [ProductController::class, 'create'])->name('admin.product.create');
+    Route::post('/product', [ProductController::class, 'store'])->name('admin.product.store');
+    Route::get('/product/{id}/edit', [ProductController::class, 'edit'])->name('admin.product.edit');
+    Route::put('/product/{id}', [ProductController::class, 'update'])->name('admin.product.update');
+    Route::post('/product/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
 
 
-//         Route::post('product/{id}', 'ProductController@update');
-// Route::put('product/{id}', 'ProductController@store');
+
+
+    //         Route::post('product/{id}', 'ProductController@update');
+    // Route::put('product/{id}', 'ProductController@store');
 
 });
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
 
 // xem chi tiết
 
-Route::get('/user product', [HomeController::class,'userProduct'])->name('admin.product.usersProducts');
+Route::get('/user product', [HomeController::class, 'userProduct'])->name('admin.product.usersProducts');
 
 // Route cart
 Route::get('/cart', [CartController::class, 'getListCart'])->name('cart.list');
@@ -121,7 +121,7 @@ Route::post('/cart/delete/{productId}/{full_name}/{phone}/{address}', [CartContr
 Route::post('/cart/add', [CartController::class, 'addProductToCart'])->middleware('auth');
 
 
-Route::get('/find product', [HomeController::class,'seachProduct'])->name('product.seach');
+Route::get('/find product', [HomeController::class, 'seachProduct'])->name('product.seach');
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 

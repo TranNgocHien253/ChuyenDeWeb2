@@ -21,7 +21,7 @@
     @endif
 
 
-    <form action="{{ route('admin.user.update', $user->id) }}" method="POST" enctype="multipart/form-data" class="bg-white px-6 pb-5 rounded-lg shadow-md">
+    <form action="{{ route('admin.user.update', ['encryptedId' => Crypt::encrypt($user->id)]) }}" method="POST" enctype="multipart/form-data" class="bg-white px-6 pb-5 rounded-lg shadow-md">
         @csrf
         @method('PUT')
 
