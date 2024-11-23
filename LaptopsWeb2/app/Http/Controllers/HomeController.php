@@ -65,7 +65,6 @@ class HomeController extends Controller
 }
 
     
-
     public function getProductsByType($id)
     {
         try {

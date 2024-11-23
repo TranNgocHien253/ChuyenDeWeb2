@@ -103,5 +103,5 @@ class ProductController extends Controller
 
         // Chuyển hướng về trang quản lý sản phẩm với thông báo thành công
         return redirect()->route('admin.product.index')->with('success', 'Sản phẩm đã được xóa thành công!');
-    }
+    }   
 }

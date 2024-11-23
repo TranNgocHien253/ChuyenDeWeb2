@@ -329,68 +329,80 @@
         <!-- Products Container - Đây là container mới để hiển thị sản phẩm theo danh mục -->
         <div id="products-container" class="container mx-auto px-6 mt-16">
             @if(isset($currentType))
-            <h3 class="text-gray-600 text-2xl font-medium">{{ $currentType->name_type }}</h3>
+                <h3 class="text-gray-600 text-2xl font-medium">{{ $currentType->name_type }}</h3>
             @else
-            <h3 class="text-gray-600 text-2xl font-medium">Tất cả sản phẩm</h3>
+                <h3 class="text-gray-600 text-2xl font-medium">Tất cả sản phẩm</h3>
             @endif
         
             <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                 @foreach ($products as $product)
-        
-                <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden border border-gray-300">
-                    <!-- Product Image -->
-                    <div class="relative">
-                        <a href="/product/{{ $product->id }}">
-                            <img src="{{ asset('/images/' . $product->image) }}" alt="image" class="h-56 w-full object-cover" />
-
-
-
-                        </a>        
-                        <!-- Favorite Button -->
-                        <button
-                            class="absolute top-2 right-2 text-gray-600 hover:text-red-500 focus:outline-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                                <path stroke-linecap="round" stroke-linejoin="round"
-                                    d="M20.84 4.61a5.5 5.5 0 01.02 7.77L12 20.39l-8.86-8.01a5.5 5.5 0 017.78-7.78l1.1 1.1 1.1-1.1a5.5 5.5 0 017.77.01z" />
-                            </svg>
-                        </button>
-                    </div>
-                    <!-- Product Details -->
-                    <div class="px-5 py-3">
-                        <h3 class="text-gray-700 uppercase font-bold">{{ $product->name }}</h3>
-                        <p class="text-gray-500 text-sm mt-2">{{ $product->description }}</p>
-                        <div class="flex items-center mt-2">
-                            <!-- Rating -->
-                            <div class="flex text-yellow-500">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="{{ $i <= $product->rating ? 'currentColor' : 'none' }}"
-                                    viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                    <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden border border-gray-300">
+                        <!-- Product Image -->
+                        <div class="relative">
+                            <a href="/product/{{ $product->id }}">
+                                <img src="{{ asset('/images/' . $product->image) }}" alt="image" class="h-56 w-full object-cover" />
+                            </a>
+                            <!-- Favorite Button -->
+                            <button class="absolute top-2 right-2 text-gray-600 hover:text-red-500 focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     stroke-width="2" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l2.158 6.63a1 1 0 00.95.69h6.905c.969 0 1.371 1.24.588 1.81l-5.634 4.1a1 1 0 00-.364 1.118l2.157 6.63c.3.921-.755 1.688-1.54 1.118l-5.634-4.1a1 1 0 00-1.175 0l-5.634 4.1c-.784.57-1.839-.197-1.539-1.118l2.157-6.63a1 1 0 00-.364-1.118L2.322 11.057c-.783-.57-.38-1.81.589-1.81h6.905a1 1 0 00.95-.69l2.157-6.63z" />
-                                    </svg>
-                                @endfor
-                            </div>
-                            <span class="text-gray-600 ml-2">({{ $product->reviews_count }}đánh giá)</span>
+                                          d="M20.84 4.61a5.5 5.5 0 01.02 7.77L12 20.39l-8.86-8.01a5.5 5.5 0 017.78-7.78l1.1 1.1 1.1-1.1a5.5 5.5 0 017.77.01z" />
+                                </svg>
+                            </button>
                         </div>
-                        <span class="text-gray-500 mt-2 block">${{ $product->unit_price }}</span>
-                        <!-- Buttons -->
-                        <div class="flex items-center justify-between mt-4">
-                            <form action="/cart/add" method="POST">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                <input type="hidden" name="quantity" value="1">
-                                <button type="submit"
-                                    class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
-                                    Thêm vào giỏ hàng
+                        <!-- Product Details -->
+                        <div class="px-5 py-3">
+                            <h3 class="text-gray-700 uppercase font-bold">{{ $product->name }}</h3>
+                            <p class="text-gray-500 text-sm mt-2">{{ $product->description }}</p>
+                            <div class="flex items-center mt-2">
+                                <!-- Rating -->
+                                <div class="flex text-yellow-500">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        @if ($i <= $product->rating)
+                                            <!-- Star (Rated) -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" 
+                                                 class="w-5 h-5">
+                                                <path d="M12 .587l3.668 7.429L23.735 9.3l-5.501 5.373L19.871 24 12 19.77 4.129 24l1.637-9.327L.265 9.3l8.067-1.284L12 .587z" />
+                                            </svg>
+                                        @else
+                                            <!-- Star (Unrated) -->
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24" 
+                                                 class="w-5 h-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                      d="M12 .587l3.668 7.429L23.735 9.3l-5.501 5.373L19.871 24 12 19.77 4.129 24l1.637-9.327L.265 9.3l8.067-1.284L12 .587z" />
+                                            </svg>
+                                        @endif
+                                    @endfor
+                                </div>
+                                <!-- Number of Reviews -->
+                                <span class="text-gray-600 ml-2">({{ $product->reviews_count }} đánh giá)</span>
+                            </div>
+                            <span class="text-gray-500 mt-2 block">${{ $product->unit_price }}</span>
+                            <!-- Buttons -->
+                            <div class="flex items-center justify-between mt-4">
+                                <!-- Add to Cart Button -->
+                                <form action="/cart/add" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit"
+                                            class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
+                                        Thêm vào giỏ hàng
+                                    </button>
+                                </form>
+                                <!-- Share Button -->
+                                <button onclick="shareOnFacebook('{{ url('/product/' . $product->id) }}')"
+                                        class="bg-blue-500 text-white px-2 py-2 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400">
+                                    Chia sẻ
                                 </button>
-                            </form>
+                            </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
             </div>
         </div>
+        
         
         </div>
 
@@ -405,6 +417,13 @@
 </button>
 
 <!-- Kết nối với tệp JavaScript -->
+<script>
+    function shareOnFacebook(productUrl) {
+    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(productUrl)}`;
+    window.open(facebookShareUrl, '_blank', 'width=600,height=400');
+}
+
+</script>
 <script src="{{ asset('js/slider.js') }}">
     document.querySelector('#addToCartButton').addEventListener('click', function() {
         const productId = 1; // ID sản phẩm
@@ -425,7 +444,10 @@
                 if (data.message) alert(data.message);
                 else alert(data.error);
             }).catch(error => console.error('Lỗi:', error));
+
     });
+    
 </script>
+
 <script lang="javascript">var __vnp = {code : 23536,key:'', secret : '21c87d0c65318b3230da6f4f05e907ef'};(function() {var ga = document.createElement('script');ga.type = 'text/javascript';ga.async=true; ga.defer=true;ga.src = '//core.vchat.vn/code/tracking.js?v=66009'; var s = document.getElementsByTagName('script');s[0].parentNode.insertBefore(ga, s[0]);})();</script>
 @endsection
