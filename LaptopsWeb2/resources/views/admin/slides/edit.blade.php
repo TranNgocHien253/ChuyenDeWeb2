@@ -22,7 +22,7 @@
     </div>
     @endif
 
-    <form action="{{ route('admin.slides.update', $slide->id) }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md" require>
+    <form action="{{ route('admin.slides.update', Crypt::encryptString($slide->id)) }}" method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded-lg shadow-md" require>
         @csrf
         @method('PUT')
 

@@ -24,7 +24,7 @@ class AuthController extends Controller
             // Kiểm tra nếu tài khoản còn trong thời gian khôi phục
             $deletionTime = $user->deleted_at;
             $currentTime = now();
-            $restoreLimit = $deletionTime->addSeconds(30); // Thời gian cho phép khôi phục là 30 ngày
+            $restoreLimit = $deletionTime->addDays(30); // Thời gian cho phép khôi phục là 30 ngày addSeconds(30);
 
             if ($currentTime <= $restoreLimit) {
                 return view('user.profile.restore', ['user' => $user]);
