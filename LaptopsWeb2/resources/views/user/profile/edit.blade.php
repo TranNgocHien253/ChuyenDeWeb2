@@ -16,7 +16,7 @@
 <div class="mb-10 w-full rounded-2xl bg-white p-10 shadow-xl transition-all duration-300 animate-fade-in">
 
 
-    <form action="{{ route('user.profile.update', $user->id) }}" method="POST" enctype="multipart/form-data" require>
+    <form action="{{ route('user.profile.update', ['encryptedId' => Crypt::encrypt($user->id)]) }}" method="POST" enctype="multipart/form-data" require>
         @csrf
         @method('PUT')
         <div class="font-std  font-normal leading-relaxed text-gray-900 ">

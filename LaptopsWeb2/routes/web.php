@@ -33,8 +33,8 @@ Route::get('/', [HomeController::class, 'index'])->name('user.home');
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/profile', [UserController::class, 'showProfile'])->name('profile');
-    Route::get('/profile/{id}/edit', [UserController::class, 'edit'])->name('user.profile.edit');
-    Route::put('/profile/{id}', [UserController::class, 'update'])->name('user.profile.update');
+    Route::get('/profile/{encryptedId}/edit', [UserController::class, 'edit'])->name('user.profile.edit');
+    Route::put('/profile/{encryptedId}', [UserController::class, 'update'])->name('user.profile.update');
     Route::delete('/profile/{id}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
 });
 Route::post('/profile/restore/{id}', [UserController::class, 'restoreUser'])->name('user.restore');
