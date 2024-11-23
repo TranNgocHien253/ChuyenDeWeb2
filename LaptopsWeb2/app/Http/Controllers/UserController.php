@@ -42,14 +42,13 @@ class UserController extends Controller
             'password' => [
                 'required',
                 'string',
-                'min:3',
+                'min:6',
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/'
             ],
             'imageAvatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Allow image files
-            'gender' => 'nullable|string|max:50',
-            'address' => 'nullable|string',
-            'phone' => 'nullable|string|max:15',
-
+            'gender' => 'required|string|max:50',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|regex:/^0\d{9}$/',
         ]);
 
         if ($validator->fails()) {
@@ -81,7 +80,18 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+        if (!$user) {
+            // Nếu người dùng không tồn tại, chuyển hướng đến trang profile của user với thông báo lỗi
+            if (Auth::check() && Auth::user()->role !== 1) {
+                return redirect()->route('profile')
+                    ->with('error', 'User not found.');
+            }
+
+            // Nếu không tìm thấy và là admin, chuyển hướng về trang danh sách người dùng
+            return redirect()->route('admin.user.index')
+                ->with('error', 'User not found.');
+        }
         if (Auth::check() && Auth::user()->role !== 1) {
             // Trả về view trang chủ cho admin
             return view('user.profile.edit', compact('user'));
@@ -100,10 +110,16 @@ class UserController extends Controller
                 ->with('error', 'Người dùng không tồn tại.');
         }
 
-        if ($user->trashed()) {
-            // Nếu người dùng đã bị xóa mềm, hiển thị thông báo phù hợp
-            return redirect()->route('admin.user.index')
-                ->with('error', 'Không thể cập nhật vì người dùng đã bị xóa.');
+        // Kiểm tra nếu mật khẩu hiện tại được nhập
+        if ($request->current_password && !Hash::check($request->current_password, $user->password)) {
+            return redirect()->back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng.']);
+        }
+
+        // Kiểm tra mật khẩu mới không trùng với mật khẩu cũ
+        if ($request->password && Hash::check($request->password, $user->password)) {
+            return redirect()->back()
+                ->withErrors(['password' => 'Mật khẩu mới không được trùng với mật khẩu cũ.'])
+                ->withInput();
         }
 
         // Thực hiện cập nhật dữ liệu
@@ -117,9 +133,9 @@ class UserController extends Controller
                 'regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/'
             ],
             'imageAvatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gender' => 'nullable|string|max:50',
-            'address' => 'nullable|string',
-            'phone' => 'nullable|string|max:15',
+            'gender' => 'required|string|max:50',
+            'address' => 'nullable|string|max:255',
+            'phone' => 'nullable|regex:/^0\d{9}$/',
         ]);
 
         if ($validator->fails()) {
@@ -149,8 +165,15 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->save();
 
-        return redirect()->route('admin.user.index')
-            ->with('success', "Cập nhật thông tin người dùng {$user->full_name} thành công.");
+        if (Auth::user()->role === 1) {
+            // Nếu là admin, chuyển về trang admin.user.index
+            return redirect()->route('admin.user.index')
+                ->with('success', "Cập nhật thông tin người dùng {$user->full_name} thành công.");
+        } else {
+            // Nếu là user, chuyển về trang user.profile.edit
+            return redirect()->route('profile')
+                ->with('success', "Cập nhật thông tin của bạn thành công.");
+        }
     }
 
 

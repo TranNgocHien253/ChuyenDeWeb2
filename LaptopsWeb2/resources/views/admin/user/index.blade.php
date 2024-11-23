@@ -13,8 +13,8 @@
                 {{ session('success') }}
             </div>
             @endif
-            @if (session('error'))
-            <div class="absolute w-2/3 bg-red-100 text-red-700 p-4 rounded my-2 fade-in ">
+            @if(session('error'))
+            <div class="absolute w-2/3 bg-red-100 text-red-700 p-4 rounded my-2 fade-in">
                 {{ session('error') }}
             </div>
             @endif

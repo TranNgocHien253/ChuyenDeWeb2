@@ -46,7 +46,16 @@ class SlideController extends Controller
     // Sửa slide
     public function edit($id)
     {
-        $slide = Slide::findOrFail($id);
+        // Tìm slide theo ID
+        $slide = Slide::find($id);
+
+        if (!$slide) {
+            // Nếu không tìm thấy slide, trả về trang danh sách với thông báo lỗi
+            return redirect()->route('admin.slides.index')
+                ->withErrors(['error' => 'Slide không tồn tại.']);
+        }
+
+        // Nếu tìm thấy slide, trả về view sửa slide
         return view('admin.slides.edit', compact('slide'));
     }
 
@@ -96,9 +105,8 @@ class SlideController extends Controller
         $slide = Slide::find($id);
 
         if (!$slide) {
-            // Nếu không tìm thấy slide, trả về thông báo lỗi
             return redirect()->route('admin.slides.index')
-                ->with('error', 'Slide không tồn tại.');
+                ->withErrors(['error' => 'Slide không tồn tại hoặc đã bị xóa.']);
         }
 
         // Kiểm tra nếu file ảnh tồn tại và xóa nó

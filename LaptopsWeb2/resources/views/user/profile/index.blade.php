@@ -1,8 +1,16 @@
 @extends('app')
 
 @section('content')
+<div class="flex top-3 justify-center">
+    @if(session('error'))
+    <div class="fixed w-2/3 z-50 bg-red-100 text-red-700 p-4 rounded my-2 fade-in">
+        {{ session('error') }}
+    </div>
+    @endif
+</div>
 <div class="bg-white mx-auto rounded-xl shadow-2xl max-w-4xl w-full p-8 transition-all duration-300 animate-fade-in">
     <div class="flex flex-col md:flex-row">
+
         <div class="md:w-1/3 text-center mb-8 md:mb-0">
 
             @if($user->imageAvatar)
@@ -90,6 +98,29 @@
 
     .animate-fade-in {
         animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .fade-in {
+        opacity: 0;
+        animation: fadeIn 0.5s ease-out;
+        animation-delay: .6s;
+        animation-fill-mode: forwards;
+    }
+
+    .fade-hide {
+        animation: fadeIn 0.5s ease-out;
     }
 </style>
 
