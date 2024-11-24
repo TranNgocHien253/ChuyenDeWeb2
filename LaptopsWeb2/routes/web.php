@@ -9,6 +9,7 @@ use App\Http\Controllers\SlideController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
+use Laravel\Socialite\Facades\Socialite;
 
 use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\TypeProductController;
@@ -141,3 +142,7 @@ Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword
 
 // Xử lý đặt lại mật khẩu
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+
+
+Route::get('auth/google', [AuthController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [AuthController::class, 'handleGoogleCallback']);
