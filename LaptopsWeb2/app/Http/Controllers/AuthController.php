@@ -82,7 +82,7 @@ class AuthController extends Controller
     }
 
     // Xử lý đặt lại mật khẩu
-    // Xử lý đặt lại mật khẩu
+    
     public function resetPassword(Request $request)
     {
         $request->validate([
