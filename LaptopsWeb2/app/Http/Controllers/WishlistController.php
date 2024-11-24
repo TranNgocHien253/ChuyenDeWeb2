@@ -4,12 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class WishlistController extends Controller
 {
     public function addToWishlist(Request $request, $productId)
     {
+    //     // Kiểm tra người dùng đã đăng nhập hay chưa
+    // if (!Auth::check()) {
+    //     return redirect()->route('login')->with('error', 'Vui lòng đăng nhập để thêm vào wishlist.');
+    // }
         $userId = auth()->id();
     
         // Kiểm tra sản phẩm đã tồn tại trong wishlist chưa
