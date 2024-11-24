@@ -129,3 +129,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/wishlist/{productId}/remove', [WishlistController::class, 'removeFromWishlist'])->name('wishlist.remove');
     Route::get('/wishlist', [WishlistController::class, 'showWishlist'])->name('wishlist.index');
 });
+
+
+
+// Hiển thị form nhập email
+Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+
+// Xử lý gửi link reset mật khẩu
+Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
+
+// Hiển thị form đặt lại mật khẩu
+Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+
+// Xử lý đặt lại mật khẩu
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+

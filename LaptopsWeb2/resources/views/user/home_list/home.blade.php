@@ -354,6 +354,7 @@
                         <img src="data:image;base64,{{ $product->image }}" alt="image"
                             class="h-56 w-full object-cover" />
                         <!-- Favorite Button -->
+                    
                         <form id="wishlist-form-{{ $product->id }}" data-product-id="{{ $product->id }}">
                             @csrf
                             <button type="button" class="flex absolute top-2 right-2 text-gray-600 hover:text-red-500 focus:outline-none wishlist-button">
