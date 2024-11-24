@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Log;
+
 
 class AuthController extends Controller
 {
@@ -103,4 +107,61 @@ class AuthController extends Controller
             ? redirect()->route('login')->with('success', 'Password reset successfully.')
             : back()->withErrors(['email' => trans($status)]);
     }
+
+     // Redirect to Google login // Redirect to Google login
+    // Redirect Google login
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')
+                ->stateless()
+                ->setHttpClient(new Client(['verify' => false])) // Tắt SSL Verification
+                ->user();
+    
+            // Kiểm tra nếu Google trả về email
+            if (!$googleUser->getEmail()) {
+                return redirect('login')->with('error', 'Không thể đăng nhập. Tài khoản Google không có email.');
+            }
+    
+            // Kiểm tra xem người dùng đã tồn tại trong database chưa
+            $user = User::where('email', $googleUser->getEmail())->first();
+    
+            if (!$user) {
+                // Tạo mới người dùng nếu chưa tồn tại
+                $user = User::create([
+                    'full_name' => $googleUser->getName(),
+                    'email' => $googleUser->getEmail(),
+                    'password' => bcrypt('random_password'), // Tạo mật khẩu ngẫu nhiên
+                    'imageAvatar' => $googleUser->getAvatar(),
+                    'gender' => 'Not specified', // Cập nhật theo yêu cầu của bạn
+                    'address' => 'Unknown',
+                    'phone' => 'Unknown',
+                    'role' => 0, // Vai trò mặc định
+                ]);
+            } else {
+                // Nếu người dùng đã tồn tại, có thể cập nhật một số thông tin (như ảnh đại diện)
+                $user->update([
+                    'imageAvatar' => $googleUser->getAvatar(),
+                ]);
+            }
+    
+            // Đăng nhập người dùng ngay sau khi tạo hoặc tìm thấy
+            Auth::login($user);
+    
+            // Chuyển hướng tới trang chủ
+            return redirect()->intended('/');
+        } catch (\Exception $e) {
+            Log::error('Google Login Error: ' . $e->getMessage());
+            return redirect('login')->with('error', 'Đăng nhập thất bại, vui lòng thử lại.');
+        }
+    }
+    
+
+    
+    
 }
