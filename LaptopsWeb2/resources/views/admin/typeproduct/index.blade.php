@@ -58,7 +58,7 @@
                         style="width: 100px; height: 100px; object-fit: cover;"></td>
                 <td>{{ $type->created_at ? $type->created_at->format('d/m/Y') : 'N/A' }}</td>
                 <td class="actions">
-                    <a href="{{ route('admin.typeproduct.edit', $type->id) }}" class="edit fas fa-edit"
+                    <a href="{{ route('admin.typeproduct.edit', $encodedIds[$loop->index]) }}" class="edit fas fa-edit"
                         title="Chỉnh sửa"></a>
                     <form action="{{ route('admin.typeproduct.destroy', $type->id) }}" method="POST" class="delete-form"
                         data-id="{{ $type->id }}" style="display:inline;">

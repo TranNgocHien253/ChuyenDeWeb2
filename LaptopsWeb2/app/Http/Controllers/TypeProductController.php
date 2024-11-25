@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TypeProduct;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class TypeProductController extends Controller
 {
@@ -16,7 +18,11 @@ class TypeProductController extends Controller
         // Lấy danh sách loại sản phẩm với phân trang
         $types = TypeProduct::paginate($perPage);
 
-        return view('admin.typeproduct.index', compact('types'));
+        $encodedIds = $types->map(function ($type) {
+            return $this->encodeId($type->id);
+        });
+
+        return view('admin.typeproduct.index', compact('types', 'encodedIds'));
     }
 
     // Hiển thị form thêm loại sản phẩm
@@ -51,34 +57,53 @@ class TypeProductController extends Controller
         return redirect()->back()->with('error', 'Vui lòng chọn hình ảnh.');
     }
 
-    // Hiển thị form chỉnh sửa loại sản phẩm
-    public function edit($id)
+    // Mã hóa ID
+    private function encodeId($id)
     {
-        // Kiểm tra ID có hợp lệ hay không (chỉ cho phép số)
-        if (!preg_match('/^\d+$/', $id)) {
-            return redirect()->route('admin.typeproduct.index')->with('error', 'URL không hợp lệ để tìm danh mục.');
+        return Str::random(10) . base64_encode($id);
+    }
+
+    // Giải mã ID
+    private function decodeId($encodedId)
+    {
+        $decoded = base64_decode(substr($encodedId, 10)); // Ensure this matches your encoding logic
+        return is_numeric($decoded) ? $decoded : null; // Check if the decoded value is numeric
+    }
+
+    // Hiển thị form chỉnh sửa loại sản phẩm
+    public function edit($encodedId)
+    {
+        Log::info('Encoded ID: ' . $encodedId);
+        
+        $id = $this->decodeId($encodedId);
+        Log::info('Decoded ID: ' . $id);
+        
+        if (!$id) {
+            return redirect()->route('admin.typeproduct.index')->with('error', 'URL không hợp lệ.');
         }
 
-        // Kiểm tra nếu ID không tồn tại
         $typeProduct = TypeProduct::find($id);
+        Log::info('Type Product: ', [$typeProduct]);
+
         if (!$typeProduct) {
             return redirect()->route('admin.typeproduct.index')->with('error', 'Danh mục này không thể tìm thấy.');
         }
 
-        $typeProduct = TypeProduct::findOrFail($id); // Tìm loại sản phẩm theo ID
-        return view('admin.typeproduct.edit', compact('typeProduct')); // Truyền biến $typeProduct vào view
+        return view('admin.typeproduct.edit', compact('typeProduct', 'encodedId'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $encodedId)
     {
-        // Tìm loại sản phẩm
+        $id = $this->decodeId($encodedId);
+        if (!$id) {
+            return redirect()->route('admin.typeproduct.index')->with('error', 'URL không hợp lệ hoặc loại đã bị xóa.');
+        }
+
         $typeProduct = TypeProduct::find($id);
         if (!$typeProduct) {
-            // Nếu không tìm thấy, chuyển hướng với thông báo lỗi
             return redirect()->route('admin.typeproduct.index')->with('error', 'Loại sản phẩm không tồn tại.');
         }
 
-        // Validate dữ liệu từ request
         $data = $request->validate([
             'name_type' => 'required|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -102,7 +127,6 @@ class TypeProductController extends Controller
         // Cập nhật thông tin loại sản phẩm
         $typeProduct->update($data);
 
-        // Trả về trang danh sách với thông báo thành công
         return redirect()->route('admin.typeproduct.index')->with('success', 'Loại sản phẩm đã được cập nhật thành công.');
     }
 

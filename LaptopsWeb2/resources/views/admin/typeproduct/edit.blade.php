@@ -37,7 +37,7 @@
 </head>
 
 <body>
-    <form action="{{ route('admin.typeproduct.update', $typeProduct->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.typeproduct.update', $encodedId) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="form-container">

@@ -104,7 +104,7 @@
 
 <body>
     <div class="container">
-        <form action="{{ route('admin.order.update', $order->id) }}" method="POST" onsubmit="return validateForm()">
+        <form action="{{ route('admin.order.update', $encodedId) }}" method="POST" onsubmit="return validateForm()">
             @csrf
             @method('PUT')
             <div class="order-form">

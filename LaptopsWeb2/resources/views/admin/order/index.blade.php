@@ -25,7 +25,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{{asset('css/orders1.css')}}">
 </head>
-
 <body>
     <div class="top-controls">
         <div class="sort-controls">
@@ -64,7 +63,7 @@
                         </span>
                     </td>
                     <td class="actions">
-                        <a href="{{ route('admin.order.edit', $order->id) }}" class="edit fas fa-edit"
+                        <a href="{{ route('admin.order.edit', $encodedIds[$loop->index]) }}" class="edit fas fa-edit"
                             title="Chỉnh sửa"></a>
                         <form action="{{ route('admin.order.destroy', $order->id) }}" method="POST" class="delete-form"
                             data-id="{{ $order->id }}" style="display:inline;">

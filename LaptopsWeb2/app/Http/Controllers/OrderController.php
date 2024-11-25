@@ -6,9 +6,23 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\TypeProduct;
 use App\Models\Product;
+use Illuminate\Support\Str;
 
 class OrderController extends Controller
 {
+    // Mã hóa ID
+    private function encodeId($id)
+    {
+        return Str::random(10) . base64_encode($id);
+    }
+
+    // Giải mã ID
+    private function decodeId($encodedId)
+    {
+        $decoded = base64_decode(substr($encodedId, 10));
+        return is_numeric($decoded) ? $decoded : null;
+    }
+
     // Hiển thị danh sách đơn hàng
     public function index(Request $request)
     {
@@ -18,7 +32,12 @@ class OrderController extends Controller
         // Lấy danh sách đơn hàng với phân trang
         $orders = Order::paginate($perPage);
 
-        return view('admin.order.index', compact('orders'));
+        // Mã hóa ID cho mỗi đơn hàng
+        $encodedIds = $orders->map(function($order) {
+            return $this->encodeId($order->id);
+        });
+
+        return view('admin.order.index', compact('orders', 'encodedIds'));
     }
 
     // Hiển thị form thêm đơn hàng
@@ -46,11 +65,11 @@ class OrderController extends Controller
     }
 
     // Hiển thị form chỉnh sửa đơn hàng
-    public function edit($id, Request $request)
+    public function edit($encodedId, Request $request)
     {
-        // Kiểm tra ID hợp lệ
-        if (!preg_match('/^\d+$/', $id)) {
-            return redirect()->route('admin.order.index')->with('error', 'URL không hợp lệ để tìm đơn hàng.');
+        $id = $this->decodeId($encodedId);
+        if (!$id) {
+            return redirect()->route('admin.order.index')->with('error', 'URL không hợp lệ.');
         }
 
         $order = Order::find($id);
@@ -61,12 +80,17 @@ class OrderController extends Controller
         $categories = TypeProduct::all();
         $products = Product::all();
 
-        return view('admin.order.edit', compact('order', 'categories', 'products'));
+        return view('admin.order.edit', compact('order', 'categories', 'products', 'encodedId'));
     }
 
     // Cập nhật đơn hàng
-    public function update(Request $request, $id)
+    public function update(Request $request, $encodedId)
     {
+        $id = $this->decodeId($encodedId);
+        if (!$id) {
+            return redirect()->route('admin.order.index')->with('error', 'URL không hợp lệ.');
+        }
+
         $order = Order::find($id);
         if (!$order) {
             return redirect()->route('admin.order.index')->with('error', 'Đơn hàng không tồn tại.');
