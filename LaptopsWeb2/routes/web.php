@@ -105,6 +105,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 });
 
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.show');
+
+// xem chi tiết
 
 Route::get('/user product', [HomeController::class, 'userProduct'])->name('admin.product.usersProducts');
 

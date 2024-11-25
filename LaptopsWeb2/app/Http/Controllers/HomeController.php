@@ -41,26 +41,30 @@ class HomeController extends Controller
         return view('admin.product.productDetail', compact('product')); // Trả về view với thông tin sản phẩm
     }
     public function seachProduct(Request $request)
-    {
-        $query = Product::query();
+{
+    $query = Product::query();
 
-        // Check if there's a search term and filter products by name or description
-        if ($request->has('search') && $request->search != '') {
-            $query->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%')
-                    ->orWhere('description', 'like', '%' . $request->search . '%');
-            });
-        }
-
-        // Get slides for the homepage
-        $slides = Slide::orderBy('updated_at', 'desc')->take(25)->get();
-
-        // Paginate the results
-        $products = $query->paginate(9);
-
-        return view('user.home_list.home', compact('products', 'slides'));
+    // Check if there's a search term and filter products by name or description
+    if ($request->has('search') && $request->search != '') {
+        $query->where(function ($q) use ($request) {
+            $q->where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('description', 'like', '%' . $request->search . '%');
+        });
     }
 
+    // Get slides for the homepage
+    $slides = Slide::orderBy('updated_at', 'desc')->take(25)->get();
+
+    // Get product types
+    $typeProducts = TypeProduct::orderBy('name_type', 'asc')->take(25)->get();
+
+    // Paginate products
+    $products = $query->paginate(9);
+
+    return view('user.home_list.home', compact('products', 'slides', 'typeProducts'));
+}
+
+    
     public function getProductsByType($id)
     {
         try {
