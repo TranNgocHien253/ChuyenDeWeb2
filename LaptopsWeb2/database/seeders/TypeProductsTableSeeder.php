@@ -14,9 +14,9 @@ class TypeProductsTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('type_products')->insert([
-            ['name_type' => 'Electronics', 'image' => 'images/1729731408.jpg', 'created_at' => '2023-10-01'],
-            ['name_type' => 'Clothing', 'image' => 'images/1731549795.jpg', 'created_at' => '2023-10-02'],
-            ['name_type' => 'Furniture', 'image' => 'images/1731720843.jpg', 'created_at' => '2023-10-03'],
+            ['name_type' => 'Apple', 'image' => 'images/education_overview__ccmf0v3aqnjm_og.png', 'created_at' => '2023-10-01'],
+            ['name_type' => 'HP', 'image' => 'images/download (1).png', 'created_at' => '2023-10-02'],
+            ['name_type' => 'Asus', 'image' => 'images/download.png', 'created_at' => '2023-10-03'],
             ['name_type' => 'Books', 'image' => 'images/1731588736.jpg', 'created_at' => '2023-10-04'],
             ['name_type' => 'Toys', 'image' => 'images/1729731408.jpg', 'created_at' => '2023-10-05'],
             ['name_type' => 'Sports', 'image' => 'images/1731549795.jpg', 'created_at' => '2023-10-06'],
